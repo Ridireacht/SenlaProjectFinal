@@ -30,4 +30,8 @@ public class UserScore {
 
   private int score;
 
+  @ManyToOne
+  @JoinColumn(name = "rating_id")
+  private Rating rating;
+
 }
