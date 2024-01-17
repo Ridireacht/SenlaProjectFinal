@@ -30,8 +30,8 @@ public class Ad {
   private String content;
   private int price;
 
-  private Boolean available;
-  private Boolean premium;
+  private boolean available;
+  private boolean premium;
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
