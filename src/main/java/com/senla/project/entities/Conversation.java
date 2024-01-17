@@ -25,6 +25,10 @@ public class Conversation {
   private Long id;
 
   @ManyToOne
+  @JoinColumn(name = "ad_id")
+  private Ad ad;
+
+  @ManyToOne
   @JoinColumn(name = "buyer_id")
   private User buyer;
 
