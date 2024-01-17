@@ -10,6 +10,8 @@ public interface AdService {
 
   List<AdResponse> getAdsByUserId(Long id);
 
+  AdResponse getAdById(Long id);
+
   AdResponse createAd(AdRequest adRequest);
 
   AdResponse updateAd(AdRequest adRequest);

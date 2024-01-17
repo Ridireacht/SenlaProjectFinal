@@ -26,6 +26,11 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
+  public AdResponse getAdById(Long id) {
+    return null;
+  }
+
+  @Override
   public AdResponse createAd(AdRequest adRequest) {
     return null;
   }
