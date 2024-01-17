@@ -33,7 +33,7 @@ public class AdController {
 
   @GetMapping("/{id}")
   public AdResponse getAd(@PathVariable("id") Long id) {
-    return adService.getAdById();
+    return adService.getAdById(id);
   }
 
   @PostMapping
