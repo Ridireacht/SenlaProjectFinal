@@ -47,7 +47,7 @@ public class AdController {
   }
 
   @PutMapping("/{id}/premium")
-  public AdResponse updateAd(@PathVariable("id") Long id) {
+  public AdResponse makeAdPremium(@PathVariable("id") Long id) {
     return adService.makeAdPremium(id);
   }
 
