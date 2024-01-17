@@ -1,6 +1,7 @@
 package com.senla.project.services.impl;
 
-import com.senla.project.entities.Comment;
+import com.senla.project.dto.CommentRequest;
+import com.senla.project.dto.CommentResponse;
 import com.senla.project.repositories.CommentRepository;
 import com.senla.project.services.CommentService;
 import java.util.List;
@@ -15,22 +16,22 @@ public class CommentServiceImpl implements CommentService {
 
 
   @Override
-  public List<Comment> getAllComments() {
+  public List<CommentResponse> getAllComments() {
     return null;
   }
 
   @Override
-  public List<Comment> getCommentsByAdId(Long id) {
+  public List<CommentResponse> getCommentsByAdId(Long id) {
     return null;
   }
 
   @Override
-  public Comment createComment() {
+  public CommentResponse createComment(CommentRequest commentRequest) {
     return null;
   }
 
   @Override
-  public Comment updateComment() {
+  public CommentResponse updateComment(CommentRequest commentRequest) {
     return null;
   }
 

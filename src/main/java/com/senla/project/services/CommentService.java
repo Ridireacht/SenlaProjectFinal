@@ -1,17 +1,18 @@
 package com.senla.project.services;
 
-import com.senla.project.entities.Comment;
+import com.senla.project.dto.CommentRequest;
+import com.senla.project.dto.CommentResponse;
 import java.util.List;
 
 public interface CommentService {
 
-  List<Comment> getAllComments();
+  List<CommentResponse> getAllComments();
 
-  List<Comment> getCommentsByAdId(Long id);
+  List<CommentResponse> getCommentsByAdId(Long id);
 
-  Comment createComment();
+  CommentResponse createComment(CommentRequest commentRequest);
 
-  Comment updateComment();
+  CommentResponse updateComment(CommentRequest commentRequest);
 
   boolean deleteComment(Long id);
 }
