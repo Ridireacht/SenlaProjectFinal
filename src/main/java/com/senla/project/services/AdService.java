@@ -1,19 +1,20 @@
 package com.senla.project.services;
 
-import com.senla.project.entities.Ad;
+import com.senla.project.dto.AdRequest;
+import com.senla.project.dto.AdResponse;
 import java.util.List;
 
 public interface AdService {
 
-  List<Ad> getAllAds();
+  List<AdResponse> getAllAds();
 
-  List<Ad> getAdsByUserId(Long id);
+  List<AdResponse> getAdsByUserId(Long id);
 
-  Ad createAd();
+  AdResponse createAd(AdRequest adRequest);
 
-  Ad updateAd();
+  AdResponse updateAd(AdRequest adRequest);
 
-  Ad makeAdPremium(Long id);
+  AdResponse makeAdPremium(Long id);
 
   boolean deleteAd(Long id);
 }

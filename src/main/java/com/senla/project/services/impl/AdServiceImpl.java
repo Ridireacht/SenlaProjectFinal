@@ -1,6 +1,7 @@
 package com.senla.project.services.impl;
 
-import com.senla.project.entities.Ad;
+import com.senla.project.dto.AdRequest;
+import com.senla.project.dto.AdResponse;
 import com.senla.project.repositories.AdRepository;
 import com.senla.project.services.AdService;
 import java.util.List;
@@ -15,27 +16,27 @@ public class AdServiceImpl implements AdService {
 
 
   @Override
-  public List<Ad> getAllAds() {
+  public List<AdResponse> getAllAds() {
     return null;
   }
 
   @Override
-  public List<Ad> getAdsByUserId(Long id) {
+  public List<AdResponse> getAdsByUserId(Long id) {
     return null;
   }
 
   @Override
-  public Ad createAd() {
+  public AdResponse createAd(AdRequest adRequest) {
     return null;
   }
 
   @Override
-  public Ad updateAd() {
+  public AdResponse updateAd(AdRequest adRequest) {
     return null;
   }
 
   @Override
-  public Ad makeAdPremium(Long id) {
+  public AdResponse makeAdPremium(Long id) {
     return null;
   }
 
