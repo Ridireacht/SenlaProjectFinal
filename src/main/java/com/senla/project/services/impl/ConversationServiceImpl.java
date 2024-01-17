@@ -1,6 +1,6 @@
 package com.senla.project.services.impl;
 
-import com.senla.project.entities.Conversation;
+import com.senla.project.dto.ConversationResponse;
 import com.senla.project.repositories.ConversationRepository;
 import com.senla.project.services.ConversationService;
 import java.util.List;
@@ -15,27 +15,27 @@ public class ConversationServiceImpl implements ConversationService {
 
 
   @Override
-  public List<Conversation> getAllConversations() {
+  public List<ConversationResponse> getAllConversations() {
     return null;
   }
 
   @Override
-  public List<Conversation> getConversationsByUserId(Long id) {
+  public List<ConversationResponse> getConversationsByUserId(Long id) {
     return null;
   }
 
   @Override
-  public List<Conversation> getConversationsByAdId(Long id) {
+  public List<ConversationResponse> getConversationsByAdId(Long id) {
     return null;
   }
 
   @Override
-  public Conversation getConversation(Long id) {
+  public ConversationResponse getConversation(Long id) {
     return null;
   }
 
   @Override
-  public Conversation createConversation() {
+  public ConversationResponse createConversationByAdId(Long id) {
     return null;
   }
 

@@ -1,19 +1,19 @@
 package com.senla.project.services;
 
-import com.senla.project.entities.Conversation;
+import com.senla.project.dto.ConversationResponse;
 import java.util.List;
 
 public interface ConversationService {
 
-  List<Conversation> getAllConversations();
+  List<ConversationResponse> getAllConversations();
 
-  List<Conversation> getConversationsByUserId(Long id);
+  List<ConversationResponse> getConversationsByUserId(Long id);
 
-  List<Conversation> getConversationsByAdId(Long id);
+  List<ConversationResponse> getConversationsByAdId(Long id);
 
-  Conversation getConversation(Long id);
+  ConversationResponse getConversation(Long id);
 
-  Conversation createConversation();
+  ConversationResponse createConversationByAdId(Long id);
 
   boolean deleteConversation(Long id);
 }
