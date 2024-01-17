@@ -34,4 +34,5 @@ public class Message {
   @ManyToOne
   @JoinColumn(name = "to_user_id")
   private User toUser;
+  
 }
