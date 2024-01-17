@@ -21,7 +21,12 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public List<AdResponse> getAdsByUserId(Long id) {
+  public List<AdResponse> getCurrentAdsByUserId(Long id) {
+    return null;
+  }
+
+  @Override
+  public List<AdResponse> getClosedAdsByUserId(Long id) {
     return null;
   }
 

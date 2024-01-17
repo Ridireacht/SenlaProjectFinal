@@ -26,9 +26,14 @@ public class AdController {
     return adService.getAllAds();
   }
 
-  @GetMapping("/my")
-  public List<AdResponse> getMyAds() {
-    return adService.getAdsByUserId();
+  @GetMapping("/current")
+  public List<AdResponse> getCurrentAds() {
+    return adService.getCurrentAdsByUserId();
+  }
+
+  @GetMapping("/closed")
+  public List<AdResponse> getCurrentAds() {
+    return adService.getClosedAdsByUserId();
   }
 
   @GetMapping("/{id}")
