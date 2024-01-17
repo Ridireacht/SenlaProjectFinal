@@ -15,8 +15,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "ads")
-public class Ad {
+@Table(name = "comments")
+public class Comment {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +26,13 @@ public class Ad {
   @JoinColumn(name = "user_id")
   private User user;
 
-  private String title;
-  private String content;
-  private int price;
+  @ManyToOne
+  @JoinColumn(name = "ad_id")
+  private Ad ad;
 
-  private Boolean available;
-  private Boolean premium;
+  private String content;
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
-  
+
 }
