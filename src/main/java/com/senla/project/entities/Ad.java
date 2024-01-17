@@ -43,4 +43,9 @@ public class Ad {
   @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Conversation> conversations = new ArrayList<>();
 
+  @Column(name = "is_closed")
+  boolean isClosed = false;
+  @ManyToOne
+  @JoinColumn(name = "buyer_id")
+  private User buyer;
 }
