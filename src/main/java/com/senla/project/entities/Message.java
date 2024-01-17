@@ -22,8 +22,8 @@ public class Message {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "created_at")
-  private LocalDateTime createdAt;
+  @Column(name = "posted_at")
+  private LocalDateTime postedAt;
 
   private String content;
 
