@@ -7,13 +7,13 @@ public interface AdService {
 
   List<Ad> getAllAds();
 
-  List<Ad> getAdsByUserId();
+  List<Ad> getAdsByUserId(Long id);
 
   Ad createAd();
 
   Ad updateAd();
 
-  Ad makeAdPremium();
+  Ad makeAdPremium(Long id);
 
-  boolean deleteAd();
+  boolean deleteAd(Long id);
 }

@@ -7,13 +7,13 @@ public interface ConversationService {
 
   List<Conversation> getAllConversations();
 
-  List<Conversation> getConversationsByUserId();
+  List<Conversation> getConversationsByUserId(Long id);
 
-  List<Conversation> getConversationsByAdId();
+  List<Conversation> getConversationsByAdId(Long id);
 
-  Conversation getConversation();
+  Conversation getConversation(Long id);
 
   Conversation createConversation();
 
-  boolean deleteConversation();
+  boolean deleteConversation(Long id);
 }

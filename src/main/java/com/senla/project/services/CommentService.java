@@ -7,11 +7,11 @@ public interface CommentService {
 
   List<Comment> getAllComments();
 
-  List<Comment> getCommentsByAdId();
+  List<Comment> getCommentsByAdId(Long id);
 
   Comment createComment();
 
   Comment updateComment();
 
-  boolean deleteComment();
+  boolean deleteComment(Long id);
 }

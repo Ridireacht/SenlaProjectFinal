@@ -20,7 +20,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public List<Ad> getAdsByUserId() {
+  public List<Ad> getAdsByUserId(Long id) {
     return null;
   }
 
@@ -35,12 +35,12 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public Ad makeAdPremium() {
+  public Ad makeAdPremium(Long id) {
     return null;
   }
 
   @Override
-  public boolean deleteAd() {
+  public boolean deleteAd(Long id) {
     return false;
   }
 }

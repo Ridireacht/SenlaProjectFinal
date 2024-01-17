@@ -20,7 +20,7 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public List<Comment> getCommentsByAdId() {
+  public List<Comment> getCommentsByAdId(Long id) {
     return null;
   }
 
@@ -35,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public boolean deleteComment() {
+  public boolean deleteComment(Long id) {
     return false;
   }
 }
