@@ -14,13 +14,11 @@ import lombok.Setter;
 @Table(name = "user_scores")
 public class UserScore {
 
-  // Пользователь, который поставил оценку
-  @ManyToOne    // пока не уверен насчёт связи
+  @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
 
-  // Объявление, за которое поставили оценку
-  @OneToOne     // пока не уверен насчёт связи
+  @ManyToOne
   @JoinColumn(name = "ad_id")
   private Ad ad;
 
