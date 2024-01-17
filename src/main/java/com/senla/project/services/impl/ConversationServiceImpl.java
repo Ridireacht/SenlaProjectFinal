@@ -25,6 +25,11 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
+  public List<Conversation> getConversationsByAdId() {
+    return null;
+  }
+
+  @Override
   public Conversation getConversation() {
     return null;
   }

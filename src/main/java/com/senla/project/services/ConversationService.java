@@ -9,6 +9,8 @@ public interface ConversationService {
 
   List<Conversation> getConversationsByUserId();
 
+  List<Conversation> getConversationsByAdId();
+
   Conversation getConversation();
 
   Conversation createConversation();
