@@ -20,7 +20,7 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public List<Comment> getCurrentAdComments() {
+  public List<Comment> getCommentsByAdId() {
     return null;
   }
 

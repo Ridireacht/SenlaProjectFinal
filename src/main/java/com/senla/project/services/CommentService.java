@@ -7,7 +7,7 @@ public interface CommentService {
 
   List<Comment> getAllComments();
 
-  List<Comment> getCurrentAdComments();
+  List<Comment> getCommentsByAdId();
 
   Comment createComment();
 
