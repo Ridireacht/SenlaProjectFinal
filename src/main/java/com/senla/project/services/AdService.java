@@ -13,5 +13,7 @@ public interface AdService {
 
   Ad updateAd();
 
+  Ad makeAdPremium();
+
   boolean deleteAd();
 }

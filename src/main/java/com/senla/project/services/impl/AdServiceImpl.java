@@ -35,6 +35,11 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
+  public Ad makeAdPremium() {
+    return null;
+  }
+
+  @Override
   public boolean deleteAd() {
     return false;
   }
