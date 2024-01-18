@@ -35,3 +35,6 @@
 - **GET /conversations/{id}**: получить конкретную переписку.
 - **POST /ads/{adId}/discuss**: начать переписку по поводу объявления.
 - **DELETE /conversations/{id}**: удалить переписку вручную.
+
+### Сообщения  (`/conversations/{id}/messages`)
+- **POST /conversations/{id}/messages**: отправить сообщение в переписку.
