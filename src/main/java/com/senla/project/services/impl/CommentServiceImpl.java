@@ -4,6 +4,7 @@ import com.senla.project.dto.CommentRequest;
 import com.senla.project.dto.CommentResponse;
 import com.senla.project.repositories.CommentRepository;
 import com.senla.project.services.CommentService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,17 @@ public class CommentServiceImpl implements CommentService {
 
 
   @Override
-  public CommentResponse createComment(CommentRequest commentRequest) {
+  public List<CommentResponse> getAllCommentsByAdId(Long adId) {
     return null;
   }
 
   @Override
-  public CommentResponse updateComment(CommentRequest commentRequest) {
+  public CommentResponse createComment(Long adId, CommentRequest commentRequest) {
+    return null;
+  }
+
+  @Override
+  public CommentResponse updateComment(Long commentId, CommentRequest commentRequest) {
     return null;
   }
 
