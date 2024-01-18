@@ -15,17 +15,17 @@ public class ConversationServiceImpl implements ConversationService {
 
 
   @Override
-  public List<ConversationResponse> getAllConversations() {
+  public List<ConversationResponse> getConversationsByUserId(Long userId) {
     return null;
   }
 
   @Override
-  public List<ConversationResponse> getConversationsByUserId(Long id) {
+  public List<ConversationResponse> getSellerConversationsByAdId(Long adId) {
     return null;
   }
 
   @Override
-  public List<ConversationResponse> getConversationsByAdId(Long id) {
+  public ConversationResponse getBuyerConversationByAdId(Long adId) {
     return null;
   }
 
@@ -35,7 +35,7 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
-  public ConversationResponse createConversationByAdId(Long id) {
+  public ConversationResponse createConversationByAdId(Long adId) {
     return null;
   }
 

@@ -5,15 +5,15 @@ import java.util.List;
 
 public interface ConversationService {
 
-  List<ConversationResponse> getAllConversations();
+  List<ConversationResponse> getConversationsByUserId(Long userId);
 
-  List<ConversationResponse> getConversationsByUserId(Long id);
+  List<ConversationResponse> getSellerConversationsByAdId(Long adId);
 
-  List<ConversationResponse> getConversationsByAdId(Long id);
+  ConversationResponse getBuyerConversationByAdId(Long adId);
 
   ConversationResponse getConversation(Long id);
 
-  ConversationResponse createConversationByAdId(Long id);
+  ConversationResponse createConversationByAdId(Long adId);
 
   boolean deleteConversation(Long id);
 }
