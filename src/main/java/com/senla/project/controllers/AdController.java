@@ -36,6 +36,11 @@ public class AdController {
     return adService.getClosedAdsByUserId();
   }
 
+  @GetMapping("/purchased")
+  public List<AdResponse> getPurchasedAds() {
+    return adService.getPurchasedAdsByUserId();
+  }
+
   @GetMapping("/{id}")
   public AdResponse getAd(@PathVariable("id") Long id) {
     return adService.getAdById(id);

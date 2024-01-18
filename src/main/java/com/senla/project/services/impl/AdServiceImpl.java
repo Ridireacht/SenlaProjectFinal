@@ -14,19 +14,23 @@ public class AdServiceImpl implements AdService {
 
   final AdRepository adRepository;
 
-
   @Override
   public List<AdResponse> getAllAds() {
     return null;
   }
 
   @Override
-  public List<AdResponse> getCurrentAdsByUserId(Long id) {
+  public List<AdResponse> getCurrentAdsByUserId(Long userId) {
     return null;
   }
 
   @Override
-  public List<AdResponse> getClosedAdsByUserId(Long id) {
+  public List<AdResponse> getClosedAdsByUserId(Long userId) {
+    return null;
+  }
+
+  @Override
+  public List<AdResponse> getPurchasedAdsByUserId(Long userId) {
     return null;
   }
 
@@ -59,4 +63,5 @@ public class AdServiceImpl implements AdService {
   public boolean deleteAd(Long id) {
     return false;
   }
+
 }

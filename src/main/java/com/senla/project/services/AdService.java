@@ -8,9 +8,11 @@ public interface AdService {
 
   List<AdResponse> getAllAds();
 
-  List<AdResponse> getCurrentAdsByUserId(Long id);
+  List<AdResponse> getCurrentAdsByUserId(Long userId);
 
-  List<AdResponse> getClosedAdsByUserId(Long id);
+  List<AdResponse> getClosedAdsByUserId(Long userId);
+
+  List<AdResponse> getPurchasedAdsByUserId(Long userId);
 
   AdResponse getAdById(Long id);
 
