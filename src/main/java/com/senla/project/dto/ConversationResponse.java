@@ -11,5 +11,5 @@ import lombok.Setter;
 public class ConversationResponse {
   private Long id;
   private Long adId;
-  private List<Message> messages = new ArrayList<>();
+  private List<MessageResponse> messages = new ArrayList<>();
 }
