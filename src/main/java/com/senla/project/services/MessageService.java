@@ -6,6 +6,4 @@ import com.senla.project.dto.MessageRequest;
 public interface MessageService {
 
   ConversationResponse sendMessageWithConversationId(MessageRequest messageRequest);
-
-  ConversationResponse sendMessageWithAdId(MessageRequest messageRequest);
 }
