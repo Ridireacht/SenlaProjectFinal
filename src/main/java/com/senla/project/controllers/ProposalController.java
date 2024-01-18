@@ -40,7 +40,7 @@ public class ProposalController {
     return proposalService.createProposal(proposalRequest);
   }
 
-  @DeleteMapping("{id}")
+  @DeleteMapping("/received/{id}")
   public boolean declineProposalById(@PathVariable("{id}") Long id) {
     return proposalService.declineProposalById(id);
   }
