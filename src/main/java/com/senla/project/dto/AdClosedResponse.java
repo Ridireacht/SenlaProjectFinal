@@ -11,4 +11,5 @@ public class AdClosedResponse {
   private String content;
   private int price;
   private Long buyerId;
+  private int score;
 }
