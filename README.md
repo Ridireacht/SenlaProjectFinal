@@ -36,5 +36,8 @@
 - **POST /ads/{adId}/discuss**: начать переписку по поводу объявления.
 - **DELETE /conversations/{id}**: удалить переписку вручную.
 
-### Сообщения  (`/conversations/{id}/messages`)
+### Сообщения (`/conversations/{id}/messages`)
 - **POST /conversations/{id}/messages**: отправить сообщение в переписку.
+
+### Оценки (`/ads/purchased/{id}`)
+- **POST /ads/purchased/{id}**: поставить оценку выкупленному объявлению.
