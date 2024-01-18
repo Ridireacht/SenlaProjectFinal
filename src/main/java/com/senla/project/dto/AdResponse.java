@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class AdResponse {
   private Long id;
-  private String sellerUsername;
   private String title;
   private String content;
   private int price;
