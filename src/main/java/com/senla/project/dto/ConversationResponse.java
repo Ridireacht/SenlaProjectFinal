@@ -10,5 +10,6 @@ import lombok.Setter;
 @Setter
 public class ConversationResponse {
   private Long id;
+  private Long adId;
   private List<Message> messages = new ArrayList<>();
 }
