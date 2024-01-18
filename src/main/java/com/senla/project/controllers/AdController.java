@@ -32,7 +32,7 @@ public class AdController {
   }
 
   @GetMapping("/closed")
-  public List<AdResponse> getCurrentAds() {
+  public List<AdResponse> getClosedAds() {
     return adService.getClosedAdsByUserId();
   }
 
