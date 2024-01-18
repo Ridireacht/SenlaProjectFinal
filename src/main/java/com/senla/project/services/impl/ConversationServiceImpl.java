@@ -20,11 +20,6 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
-  public List<ConversationResponse> getSellerConversationsByAdId(Long adId) {
-    return null;
-  }
-
-  @Override
   public ConversationResponse getBuyerConversationByAdId(Long adId) {
     return null;
   }
@@ -43,4 +38,5 @@ public class ConversationServiceImpl implements ConversationService {
   public boolean deleteConversation(Long id) {
     return false;
   }
+
 }

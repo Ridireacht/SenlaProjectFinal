@@ -7,8 +7,6 @@ public interface ConversationService {
 
   List<ConversationResponse> getConversationsByUserId(Long userId);
 
-  List<ConversationResponse> getSellerConversationsByAdId(Long adId);
-
   ConversationResponse getBuyerConversationByAdId(Long adId);
 
   ConversationResponse getConversation(Long id);

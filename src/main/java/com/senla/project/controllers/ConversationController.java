@@ -28,18 +28,12 @@ public class ConversationController {
     return conversationService.getConversation(id);
   }
 
-  @GetMapping("/api/ads/{adId}/convo")
-  public List<ConversationResponse> getConvo(@PathVariable("adId") Long adId) {
-    if(true) {
-      return Collections.singletonList(conversationService.getBuyerConversationByAdId(adId));
-    }
-
-    else {
-      return conversationService.getSellerConversationsByAdId(adId);
-    }
+  @GetMapping("/api/ads/{adId}/discuss")
+  public ConversationResponse getBuyerConversation(@PathVariable("adId") Long adId) {
+      return conversationService.getBuyerConversationByAdId(adId);
   }
   
-  @PostMapping("/api/ads/{adId}/convo")
+  @PostMapping("/api/ads/{adId}/discuss")
   public ConversationResponse createConversation(@PathVariable("adId") Long adId) {
     return conversationService.createConversationByAdId(adId);
   }
