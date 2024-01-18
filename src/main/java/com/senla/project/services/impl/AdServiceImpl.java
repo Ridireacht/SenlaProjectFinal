@@ -54,6 +54,11 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
+  public boolean setScoreForAd(Long id, int score) {
+    return false;
+  }
+
+  @Override
   public AdResponse makeAdPremium(Long id) {
     return null;
   }

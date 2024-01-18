@@ -23,6 +23,8 @@ public interface AdService {
 
   AdResponse updateAd(AdRequest adRequest);
 
+  boolean setScoreForAd(Long id, int score);
+
   AdResponse makeAdPremium(Long id);
 
   AdResponse closeAd(Long adId, Long buyerId);
