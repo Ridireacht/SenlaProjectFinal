@@ -15,7 +15,8 @@ public class MessageServiceImpl implements MessageService {
 
 
   @Override
-  public ConversationResponse sendMessageWithConversationId(MessageRequest messageRequest) {
+  public ConversationResponse sendMessageWithConversationId(Long conversationId,
+      MessageRequest messageRequest) {
     return null;
   }
 }
