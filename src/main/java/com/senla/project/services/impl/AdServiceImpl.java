@@ -51,6 +51,11 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
+  public AdResponse closeAd(Long adId, Long buyerId) {
+    return null;
+  }
+
+  @Override
   public boolean deleteAd(Long id) {
     return false;
   }

@@ -20,5 +20,7 @@ public interface AdService {
 
   AdResponse makeAdPremium(Long id);
 
+  AdResponse closeAd(Long adId, Long buyerId);
+
   boolean deleteAd(Long id);
 }
