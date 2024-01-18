@@ -1,6 +1,7 @@
 package com.senla.project.controllers;
 
 import com.senla.project.dto.AdPurchasedResponse;
+import com.senla.project.dto.UserScoreRequest;
 import com.senla.project.repositories.UserScoreRepository;
 import com.senla.project.services.UserScoreService;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class UserScoreController {
 
 
   @PostMapping
-  public AdPurchasedResponse setUserScoreByAdId(@PathVariable("{id}") Long id) {
-    return userScoreService.setUserScoreByAdId(id);
+  public AdPurchasedResponse setUserScoreByAdId(@PathVariable("{id}") Long id, UserScoreRequest userScoreRequest) {
+    return userScoreService.setUserScoreByAdId(id, userScoreRequest);
   }
 }

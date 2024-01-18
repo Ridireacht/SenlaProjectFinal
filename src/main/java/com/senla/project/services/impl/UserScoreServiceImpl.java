@@ -1,6 +1,7 @@
 package com.senla.project.services.impl;
 
 import com.senla.project.dto.AdPurchasedResponse;
+import com.senla.project.dto.UserScoreRequest;
 import com.senla.project.repositories.UserScoreRepository;
 import com.senla.project.services.UserScoreService;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ public class UserScoreServiceImpl implements UserScoreService {
 
 
   @Override
-  public AdPurchasedResponse setUserScoreByAdId(Long id) {
+  public AdPurchasedResponse setUserScoreByAdId(Long id, UserScoreRequest userScoreRequest) {
     return null;
   }
 }
