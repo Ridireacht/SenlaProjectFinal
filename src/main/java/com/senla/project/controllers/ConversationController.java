@@ -2,6 +2,7 @@ package com.senla.project.controllers;
 
 import com.senla.project.dto.ConversationResponse;
 import com.senla.project.services.ConversationService;
+import java.util.Collections;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,17 +28,18 @@ public class ConversationController {
     return conversationService.getConversation(id);
   }
 
-  @GetMapping("/api/ads/{adId}/conversation")
-  public ConversationResponse getBuyerConversation(@PathVariable("adId") Long adId) {
-    return conversationService.getBuyerConversationByAdId(adId);
-  }
+  @GetMapping("/api/ads/{adId}/convo")
+  public List<ConversationResponse> getConvo(@PathVariable("adId") Long adId) {
+    if(true) {
+      return Collections.singletonList(conversationService.getBuyerConversationByAdId(adId));
+    }
 
-  @GetMapping("/api/ads/{adId}/conversations")
-  public List<ConversationResponse> getSellerConversations(@PathVariable("adId") Long adId) {
-    return conversationService.getSellerConversationsByAdId(adId);
+    else {
+      return conversationService.getSellerConversationsByAdId(adId);
+    }
   }
-
-  @PostMapping("/api/ads/{adId}/conversation")
+  
+  @PostMapping("/api/ads/{adId}/convo")
   public ConversationResponse createConversation(@PathVariable("adId") Long adId) {
     return conversationService.createConversationByAdId(adId);
   }
