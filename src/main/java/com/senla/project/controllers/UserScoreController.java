@@ -18,7 +18,7 @@ public class UserScoreController {
 
 
   @PostMapping
-  public AdPurchasedResponse setScoreForAd(@PathVariable("{id}") Long id) {
+  public AdPurchasedResponse setUserScoreByAdId(@PathVariable("{id}") Long id) {
     return userScoreService.setUserScoreByAdId(id);
   }
 }
