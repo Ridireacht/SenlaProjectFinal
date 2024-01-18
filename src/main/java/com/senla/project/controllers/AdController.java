@@ -6,8 +6,11 @@ import com.senla.project.dto.AdPurchasedResponse;
 import com.senla.project.dto.AdRequest;
 import com.senla.project.dto.AdResponse;
 import com.senla.project.services.AdService;
+import com.senla.project.services.UserService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdController {
 
   private final AdService adService;
+  private final UserService userService;
 
 
   @GetMapping
@@ -31,17 +35,17 @@ public class AdController {
 
   @GetMapping("/current")
   public List<AdCurrentResponse> getCurrentAds() {
-    return adService.getCurrentAdsByUserId();
+    return adService.getCurrentAdsByUserId(getCurrentUserId());
   }
 
   @GetMapping("/closed")
   public List<AdClosedResponse> getClosedAds() {
-    return adService.getClosedAdsByUserId();
+    return adService.getClosedAdsByUserId(getCurrentUserId());
   }
 
   @GetMapping("/purchased")
   public List<AdPurchasedResponse> getPurchasedAds() {
-    return adService.getPurchasedAdsByUserId();
+    return adService.getPurchasedAdsByUserId(getCurrentUserId());
   }
 
   @GetMapping("/{id}")
@@ -67,5 +71,11 @@ public class AdController {
   @DeleteMapping("/{id}")
   public boolean deleteAd(@PathVariable("id") Long id) {
     return adService.deleteAd(id);
+  }
+
+
+  private Long getCurrentUserId() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    return userService.getUserIdByUsername(authentication.getName());
   }
 }

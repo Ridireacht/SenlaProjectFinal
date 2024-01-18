@@ -8,4 +8,6 @@ public interface UserService {
   List<UserResponse> getAllUsers();
 
   UserResponse getUserById(Long id);
+
+  Long getUserIdByUsername(String username);
 }
