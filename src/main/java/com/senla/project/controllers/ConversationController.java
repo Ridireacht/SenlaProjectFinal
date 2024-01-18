@@ -27,11 +27,6 @@ public class ConversationController {
   public ConversationResponse getConversation(@PathVariable("id") Long id) {
     return conversationService.getConversation(id);
   }
-
-  @GetMapping("/api/ads/{adId}/discuss")
-  public ConversationResponse getBuyerConversation(@PathVariable("adId") Long adId) {
-      return conversationService.getBuyerConversationByAdId(adId);
-  }
   
   @PostMapping("/api/ads/{adId}/discuss")
   public ConversationResponse createConversation(@PathVariable("adId") Long adId) {
