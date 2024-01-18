@@ -1,5 +1,7 @@
 package com.senla.project.controllers;
 
+import com.senla.project.dto.AdClosedResponse;
+import com.senla.project.dto.AdPurchasedResponse;
 import com.senla.project.dto.AdRequest;
 import com.senla.project.dto.AdResponse;
 import com.senla.project.services.AdService;
@@ -32,12 +34,12 @@ public class AdController {
   }
 
   @GetMapping("/closed")
-  public List<AdResponse> getClosedAds() {
+  public List<AdClosedResponse> getClosedAds() {
     return adService.getClosedAdsByUserId();
   }
 
   @GetMapping("/purchased")
-  public List<AdResponse> getPurchasedAds() {
+  public List<AdPurchasedResponse> getPurchasedAds() {
     return adService.getPurchasedAdsByUserId();
   }
 
