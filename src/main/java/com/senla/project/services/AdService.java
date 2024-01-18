@@ -1,6 +1,7 @@
 package com.senla.project.services;
 
 import com.senla.project.dto.AdClosedResponse;
+import com.senla.project.dto.AdCurrentResponse;
 import com.senla.project.dto.AdPurchasedResponse;
 import com.senla.project.dto.AdRequest;
 import com.senla.project.dto.AdResponse;
@@ -10,7 +11,7 @@ public interface AdService {
 
   List<AdResponse> getAllAds();
 
-  List<AdResponse> getCurrentAdsByUserId(Long userId);
+  List<AdCurrentResponse> getCurrentAdsByUserId(Long userId);
 
   List<AdClosedResponse> getClosedAdsByUserId(Long userId);
 

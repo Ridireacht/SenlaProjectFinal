@@ -1,6 +1,7 @@
 package com.senla.project.services.impl;
 
 import com.senla.project.dto.AdClosedResponse;
+import com.senla.project.dto.AdCurrentResponse;
 import com.senla.project.dto.AdPurchasedResponse;
 import com.senla.project.dto.AdRequest;
 import com.senla.project.dto.AdResponse;
@@ -23,7 +24,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public List<AdResponse> getCurrentAdsByUserId(Long userId) {
+  public List<AdCurrentResponse> getCurrentAdsByUserId(Long userId) {
     return null;
   }
 

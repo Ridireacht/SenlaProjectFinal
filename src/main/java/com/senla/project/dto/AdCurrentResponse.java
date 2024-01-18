@@ -5,10 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AdResponse {
+public class AdCurrentResponse {
   private Long id;
-  private Long sellerId;
   private String title;
   private String content;
   private int price;
+  private boolean isPremium;
 }

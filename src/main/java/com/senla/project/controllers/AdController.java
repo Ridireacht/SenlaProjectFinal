@@ -1,6 +1,7 @@
 package com.senla.project.controllers;
 
 import com.senla.project.dto.AdClosedResponse;
+import com.senla.project.dto.AdCurrentResponse;
 import com.senla.project.dto.AdPurchasedResponse;
 import com.senla.project.dto.AdRequest;
 import com.senla.project.dto.AdResponse;
@@ -29,7 +30,7 @@ public class AdController {
   }
 
   @GetMapping("/current")
-  public List<AdResponse> getCurrentAds() {
+  public List<AdCurrentResponse> getCurrentAds() {
     return adService.getCurrentAdsByUserId();
   }
 
