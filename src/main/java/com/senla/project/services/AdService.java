@@ -17,17 +17,17 @@ public interface AdService {
 
   List<AdPurchasedResponse> getPurchasedAdsByUserId(Long userId);
 
-  AdResponse getAdById(Long id);
+  AdResponse getAdById(Long adId);
 
-  AdResponse createAd(AdRequest adRequest);
+  AdResponse createAd(Long userId, AdRequest adRequest);
 
-  AdResponse updateAd(AdRequest adRequest);
+  AdResponse updateAd(Long adId, AdRequest adRequest);
 
-  boolean setScoreForAd(Long id, int score);
+  boolean setScoreForAd(Long adId, int score);
 
-  AdResponse makeAdPremium(Long id);
+  AdResponse makeAdPremium(Long adId);
 
   AdResponse closeAd(Long adId, Long buyerId);
 
-  boolean deleteAd(Long id);
+  boolean deleteAd(Long adId);
 }

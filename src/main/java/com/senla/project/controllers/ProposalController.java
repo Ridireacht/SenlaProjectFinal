@@ -37,12 +37,12 @@ public class ProposalController {
 
   @PostMapping
   public ProposalSentResponse sendProposal(ProposalRequest proposalRequest) {
-    return proposalService.createProposal(proposalRequest);
+    return proposalService.createProposal(getCurrentUserId(), proposalRequest);
   }
 
   @DeleteMapping("/received/{id}")
-  public boolean declineProposalById(@PathVariable("{id}") Long id) {
-    return proposalService.declineProposalById(id);
+  public boolean declineProposal(@PathVariable("{id}") Long proposalId) {
+    return proposalService.declineProposalById(proposalId);
   }
 
   private Long getCurrentUserId() {

@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserResponse getUserById(Long id) {
+  public UserResponse getUserById(Long userId) {
     return null;
   }
 

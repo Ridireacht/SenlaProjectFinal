@@ -7,9 +7,9 @@ public interface ConversationService {
 
   List<ConversationResponse> getConversationsByUserId(Long userId);
 
-  ConversationResponse getConversation(Long id);
+  ConversationResponse getConversation(Long conversationId);
 
-  ConversationResponse createConversationByAdId(Long adId);
+  ConversationResponse createConversationByAdId(Long userId, Long adId);
 
-  boolean deleteConversation(Long id);
+  boolean deleteConversation(Long conversationId);
 }

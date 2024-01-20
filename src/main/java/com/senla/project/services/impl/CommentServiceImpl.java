@@ -21,7 +21,7 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public CommentResponse createComment(Long adId, CommentRequest commentRequest) {
+  public CommentResponse createComment(Long userId, Long adId, CommentRequest commentRequest) {
     return null;
   }
 
@@ -31,7 +31,7 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public boolean deleteComment(Long id) {
+  public boolean deleteComment(Long commentId) {
     return false;
   }
 }

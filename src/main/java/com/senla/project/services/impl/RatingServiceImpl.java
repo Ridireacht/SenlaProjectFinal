@@ -14,7 +14,7 @@ public class RatingServiceImpl implements RatingService {
 
 
   @Override
-  public UserResponse addScoreToRatingByUserId(Long id, int score) {
+  public UserResponse addScoreToRatingByUserId(Long userId, int score) {
     return null;
   }
 }

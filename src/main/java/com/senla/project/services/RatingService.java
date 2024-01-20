@@ -4,5 +4,5 @@ import com.senla.project.dto.UserResponse;
 
 public interface RatingService {
 
-  UserResponse addScoreToRatingByUserId(Long id, int score);
+  UserResponse addScoreToRatingByUserId(Long userId, int score);
 }

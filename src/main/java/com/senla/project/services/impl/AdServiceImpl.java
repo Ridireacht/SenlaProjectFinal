@@ -39,27 +39,27 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public AdResponse getAdById(Long id) {
+  public AdResponse getAdById(Long adId) {
     return null;
   }
 
   @Override
-  public AdResponse createAd(AdRequest adRequest) {
+  public AdResponse createAd(Long userId, AdRequest adRequest) {
     return null;
   }
 
   @Override
-  public AdResponse updateAd(AdRequest adRequest) {
+  public AdResponse updateAd(Long adId, AdRequest adRequest) {
     return null;
   }
 
   @Override
-  public boolean setScoreForAd(Long id, int score) {
+  public boolean setScoreForAd(Long adId, int score) {
     return false;
   }
 
   @Override
-  public AdResponse makeAdPremium(Long id) {
+  public AdResponse makeAdPremium(Long adId) {
     return null;
   }
 
@@ -69,7 +69,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public boolean deleteAd(Long id) {
+  public boolean deleteAd(Long adId) {
     return false;
   }
 

@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface ProposalService {
 
-  List<ProposalSentResponse> getAllSentProposalsByUserId(Long id);
+  List<ProposalSentResponse> getAllSentProposalsByUserId(Long userId);
 
-  List<ProposalReceivedResponse> getAllReceivedProposalsByUserId(Long id);
+  List<ProposalReceivedResponse> getAllReceivedProposalsByUserId(Long userId);
 
-  ProposalSentResponse createProposal(ProposalRequest proposalRequest);
+  ProposalSentResponse createProposal(Long userId, ProposalRequest proposalRequest);
 
-  boolean declineProposalById(Long id);
+  boolean declineProposalById(Long proposalId);
 }

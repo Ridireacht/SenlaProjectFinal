@@ -20,17 +20,17 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
-  public ConversationResponse getConversation(Long id) {
+  public ConversationResponse getConversation(Long conversationId) {
     return null;
   }
 
   @Override
-  public ConversationResponse createConversationByAdId(Long adId) {
+  public ConversationResponse createConversationByAdId(Long userId, Long adId) {
     return null;
   }
 
   @Override
-  public boolean deleteConversation(Long id) {
+  public boolean deleteConversation(Long conversationId) {
     return false;
   }
 

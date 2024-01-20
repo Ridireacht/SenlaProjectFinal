@@ -17,22 +17,22 @@ public class ProposalServiceImpl implements ProposalService {
 
 
   @Override
-  public List<ProposalSentResponse> getAllSentProposalsByUserId(Long id) {
+  public List<ProposalSentResponse> getAllSentProposalsByUserId(Long userId) {
     return null;
   }
 
   @Override
-  public List<ProposalReceivedResponse> getAllReceivedProposalsByUserId(Long id) {
+  public List<ProposalReceivedResponse> getAllReceivedProposalsByUserId(Long userId) {
     return null;
   }
 
   @Override
-  public ProposalSentResponse createProposal(ProposalRequest proposalRequest) {
+  public ProposalSentResponse createProposal(Long userId, ProposalRequest proposalRequest) {
     return null;
   }
 
   @Override
-  public boolean declineProposalById(Long id) {
+  public boolean declineProposalById(Long proposalId) {
     return false;
   }
 }

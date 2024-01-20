@@ -49,28 +49,28 @@ public class AdController {
   }
 
   @GetMapping("/{id}")
-  public AdResponse getAd(@PathVariable("id") Long id) {
-    return adService.getAdById(id);
+  public AdResponse getAd(@PathVariable("id") Long adId) {
+    return adService.getAdById(adId);
   }
 
   @PostMapping
   public AdResponse createAd(AdRequest adRequest) {
-    return adService.createAd(adRequest);
+    return adService.createAd(getCurrentUserId(), adRequest);
   }
 
   @PutMapping("/{id}")
-  public AdResponse updateAd(@PathVariable("id") Long id, AdRequest adRequest) {
-    return adService.updateAd(adRequest);
+  public AdResponse updateAd(@PathVariable("id") Long adId, AdRequest adRequest) {
+    return adService.updateAd(adId, adRequest);
   }
 
   @PutMapping("/{id}/premium")
-  public AdResponse makeAdPremium(@PathVariable("id") Long id) {
-    return adService.makeAdPremium(id);
+  public AdResponse makeAdPremium(@PathVariable("id") Long adId) {
+    return adService.makeAdPremium(adId);
   }
 
   @DeleteMapping("/{id}")
-  public boolean deleteAd(@PathVariable("id") Long id) {
-    return adService.deleteAd(id);
+  public boolean deleteAd(@PathVariable("id") Long adId) {
+    return adService.deleteAd(adId);
   }
 
 

@@ -15,7 +15,8 @@ public class UserScoreServiceImpl implements UserScoreService {
 
 
   @Override
-  public AdPurchasedResponse setUserScoreByAdId(Long id, UserScoreRequest userScoreRequest) {
+  public AdPurchasedResponse setUserScoreByAdId(Long userId, Long adId,
+      UserScoreRequest userScoreRequest) {
     return null;
   }
 }

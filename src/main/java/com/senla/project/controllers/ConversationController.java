@@ -27,22 +27,23 @@ public class ConversationController {
   }
 
   @GetMapping("/conversations/{id}")
-  public ConversationResponse getConversation(@PathVariable("id") Long id) {
-    return conversationService.getConversation(id);
+  public ConversationResponse getConversation(@PathVariable("id") Long conversationId) {
+    return conversationService.getConversation(conversationId);
   }
   
   @PostMapping("/ads/{adId}/discuss")
   public ConversationResponse createConversation(@PathVariable("adId") Long adId) {
-    return conversationService.createConversationByAdId(adId);
+    return conversationService.createConversationByAdId(getCurrentUserId(), adId);
   }
 
   @DeleteMapping("/conversations/{id}")
-  public boolean deleteConversation(@PathVariable("id") Long id) {
-    return conversationService.deleteConversation(id);
+  public boolean deleteConversation(@PathVariable("id") Long conversationId) {
+    return conversationService.deleteConversation(conversationId);
   }
 
   private Long getCurrentUserId() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     return userService.getUserIdByUsername(authentication.getName());
   }
+
 }
