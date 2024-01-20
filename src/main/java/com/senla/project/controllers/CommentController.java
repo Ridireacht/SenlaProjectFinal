@@ -2,10 +2,13 @@ package com.senla.project.controllers;
 
 import com.senla.project.dto.CommentRequest;
 import com.senla.project.dto.CommentResponse;
+import com.senla.project.services.AdService;
 import com.senla.project.services.CommentService;
 import com.senla.project.services.UserService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +26,7 @@ public class CommentController {
 
   private final CommentService commentService;
   private final UserService userService;
+  private final AdService adService;
 
 
   @GetMapping
@@ -31,18 +35,42 @@ public class CommentController {
   }
 
   @PostMapping
-  public CommentResponse createComment(@PathVariable("adId") Long adId, CommentRequest commentRequest) {
-    return commentService.createComment(getCurrentUserId(), adId, commentRequest);
+  public ResponseEntity<CommentResponse> createComment(@PathVariable("adId") Long adId, CommentRequest commentRequest) {
+    if (adService.doesAdExist(adId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(commentService.createComment(getCurrentUserId(), adId, commentRequest));
   }
 
   @PutMapping("/{commentId}")
-  public CommentResponse updateComment(@PathVariable("commentId") Long commentId, CommentRequest commentRequest) {
-    return commentService.updateComment(commentId, commentRequest);
+  public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") Long commentId, CommentRequest commentRequest) {
+    if (commentService.doesCommentExist(commentId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (!adService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(commentService.updateComment(commentId, commentRequest));
   }
 
   @DeleteMapping("/{commentId}")
-  public boolean deleteComment(@PathVariable("commentId") Long commentId) {
-    return commentService.deleteComment(commentId);
+  public ResponseEntity<Boolean> deleteComment(@PathVariable("commentId") Long commentId) {
+    if (commentService.doesCommentExist(commentId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (!adService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(commentService.deleteComment(commentId));
   }
 
 
