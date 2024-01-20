@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/ads/{adId}/comments")
+@RequestMapping("/ads/{adId}/comments")
 @AllArgsConstructor
 public class CommentController {
 

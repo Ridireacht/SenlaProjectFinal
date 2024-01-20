@@ -3,7 +3,6 @@ package com.senla.project.controllers;
 import com.senla.project.dto.ConversationResponse;
 import com.senla.project.services.ConversationService;
 import com.senla.project.services.UserService;
-import java.util.Collections;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -22,22 +21,22 @@ public class ConversationController {
   private final UserService userService;
 
 
-  @GetMapping("/api/conversations")
+  @GetMapping("/conversations")
   public List<ConversationResponse> getAllUserConversations() {
     return conversationService.getConversationsByUserId(getCurrentUserId());
   }
 
-  @GetMapping("/api/conversations/{id}")
+  @GetMapping("/conversations/{id}")
   public ConversationResponse getConversation(@PathVariable("id") Long id) {
     return conversationService.getConversation(id);
   }
   
-  @PostMapping("/api/ads/{adId}/discuss")
+  @PostMapping("/ads/{adId}/discuss")
   public ConversationResponse createConversation(@PathVariable("adId") Long adId) {
     return conversationService.createConversationByAdId(adId);
   }
 
-  @DeleteMapping("/api/conversations/{id}")
+  @DeleteMapping("/conversations/{id}")
   public boolean deleteConversation(@PathVariable("id") Long id) {
     return conversationService.deleteConversation(id);
   }
