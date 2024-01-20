@@ -7,6 +7,8 @@ import com.senla.project.services.ProposalService;
 import com.senla.project.services.UserService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,8 +43,16 @@ public class ProposalController {
   }
 
   @DeleteMapping("/received/{id}")
-  public boolean declineProposal(@PathVariable("{id}") Long proposalId) {
-    return proposalService.declineProposalById(proposalId);
+  public ResponseEntity<Boolean> declineProposal(@PathVariable("{id}") Long proposalId) {
+    if (!proposalService.doesProposalExist(proposalId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (!proposalService.wasProposalSentToUser(proposalId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(proposalService.declineProposalById(proposalId));
   }
 
   private Long getCurrentUserId() {
