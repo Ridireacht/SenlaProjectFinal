@@ -40,6 +40,8 @@ public class CommentController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    // Здесь, в отличие от прочих использований этой конструкции, не используется отрицание -
+    // создатель объявления НЕ должен иметь возможности оставить комментарий у себя же.
     if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }

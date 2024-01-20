@@ -1,10 +1,13 @@
 package com.senla.project.controllers;
 
 import com.senla.project.dto.ConversationResponse;
+import com.senla.project.services.AdService;
 import com.senla.project.services.ConversationService;
 import com.senla.project.services.UserService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +22,7 @@ public class ConversationController {
 
   private final ConversationService conversationService;
   private final UserService userService;
+  private final AdService adService;
 
 
   @GetMapping("/conversations")
@@ -27,18 +31,44 @@ public class ConversationController {
   }
 
   @GetMapping("/conversations/{id}")
-  public ConversationResponse getConversation(@PathVariable("id") Long conversationId) {
-    return conversationService.getConversation(conversationId);
+  public ResponseEntity<ConversationResponse> getConversation(@PathVariable("id") Long conversationId) {
+    if (conversationService.doesConversationExist(conversationId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (!conversationService.doesConversationBelongToUser(conversationId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(conversationService.getConversation(conversationId));
   }
   
   @PostMapping("/ads/{adId}/discuss")
-  public ConversationResponse createConversation(@PathVariable("adId") Long adId) {
-    return conversationService.createConversationByAdId(getCurrentUserId(), adId);
+  public ResponseEntity<ConversationResponse> createConversation(@PathVariable("adId") Long adId) {
+    if (adService.doesAdExist(adId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    // Здесь, в отличие от прочих использований этой конструкции, не используется отрицание -
+    // создатель объявления НЕ должен иметь возможности начать с собой переписку.
+    if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(conversationService.createConversationByAdId(getCurrentUserId(), adId));
   }
 
   @DeleteMapping("/conversations/{id}")
-  public boolean deleteConversation(@PathVariable("id") Long conversationId) {
-    return conversationService.deleteConversation(conversationId);
+  public ResponseEntity<Boolean> deleteConversation(@PathVariable("id") Long conversationId) {
+    if (conversationService.doesConversationExist(conversationId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (!conversationService.doesConversationBelongToUser(conversationId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(conversationService.deleteConversation(conversationId));
   }
 
   private Long getCurrentUserId() {
