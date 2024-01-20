@@ -9,6 +9,8 @@ import com.senla.project.services.AdService;
 import com.senla.project.services.UserService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,8 +51,16 @@ public class AdController {
   }
 
   @GetMapping("/{id}")
-  public AdResponse getAd(@PathVariable("id") Long adId) {
-    return adService.getAdById(adId);
+  public ResponseEntity<AdResponse> getAd(@PathVariable("id") Long adId) {
+    if (adService.doesAdExist(adId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(adService.getAdById(adId));
   }
 
   @PostMapping
@@ -59,18 +69,42 @@ public class AdController {
   }
 
   @PutMapping("/{id}")
-  public AdResponse updateAd(@PathVariable("id") Long adId, AdRequest adRequest) {
-    return adService.updateAd(adId, adRequest);
+  public ResponseEntity<AdResponse> updateAd(@PathVariable("id") Long adId, AdRequest adRequest) {
+    if (adService.doesAdExist(adId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(adService.updateAd(adId, adRequest));
   }
 
   @PutMapping("/{id}/premium")
-  public AdResponse makeAdPremium(@PathVariable("id") Long adId) {
-    return adService.makeAdPremium(adId);
+  public ResponseEntity<AdResponse> makeAdPremium(@PathVariable("id") Long adId) {
+    if (adService.doesAdExist(adId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(adService.makeAdPremium(adId));
   }
 
   @DeleteMapping("/{id}")
-  public boolean deleteAd(@PathVariable("id") Long adId) {
-    return adService.deleteAd(adId);
+  public ResponseEntity<Boolean> deleteAd(@PathVariable("id") Long adId) {
+    if (adService.doesAdExist(adId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(adService.deleteAd(adId));
   }
 
 
