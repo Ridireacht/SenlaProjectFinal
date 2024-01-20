@@ -36,7 +36,7 @@ public class CommentController {
 
   @PostMapping
   public ResponseEntity<CommentResponse> createComment(@PathVariable("adId") Long adId, CommentRequest commentRequest) {
-    if (adService.doesAdExist(adId)) {
+    if (!adService.doesAdExist(adId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
@@ -51,7 +51,7 @@ public class CommentController {
 
   @PutMapping("/{commentId}")
   public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") Long commentId, CommentRequest commentRequest) {
-    if (commentService.doesCommentExist(commentId)) {
+    if (!commentService.doesCommentExist(commentId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
@@ -64,7 +64,7 @@ public class CommentController {
 
   @DeleteMapping("/{commentId}")
   public ResponseEntity<Boolean> deleteComment(@PathVariable("commentId") Long commentId) {
-    if (commentService.doesCommentExist(commentId)) {
+    if (!commentService.doesCommentExist(commentId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 

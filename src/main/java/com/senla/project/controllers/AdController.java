@@ -52,7 +52,7 @@ public class AdController {
 
   @GetMapping("/{id}")
   public ResponseEntity<AdResponse> getAd(@PathVariable("id") Long adId) {
-    if (adService.doesAdExist(adId)) {
+    if (!adService.doesAdExist(adId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
@@ -70,7 +70,7 @@ public class AdController {
 
   @PutMapping("/{id}")
   public ResponseEntity<AdResponse> updateAd(@PathVariable("id") Long adId, AdRequest adRequest) {
-    if (adService.doesAdExist(adId)) {
+    if (!adService.doesAdExist(adId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
@@ -83,7 +83,7 @@ public class AdController {
 
   @PutMapping("/{id}/premium")
   public ResponseEntity<AdResponse> makeAdPremium(@PathVariable("id") Long adId) {
-    if (adService.doesAdExist(adId)) {
+    if (!adService.doesAdExist(adId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
@@ -96,7 +96,7 @@ public class AdController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Boolean> deleteAd(@PathVariable("id") Long adId) {
-    if (adService.doesAdExist(adId)) {
+    if (!adService.doesAdExist(adId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 

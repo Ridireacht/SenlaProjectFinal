@@ -25,7 +25,7 @@ public class MessageController {
 
   @PostMapping("/conversations/{id}/messages")
   public ResponseEntity<ConversationResponse> sendMessage(@PathVariable("id") Long conversationId, MessageRequest messageRequest) {
-    if (conversationService.doesConversationExist(conversationId)) {
+    if (!conversationService.doesConversationExist(conversationId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 

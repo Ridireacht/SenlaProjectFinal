@@ -32,7 +32,7 @@ public class ConversationController {
 
   @GetMapping("/conversations/{id}")
   public ResponseEntity<ConversationResponse> getConversation(@PathVariable("id") Long conversationId) {
-    if (conversationService.doesConversationExist(conversationId)) {
+    if (!conversationService.doesConversationExist(conversationId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
@@ -45,7 +45,7 @@ public class ConversationController {
   
   @PostMapping("/ads/{adId}/discuss")
   public ResponseEntity<ConversationResponse> createConversation(@PathVariable("adId") Long adId) {
-    if (adService.doesAdExist(adId)) {
+    if (!adService.doesAdExist(adId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
@@ -60,7 +60,7 @@ public class ConversationController {
 
   @DeleteMapping("/conversations/{id}")
   public ResponseEntity<Boolean> deleteConversation(@PathVariable("id") Long conversationId) {
-    if (conversationService.doesConversationExist(conversationId)) {
+    if (!conversationService.doesConversationExist(conversationId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
