@@ -32,10 +32,6 @@ public class Message {
   private User fromUser;
 
   @ManyToOne
-  @JoinColumn(name = "to_user_id")
-  private User toUser;
-
-  @ManyToOne
   @JoinColumn(name = "conversation_id")
   private Conversation conversation;
   
