@@ -28,8 +28,8 @@ public class Message {
   private String content;
 
   @ManyToOne
-  @JoinColumn(name = "from_user_id")
-  private User fromUser;
+  @JoinColumn(name = "sender_id")
+  private User sender;
 
   @ManyToOne
   @JoinColumn(name = "conversation_id")

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MessageResponse {
-  private String username;
+  private Long senderId;
   private String content;
   private LocalDateTime postedAt;
 }
