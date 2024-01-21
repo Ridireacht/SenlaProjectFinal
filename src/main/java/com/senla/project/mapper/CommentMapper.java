@@ -1,5 +1,6 @@
 package com.senla.project.mapper;
 
+import com.senla.project.dto.CommentRequest;
 import com.senla.project.dto.CommentResponse;
 import com.senla.project.entities.Comment;
 import org.mapstruct.Mapper;
@@ -13,5 +14,5 @@ public interface CommentMapper {
 
   CommentResponse mapToCommentResponse(Comment comment);
 
-  Comment mapToComment(CommentResponse commentResponse);
+  Comment mapToComment(CommentRequest commentResponse);
 }
