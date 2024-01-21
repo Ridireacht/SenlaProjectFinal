@@ -5,6 +5,7 @@ import com.senla.project.dto.AdCurrentResponse;
 import com.senla.project.dto.AdPurchasedResponse;
 import com.senla.project.dto.AdRequest;
 import com.senla.project.dto.AdResponse;
+import com.senla.project.entities.Ad;
 import com.senla.project.repositories.AdRepository;
 import com.senla.project.services.AdService;
 import java.util.List;
@@ -40,6 +41,11 @@ public class AdServiceImpl implements AdService {
 
   @Override
   public AdResponse getAdById(Long adId) {
+    return null;
+  }
+
+  @Override
+  public Ad getAdEntityById(Long adId) {
     return null;
   }
 
