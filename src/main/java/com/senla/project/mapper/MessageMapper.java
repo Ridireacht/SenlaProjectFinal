@@ -15,5 +15,5 @@ public interface MessageMapper {
   @Mapping(source = "sender.id", target = "senderId")
   MessageResponse mapToMessageResponse(Message message);
 
-  //Message mapToMessage(MessageRequest messageRequest);
+  Message mapToMessage(MessageRequest messageRequest);
 }
