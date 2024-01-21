@@ -25,12 +25,8 @@ public class Proposal {
   private Ad ad;
 
   @ManyToOne
-  @JoinColumn(name = "proposed_by_user_id")
-  private User proposedBy;
-
-  @ManyToOne
-  @JoinColumn(name = "proposed_to_user_id")
-  private User proposedTo;
+  @JoinColumn(name = "sender_id")
+  private User sender;
 
   private int price;
 }
