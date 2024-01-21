@@ -34,4 +34,14 @@ public class ConversationServiceImpl implements ConversationService {
     return false;
   }
 
+  @Override
+  public boolean doesConversationExist(Long conversationId) {
+    return false;
+  }
+
+  @Override
+  public boolean doesConversationBelongToUser(Long conversationId, Long currentUserId) {
+    return false;
+  }
+
 }

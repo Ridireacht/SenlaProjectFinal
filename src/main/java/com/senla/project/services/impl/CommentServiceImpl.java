@@ -34,4 +34,9 @@ public class CommentServiceImpl implements CommentService {
   public boolean deleteComment(Long commentId) {
     return false;
   }
+
+  @Override
+  public boolean doesCommentExist(Long commentId) {
+    return false;
+  }
 }

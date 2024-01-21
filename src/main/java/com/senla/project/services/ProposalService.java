@@ -14,4 +14,8 @@ public interface ProposalService {
   ProposalSentResponse createProposal(Long userId, ProposalRequest proposalRequest);
 
   boolean declineProposalById(Long proposalId);
+
+  boolean doesProposalExist(Long proposalId);
+
+  boolean wasProposalSentToUser(Long proposalId, Long currentUserId);
 }

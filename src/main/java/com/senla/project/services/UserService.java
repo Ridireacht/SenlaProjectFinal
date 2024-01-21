@@ -10,4 +10,6 @@ public interface UserService {
   UserResponse getUserById(Long userId);
 
   Long getUserIdByUsername(String username);
+
+  boolean doesUserExist(Long userId);
 }

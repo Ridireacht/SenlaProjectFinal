@@ -1,7 +1,6 @@
 package com.senla.project.services.impl;
 
 import com.senla.project.dto.UserResponse;
-import com.senla.project.entities.User;
 import com.senla.project.repositories.UserRepository;
 import com.senla.project.services.UserService;
 import java.util.List;
@@ -28,6 +27,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public Long getUserIdByUsername(String username) {
     return null;
+  }
+
+  @Override
+  public boolean doesUserExist(Long userId) {
+    return false;
   }
 
 }

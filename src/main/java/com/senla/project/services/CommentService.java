@@ -12,4 +12,6 @@ public interface CommentService {
   CommentResponse updateComment(Long commentId, CommentRequest commentRequest);
 
   boolean deleteComment(Long commentId);
+
+  boolean doesCommentExist(Long commentId);
 }

@@ -35,4 +35,14 @@ public class ProposalServiceImpl implements ProposalService {
   public boolean declineProposalById(Long proposalId) {
     return false;
   }
+
+  @Override
+  public boolean doesProposalExist(Long proposalId) {
+    return false;
+  }
+
+  @Override
+  public boolean wasProposalSentToUser(Long proposalId, Long currentUserId) {
+    return false;
+  }
 }

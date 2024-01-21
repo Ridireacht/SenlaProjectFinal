@@ -30,4 +30,12 @@ public interface AdService {
   AdResponse closeAd(Long adId, Long buyerId);
 
   boolean deleteAd(Long adId);
+
+  boolean doesAdExist(Long adId);
+
+  boolean doesAdBelongToUser(Long adId, Long currentUserId);
+
+  boolean doesCommentBelongToUser(Long commentId, Long currentUserId);
+
+  boolean didUserBoughtAd(Long adId, Long currentUserId);
 }
