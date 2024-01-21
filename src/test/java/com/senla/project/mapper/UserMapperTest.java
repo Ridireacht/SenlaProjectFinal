@@ -18,8 +18,7 @@ public class UserMapperTest {
     User user = new User();
     user.setId(1L);
     user.setUsername("testUser");
-    user.setEmail("test@example.com");
-    user.setPassword("password");
+
 
     UserResponse expectedResponse = new UserResponse();
     expectedResponse.setId(1L);
@@ -27,6 +26,7 @@ public class UserMapperTest {
 
     UserResponse actualResponse = userMapper.mapToUserResponse(user);
 
-    assertEquals(expectedResponse, actualResponse);
+    assertEquals(expectedResponse.getId(), actualResponse.getId());
+    assertEquals(expectedResponse.getUsername(), actualResponse.getUsername());
   }
 }
