@@ -36,7 +36,7 @@ public class Ad {
   private int price;
 
   private boolean available;
-  private boolean premium;
+  private boolean isPremium;
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
