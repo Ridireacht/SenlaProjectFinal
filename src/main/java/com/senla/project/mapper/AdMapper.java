@@ -16,10 +16,12 @@ public interface AdMapper {
 
 
   @Mapping(source = "buyer.id", target = "buyerId")
+  @Mapping(source = "score.score", target = "score")
   AdClosedResponse mapToAdClosedResponse(Ad ad);
 
   AdCurrentResponse mapToAdCurrentResponse(Ad ad);
 
+  @Mapping(source = "score.score", target = "score")
   AdPurchasedResponse mapToAdPurchasedResponse(Ad ad);
 
   Ad mapToAd(AdRequest adRequest);
