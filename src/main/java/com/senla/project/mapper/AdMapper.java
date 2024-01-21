@@ -15,11 +15,12 @@ public interface AdMapper {
   AdMapper MAPPER = Mappers.getMapper(AdMapper.class);
 
 
+  @Mapping(source = "buyer.id", target = "buyerId")
   AdClosedResponse mapToAdClosedResponse(Ad ad);
 
   AdCurrentResponse mapToAdCurrentResponse(Ad ad);
 
   AdPurchasedResponse mapToAdPurchasedResponse(Ad ad);
 
-  Ad mapToAd(AdRequest adRequest);
+  //Ad mapToAd(AdRequest adRequest);
 }
