@@ -33,7 +33,7 @@ public interface AdService {
 
   boolean doesAdExist(Long adId);
 
-  boolean doesAdBelongToUser(Long adId, Long currentUserId);
+  boolean isAdAvailableForUser(Long adId, Long currentUserId);
 
   boolean doesCommentBelongToUser(Long commentId, Long currentUserId);
 
