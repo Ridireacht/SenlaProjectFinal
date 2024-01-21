@@ -22,5 +22,5 @@ public interface AdMapper {
 
   AdPurchasedResponse mapToAdPurchasedResponse(Ad ad);
 
-  //Ad mapToAd(AdRequest adRequest);
+  Ad mapToAd(AdRequest adRequest);
 }
