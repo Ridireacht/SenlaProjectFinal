@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,7 +46,11 @@ public class Ad {
 
   @Column(name = "is_closed")
   boolean isClosed = false;
+
   @ManyToOne
   @JoinColumn(name = "buyer_id")
   private User buyer;
+
+  @OneToOne(mappedBy = "ad", cascade = CascadeType.ALL)
+  private UserScore score;
 }

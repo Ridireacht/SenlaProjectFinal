@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +25,7 @@ public class UserScore {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @ManyToOne
+  @OneToOne
   @JoinColumn(name = "ad_id")
   private Ad ad;
 
