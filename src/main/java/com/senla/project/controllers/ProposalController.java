@@ -5,6 +5,7 @@ import com.senla.project.dto.ProposalRequest;
 import com.senla.project.dto.ProposalSentResponse;
 import com.senla.project.services.ProposalService;
 import com.senla.project.services.UserService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class ProposalController {
   }
 
   @PostMapping
-  public ProposalSentResponse sendProposal(@RequestBody ProposalRequest proposalRequest) {
+  public ProposalSentResponse sendProposal(@Valid @RequestBody ProposalRequest proposalRequest) {
     return proposalService.createProposal(getCurrentUserId(), proposalRequest);
   }
 

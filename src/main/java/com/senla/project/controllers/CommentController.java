@@ -5,6 +5,7 @@ import com.senla.project.dto.CommentResponse;
 import com.senla.project.services.AdService;
 import com.senla.project.services.CommentService;
 import com.senla.project.services.UserService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class CommentController {
   }
 
   @PostMapping
-  public ResponseEntity<CommentResponse> createComment(@PathVariable("adId") Long adId, @RequestBody CommentRequest commentRequest) {
+  public ResponseEntity<CommentResponse> createComment(@PathVariable("adId") Long adId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!adService.doesAdExist(adId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
@@ -51,7 +52,7 @@ public class CommentController {
   }
 
   @PutMapping("/{commentId}")
-  public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") Long commentId, @RequestBody CommentRequest commentRequest) {
+  public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!commentService.doesCommentExist(commentId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }

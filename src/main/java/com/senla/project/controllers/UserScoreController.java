@@ -5,6 +5,7 @@ import com.senla.project.dto.UserScoreRequest;
 import com.senla.project.services.AdService;
 import com.senla.project.services.UserScoreService;
 import com.senla.project.services.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class UserScoreController {
 
 
   @PostMapping
-  public ResponseEntity<AdPurchasedResponse> setUserScore(@PathVariable("{id}") Long adId, @RequestBody UserScoreRequest userScoreRequest) {
+  public ResponseEntity<AdPurchasedResponse> setUserScore(@PathVariable("{id}") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
     if (!adService.doesAdExist(adId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }

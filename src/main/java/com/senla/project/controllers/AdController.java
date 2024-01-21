@@ -7,6 +7,7 @@ import com.senla.project.dto.AdRequest;
 import com.senla.project.dto.AdResponse;
 import com.senla.project.services.AdService;
 import com.senla.project.services.UserService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -65,12 +66,12 @@ public class AdController {
   }
 
   @PostMapping
-  public AdResponse createAd(@RequestBody AdRequest adRequest) {
+  public AdResponse createAd(@Valid @RequestBody AdRequest adRequest) {
     return adService.createAd(getCurrentUserId(), adRequest);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<AdResponse> updateAd(@PathVariable("id") Long adId, @RequestBody AdRequest adRequest) {
+  public ResponseEntity<AdResponse> updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }

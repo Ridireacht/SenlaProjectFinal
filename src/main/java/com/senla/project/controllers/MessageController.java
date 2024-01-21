@@ -5,6 +5,7 @@ import com.senla.project.dto.MessageRequest;
 import com.senla.project.services.ConversationService;
 import com.senla.project.services.MessageService;
 import com.senla.project.services.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class MessageController {
 
 
   @PostMapping("/conversations/{id}/messages")
-  public ResponseEntity<ConversationResponse> sendMessage(@PathVariable("id") Long conversationId, @RequestBody MessageRequest messageRequest) {
+  public ResponseEntity<ConversationResponse> sendMessage(@PathVariable("id") Long conversationId, @Valid @RequestBody MessageRequest messageRequest) {
     if (!conversationService.doesConversationExist(conversationId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
