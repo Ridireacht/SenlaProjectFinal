@@ -15,5 +15,5 @@ public interface CommentMapper {
   @Mapping(source = "sender.id", target = "senderId")
   CommentResponse mapToCommentResponse(Comment comment);
 
-  //Comment mapToComment(CommentRequest commentResponse);
+  Comment mapToComment(CommentRequest commentRequest);
 }
