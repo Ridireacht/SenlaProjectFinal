@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,7 +25,7 @@ public class MessageController {
 
 
   @PostMapping("/conversations/{id}/messages")
-  public ResponseEntity<ConversationResponse> sendMessage(@PathVariable("id") Long conversationId, MessageRequest messageRequest) {
+  public ResponseEntity<ConversationResponse> sendMessage(@PathVariable("id") Long conversationId, @RequestBody MessageRequest messageRequest) {
     if (!conversationService.doesConversationExist(conversationId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
