@@ -38,8 +38,8 @@ public class Ad {
   private boolean available;
   private boolean isPremium;
 
-  @Column(name = "created_at")
-  private LocalDateTime createdAt;
+  @Column(name = "posted_at")
+  private LocalDateTime postedAt;
 
   @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Conversation> conversations = new ArrayList<>();

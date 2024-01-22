@@ -32,7 +32,7 @@ public class Comment {
 
   private String content;
 
-  @Column(name = "created_at")
+  @Column(name = "posted_at")
   private LocalDateTime postedAt;
 
 }
