@@ -25,7 +25,7 @@ public interface AdMapper {
   @Mapping(source = "score.score", target = "score")
   AdPurchasedResponse mapToAdPurchasedResponse(Ad ad);
 
-  @Mapping(source = "user.id", target = "sellerId")
+  @Mapping(source = "seller.id", target = "sellerId")
   AdResponse mapToAdResponse(Ad ad);
 
   Ad mapToAd(AdRequest adRequest);
