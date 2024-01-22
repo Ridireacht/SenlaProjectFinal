@@ -29,13 +29,12 @@ public class Ad {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  private User user;
+  private User seller;
 
   private String title;
   private String content;
   private int price;
 
-  private boolean available;
   private boolean isPremium;
 
   @Column(name = "posted_at")
