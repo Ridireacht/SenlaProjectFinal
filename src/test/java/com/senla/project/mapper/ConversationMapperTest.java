@@ -29,7 +29,7 @@ public class ConversationMapperTest {
     conversation.setMessages(new ArrayList<Message>());
 
     ConversationResponse expectedResponse = new ConversationResponse();
-    expectedResponse.setId(2L);
+    expectedResponse.setId(1L);
     expectedResponse.setAdId(2L);
     expectedResponse.setMessages(new ArrayList<MessageResponse>());
 
