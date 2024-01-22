@@ -4,6 +4,7 @@ import com.senla.project.dto.AdClosedResponse;
 import com.senla.project.dto.AdCurrentResponse;
 import com.senla.project.dto.AdPurchasedResponse;
 import com.senla.project.dto.AdRequest;
+import com.senla.project.dto.AdResponse;
 import com.senla.project.entities.Ad;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -23,6 +24,9 @@ public interface AdMapper {
 
   @Mapping(source = "score.score", target = "score")
   AdPurchasedResponse mapToAdPurchasedResponse(Ad ad);
+
+  @Mapping(source = "user.id", target = "sellerId")
+  AdResponse mapToAdResponse(Ad ad);
 
   Ad mapToAd(AdRequest adRequest);
 }
