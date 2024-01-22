@@ -3,6 +3,7 @@ package com.senla.project.mapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.senla.project.dto.ProposalReceivedResponse;
+import com.senla.project.dto.ProposalRequest;
 import com.senla.project.dto.ProposalSentResponse;
 import com.senla.project.entities.Ad;
 import com.senla.project.entities.Proposal;
@@ -59,5 +60,21 @@ public class ProposalMapperTest {
     assertEquals(expectedResponse.getAdId(), actualResponse.getAdId());
     assertEquals(expectedResponse.getSenderId(), actualResponse.getSenderId());
     assertEquals(expectedResponse.getPrice(), actualResponse.getPrice());
+  }
+
+  @Test
+  public void testMapToProposal() {
+    ProposalRequest proposalRequest = new ProposalRequest();
+    proposalRequest.setAdId(1L);
+    proposalRequest.setPrice(100);
+
+    Proposal expectedEntity = new Proposal();
+    expectedEntity.setAd();       // new Ad? Или вытаскивать существующую сущность? См. ProposalMapper
+    expectedEntity.setPrice(100);
+
+    Proposal actualEntity = mapper.mapToProposal(proposalRequest);
+
+    assertEquals(expectedEntity.getAd(), actualEntity.getAd());
+    assertEquals(expectedEntity.getPrice(), actualEntity.getPrice());
   }
 }
