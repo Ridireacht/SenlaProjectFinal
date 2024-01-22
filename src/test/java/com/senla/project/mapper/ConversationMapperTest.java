@@ -7,8 +7,6 @@ import com.senla.project.dto.MessageResponse;
 import com.senla.project.entities.Ad;
 import com.senla.project.entities.Conversation;
 import com.senla.project.entities.Message;
-import com.senla.project.entities.User;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -19,6 +17,7 @@ public class ConversationMapperTest {
 
   private final ConversationMapper mapper = Mappers.getMapper(ConversationMapper.class);
 
+  
   @Test
   public void testMapToConversationResponse() {
     Ad ad = new Ad();

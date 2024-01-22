@@ -4,11 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.senla.project.dto.MessageRequest;
 import com.senla.project.dto.MessageResponse;
-import com.senla.project.dto.UserResponse;
-import com.senla.project.dto.UserScoreRequest;
 import com.senla.project.entities.Message;
 import com.senla.project.entities.User;
-import com.senla.project.entities.UserScore;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -18,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class MessageMapperTest {
 
   private final MessageMapper mapper = Mappers.getMapper(MessageMapper.class);
+
 
   @Test
   public void testMapToMessageResponse() {

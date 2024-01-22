@@ -13,12 +13,12 @@ public class UserMapperTest {
 
   private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
 
+
   @Test
   public void testMapToUserResponse() {
     User user = new User();
     user.setId(1L);
     user.setUsername("testUser");
-
 
     UserResponse expectedResponse = new UserResponse();
     expectedResponse.setId(1L);
