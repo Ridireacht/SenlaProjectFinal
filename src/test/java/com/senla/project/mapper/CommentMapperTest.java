@@ -26,20 +26,20 @@ public class CommentMapperTest {
     comment.setId(1L);
     comment.setSender(user);
     comment.setContent("testContent");
-    comment.setCreatedAt(LocalDateTime.of(2022, 1, 17, 15, 30));
+    comment.setPostedAt(LocalDateTime.of(2022, 1, 17, 15, 30));
 
     CommentResponse expectedResponse = new CommentResponse();
     expectedResponse.setId(1L);
     expectedResponse.setSenderId(2L);
     expectedResponse.setContent("testContent");
-    expectedResponse.setCreatedAt(LocalDateTime.of(2022, 1, 17, 15, 30));
+    expectedResponse.setPostedAt(LocalDateTime.of(2022, 1, 17, 15, 30));
 
     CommentResponse actualResponse = mapper.mapToCommentResponse(comment);
 
     assertEquals(expectedResponse.getId(), actualResponse.getId());
     assertEquals(expectedResponse.getSenderId(), actualResponse.getSenderId());
     assertEquals(expectedResponse.getContent(), actualResponse.getContent());
-    assertEquals(expectedResponse.getCreatedAt(), actualResponse.getCreatedAt());
+    assertEquals(expectedResponse.getPostedAt(), actualResponse.getPostedAt());
   }
 
   @Test
