@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class UserMapperTest {
 
-  private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+  private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
 
   @Test
   public void testMapToUserResponse() {
@@ -24,7 +24,7 @@ public class UserMapperTest {
     expectedResponse.setId(1L);
     expectedResponse.setUsername("testUser");
 
-    UserResponse actualResponse = userMapper.mapToUserResponse(user);
+    UserResponse actualResponse = mapper.mapToUserResponse(user);
 
     assertEquals(expectedResponse.getId(), actualResponse.getId());
     assertEquals(expectedResponse.getUsername(), actualResponse.getUsername());
