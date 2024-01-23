@@ -83,6 +83,8 @@ public class ProposalMapperTest {
 
     Proposal actualEntity = mapper.mapToProposal(proposalRequest);
 
+    adRepository.deleteById(ad.getId());
+
     assertEquals(expectedEntity.getAd().getId(), actualEntity.getAd().getId());
     assertEquals(expectedEntity.getAd().getContent(), actualEntity.getAd().getContent());
     assertEquals(expectedEntity.getPrice(), actualEntity.getPrice());
