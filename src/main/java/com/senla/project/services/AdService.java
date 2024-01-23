@@ -5,7 +5,6 @@ import com.senla.project.dto.AdCurrentResponse;
 import com.senla.project.dto.AdPurchasedResponse;
 import com.senla.project.dto.AdRequest;
 import com.senla.project.dto.AdResponse;
-import com.senla.project.entities.Ad;
 import java.util.List;
 
 public interface AdService {
@@ -19,8 +18,6 @@ public interface AdService {
   List<AdPurchasedResponse> getPurchasedAdsByUserId(Long userId);
 
   AdResponse getAdById(Long adId);
-
-  Ad getAdEntityById(Long adId);
 
   AdResponse createAd(Long userId, AdRequest adRequest);
 
