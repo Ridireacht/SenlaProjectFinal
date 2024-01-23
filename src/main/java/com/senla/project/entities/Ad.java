@@ -35,6 +35,7 @@ public class Ad {
   private String content;
   private int price;
 
+  @Column(name = "is_premium")
   private boolean isPremium;
 
   @Column(name = "posted_at")

@@ -70,12 +70,11 @@ public class ProposalMapperTest {
   @Test
   public void testMapToProposal() {
     Ad ad = new Ad();
-    ad.setId(1L);
     ad.setContent("testContent");
     adRepository.save(ad);
 
     ProposalRequest proposalRequest = new ProposalRequest();
-    proposalRequest.setAdId(1L);
+    proposalRequest.setAdId(ad.getId());
     proposalRequest.setPrice(100);
 
     Proposal expectedEntity = new Proposal();
@@ -84,7 +83,8 @@ public class ProposalMapperTest {
 
     Proposal actualEntity = mapper.mapToProposal(proposalRequest);
 
-    assertEquals(expectedEntity.getAd(), actualEntity.getAd());
+    assertEquals(expectedEntity.getAd().getId(), actualEntity.getAd().getId());
+    assertEquals(expectedEntity.getAd().getContent(), actualEntity.getAd().getContent());
     assertEquals(expectedEntity.getPrice(), actualEntity.getPrice());
   }
 }

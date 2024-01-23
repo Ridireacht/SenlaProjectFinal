@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: createRolesTable
+      id: 1
       author: your_name
       changes:
         - createTable:
@@ -15,3 +15,259 @@ databaseChangeLog:
               - column:
                   name: name
                   type: VARCHAR(255)
+
+  - changeSet:
+      id: 2
+      author: your_name
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: role_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: roles(id)
+
+  - changeSet:
+      id: 3
+      author: your_name
+      changes:
+        - createTable:
+            tableName: ads
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: content
+                  type: VARCHAR(255)
+              - column:
+                  name: price
+                  type: INT
+              - column:
+                  name: is_premium
+                  type: BOOLEAN
+              - column:
+                  name: posted_at
+                  type: TIMESTAMP
+              - column:
+                  name: is_closed
+                  type: BOOLEAN
+              - column:
+                  name: buyer_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+
+  - changeSet:
+      id: 4
+      author: your_name
+      changes:
+        - createTable:
+            tableName: comments
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: sender_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+              - column:
+                  name: ad_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: ads(id)
+              - column:
+                  name: content
+                  type: VARCHAR(255)
+              - column:
+                  name: posted_at
+                  type: TIMESTAMP
+
+  - changeSet:
+      id: 5
+      author: your_name
+      changes:
+        - createTable:
+            tableName: conversations
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: ad_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: ads(id)
+              - column:
+                  name: buyer_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+              - column:
+                  name: seller_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+
+  - changeSet:
+      id: 6
+      author: your_name
+      changes:
+        - createTable:
+            tableName: messages
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: posted_at
+                  type: TIMESTAMP
+              - column:
+                  name: content
+                  type: VARCHAR(255)
+              - column:
+                  name: sender_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+              - column:
+                  name: conversation_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: conversations(id)
+
+  - changeSet:
+      id: 7
+      author: your_name
+      changes:
+        - createTable:
+            tableName: proposals
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: ad_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: ads(id)
+              - column:
+                  name: sender_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+              - column:
+                  name: price
+                  type: INT
+
+  - changeSet:
+      id: 8
+      author: your_name
+      changes:
+        - createTable:
+            tableName: ratings
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+              - column:
+                  name: average_score
+                  type: DOUBLE
+
+  - changeSet:
+      id: 9
+      author: your_name
+      changes:
+        - createTable:
+            tableName: user_scores
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+              - column:
+                  name: ad_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: ads(id)
+              - column:
+                  name: score
+                  type: INT
+              - column:
+                  name: rating_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: ratings(id)
