@@ -5,34 +5,31 @@ import com.senla.project.dto.ProposalRequest;
 import com.senla.project.dto.ProposalSentResponse;
 import com.senla.project.entities.Ad;
 import com.senla.project.entities.Proposal;
-import com.senla.project.services.AdService;
+import com.senla.project.repositories.AdRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper
-public interface ProposalMapper {
+@Mapper(componentModel = "spring")
+public abstract class ProposalMapper {
 
   @Autowired
-  AdService adService = null;
-
-  ProposalMapper MAPPER = Mappers.getMapper(ProposalMapper.class);
-
+  protected AdRepository adRepository;
 
   @Mapping(source = "ad.id", target = "adId")
-  ProposalSentResponse mapToProposalSentResponse(Proposal proposal);
+  abstract ProposalSentResponse mapToProposalSentResponse(Proposal proposal);
 
   @Mapping(source = "ad.id", target = "adId")
   @Mapping(source = "sender.id", target = "senderId")
-  ProposalReceivedResponse mapToReceivedResponse(Proposal proposal);
+  abstract ProposalReceivedResponse mapToReceivedResponse(Proposal proposal);
 
-  @Mapping(source = "adId", target = "ad", qualifiedByName = "adIdToAd")
-  Proposal mapToProposal(ProposalRequest proposalRequest);
+  @Mapping(source = "adId", target = "ad", qualifiedByName = "IdToAd")
+  abstract Proposal mapToProposal(ProposalRequest proposalRequest);
 
-  @Named("adIdToAd")
-  static Ad adIdToAd(Long adId) {
-    return adService.getAdEntityById(adId);
+  @Named("IdToAd")
+  Ad idToAd(Long adId) {
+    return adRepository.findById(adId).orElse(null);
   }
 }

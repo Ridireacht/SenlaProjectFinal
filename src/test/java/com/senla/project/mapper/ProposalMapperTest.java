@@ -8,14 +8,19 @@ import com.senla.project.dto.ProposalSentResponse;
 import com.senla.project.entities.Ad;
 import com.senla.project.entities.Proposal;
 import com.senla.project.entities.User;
+import com.senla.project.repositories.AdRepository;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class ProposalMapperTest {
 
   private final ProposalMapper mapper = Mappers.getMapper(ProposalMapper.class);
+
+  @Autowired
+  AdRepository adRepository;
 
 
   @Test
@@ -64,12 +69,17 @@ public class ProposalMapperTest {
 
   @Test
   public void testMapToProposal() {
+    Ad ad = new Ad();
+    ad.setId(1L);
+    ad.setContent("testContent");
+    adRepository.save(ad);
+
     ProposalRequest proposalRequest = new ProposalRequest();
     proposalRequest.setAdId(1L);
     proposalRequest.setPrice(100);
 
     Proposal expectedEntity = new Proposal();
-    expectedEntity.setAd();       // new Ad? Или вытаскивать существующую сущность? См. ProposalMapper
+    expectedEntity.setAd(ad);
     expectedEntity.setPrice(100);
 
     Proposal actualEntity = mapper.mapToProposal(proposalRequest);
