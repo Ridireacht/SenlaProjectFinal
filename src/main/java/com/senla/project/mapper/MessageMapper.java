@@ -5,12 +5,9 @@ import com.senla.project.dto.MessageResponse;
 import com.senla.project.entities.Message;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface MessageMapper {
-
-  MessageMapper MAPPER = Mappers.getMapper(MessageMapper.class);
 
   @Mapping(source = "sender.id", target = "senderId")
   MessageResponse mapToMessageResponse(Message message);

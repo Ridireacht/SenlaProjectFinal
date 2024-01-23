@@ -8,13 +8,9 @@ import com.senla.project.dto.AdResponse;
 import com.senla.project.entities.Ad;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface AdMapper {
-
-  AdMapper MAPPER = Mappers.getMapper(AdMapper.class);
-
 
   @Mapping(source = "buyer.id", target = "buyerId")
   @Mapping(source = "score.score", target = "score")

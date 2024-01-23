@@ -5,13 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.senla.project.entities.User;
 import com.senla.project.dto.UserResponse;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class UserMapperTest {
 
-  private final UserMapper mapper = Mappers.getMapper(UserMapper.class);
+  @Autowired
+  UserMapper mapper;
 
 
   @Test

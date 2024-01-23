@@ -9,13 +9,14 @@ import com.senla.project.entities.Conversation;
 import com.senla.project.entities.Message;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class ConversationMapperTest {
 
-  private final ConversationMapper mapper = Mappers.getMapper(ConversationMapper.class);
+  @Autowired
+  ConversationMapper mapper;
 
   
   @Test

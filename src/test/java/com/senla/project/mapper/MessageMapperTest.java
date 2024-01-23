@@ -8,13 +8,14 @@ import com.senla.project.entities.Message;
 import com.senla.project.entities.User;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class MessageMapperTest {
 
-  private final MessageMapper mapper = Mappers.getMapper(MessageMapper.class);
+  @Autowired
+  MessageMapper mapper;
 
 
   @Test

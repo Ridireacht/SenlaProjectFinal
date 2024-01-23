@@ -8,13 +8,14 @@ import com.senla.project.entities.Comment;
 import com.senla.project.entities.User;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class CommentMapperTest {
 
-  private final CommentMapper mapper = Mappers.getMapper(CommentMapper.class);
+  @Autowired
+  CommentMapper mapper;
 
 
   @Test

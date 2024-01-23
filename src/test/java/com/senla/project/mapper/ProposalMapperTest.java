@@ -10,14 +10,14 @@ import com.senla.project.entities.Proposal;
 import com.senla.project.entities.User;
 import com.senla.project.repositories.AdRepository;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class ProposalMapperTest {
 
-  private final ProposalMapper mapper = Mappers.getMapper(ProposalMapper.class);
+  @Autowired
+  ProposalMapper mapper;
 
   @Autowired
   AdRepository adRepository;
