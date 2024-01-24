@@ -5,6 +5,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.senla.project.dto.request.CommentRequest;
@@ -73,5 +75,104 @@ public class CommentServiceTest {
         hasProperty("content", is("testContent1")),
         hasProperty("content", is("testContent2"))
     ));
+  }
+
+  @Test
+  void testCreateComment() {
+    Long userId = 1L;
+    Long adId = 2L;
+
+    CommentRequest commentRequest = new CommentRequest();
+    commentRequest.setContent("testContent");
+
+    User user = new User();
+    user.setId(userId);
+
+    Ad ad = new Ad();
+    ad.setId(adId);
+
+    Comment expectedComment = new Comment();
+    expectedComment.setSender(user);
+    expectedComment.setContent(commentRequest.getContent());
+
+    CommentResponse expectedCommentResponse = new CommentResponse();
+    expectedCommentResponse.setSenderId(userId);
+    expectedCommentResponse.setContent(commentRequest.getContent());
+
+    when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+    when(adRepository.findById(adId)).thenReturn(Optional.of(ad));
+    when(commentRepository.save(any(Comment.class))).thenReturn(expectedComment);
+    when(commentMapper.mapToCommentResponse(expectedComment)).thenReturn(expectedCommentResponse);
+
+    CommentResponse actualCommentResponse = commentService.createComment(userId, adId, commentRequest);
+
+    assertEquals(expectedCommentResponse.getSenderId(), actualCommentResponse.getSenderId());
+    assertEquals(expectedCommentResponse.getContent(), actualCommentResponse.getContent());
+  }
+
+  @Test
+  void testUpdateComment() {
+    Long commentId = 1L;
+
+    CommentRequest commentRequest = new CommentRequest();
+    commentRequest.setContent("testContent");
+
+    Comment expectedExistingComment = new Comment();
+    expectedExistingComment.setContent("oldTestContent");
+
+    Comment expectedUpdatedComment = new Comment();
+    expectedExistingComment.setContent(commentRequest.getContent());
+
+    CommentResponse expectedCommentResponse = new CommentResponse();
+    expectedCommentResponse.setContent(expectedCommentResponse.getContent());
+
+    when(commentRepository.findById(commentId)).thenReturn(Optional.of(expectedExistingComment));
+    when(commentRepository.save(any(Comment.class))).thenReturn(expectedUpdatedComment);
+    when(commentMapper.mapToCommentResponse(expectedUpdatedComment)).thenReturn(expectedCommentResponse);
+
+    CommentResponse actualCommentResponse = commentService.updateComment(commentId, commentRequest);
+
+    assertEquals(expectedCommentResponse.getContent(), actualCommentResponse.getContent());
+  }
+
+  @Test
+  void testDeleteComment() {
+    Long commentId = 1L;
+
+    when(commentRepository.existsById(commentId)).thenReturn(true);
+
+    boolean expectedResult = commentService.deleteComment(commentId);
+
+    assertTrue(expectedResult);
+  }
+
+  @Test
+  void testDoesCommentExist() {
+    Long commentId = 1L;
+
+    when(commentRepository.existsById(commentId)).thenReturn(true);
+
+    boolean expectedResult = commentService.doesCommentExist(commentId);
+
+    assertTrue(expectedResult);
+  }
+
+  @Test
+  void testDoesCommentBelongToUser() {
+    Long commentId = 1L;
+    Long currentUserId = 2L;
+
+    Comment comment = new Comment();
+
+    User user = new User();
+    user.setId(currentUserId);
+
+    comment.setSender(user);
+
+    when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
+
+    boolean expectedResult = commentService.doesCommentBelongToUser(commentId, currentUserId);
+
+    assertTrue(expectedResult);
   }
 }
