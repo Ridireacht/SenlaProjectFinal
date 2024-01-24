@@ -31,7 +31,5 @@ public interface AdService {
 
   boolean isAdAvailableForUser(Long adId, Long currentUserId);
 
-  boolean doesCommentBelongToUser(Long commentId, Long currentUserId);
-
   boolean didUserBoughtAd(Long adId, Long currentUserId);
 }

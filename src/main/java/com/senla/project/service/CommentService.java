@@ -14,4 +14,6 @@ public interface CommentService {
   boolean deleteComment(Long commentId);
 
   boolean doesCommentExist(Long commentId);
+
+  boolean doesCommentBelongToUser(Long commentId, Long currentUserId);
 }

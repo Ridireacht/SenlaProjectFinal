@@ -39,4 +39,9 @@ public class CommentServiceImpl implements CommentService {
   public boolean doesCommentExist(Long commentId) {
     return false;
   }
+
+  @Override
+  public boolean doesCommentBelongToUser(Long commentId, Long currentUserId) {
+    return false;
+  }
 }

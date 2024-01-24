@@ -57,7 +57,7 @@ public class CommentController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    if (!adService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
+    if (!commentService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
@@ -70,7 +70,7 @@ public class CommentController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    if (!adService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
+    if (!commentService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 

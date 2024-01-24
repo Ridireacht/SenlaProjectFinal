@@ -76,11 +76,6 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public boolean doesCommentBelongToUser(Long commentId, Long currentUserId) {
-    return false;
-  }
-
-  @Override
   public boolean didUserBoughtAd(Long adId, Long currentUserId) {
     return false;
   }
