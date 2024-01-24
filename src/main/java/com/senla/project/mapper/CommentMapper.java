@@ -2,7 +2,7 @@ package com.senla.project.mapper;
 
 import com.senla.project.dto.CommentRequest;
 import com.senla.project.dto.CommentResponse;
-import com.senla.project.entities.Comment;
+import com.senla.project.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

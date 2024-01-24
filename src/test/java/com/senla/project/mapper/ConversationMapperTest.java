@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.senla.project.dto.ConversationResponse;
 import com.senla.project.dto.MessageResponse;
-import com.senla.project.entities.Ad;
-import com.senla.project.entities.Conversation;
-import com.senla.project.entities.Message;
+import com.senla.project.entity.Ad;
+import com.senla.project.entity.Conversation;
+import com.senla.project.entity.Message;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

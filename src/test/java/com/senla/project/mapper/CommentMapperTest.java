@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.senla.project.dto.CommentRequest;
 import com.senla.project.dto.CommentResponse;
-import com.senla.project.entities.Comment;
-import com.senla.project.entities.User;
+import com.senla.project.entity.Comment;
+import com.senla.project.entity.User;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

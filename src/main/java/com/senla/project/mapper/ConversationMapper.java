@@ -1,7 +1,7 @@
 package com.senla.project.mapper;
 
 import com.senla.project.dto.ConversationResponse;
-import com.senla.project.entities.Conversation;
+import com.senla.project.entity.Conversation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

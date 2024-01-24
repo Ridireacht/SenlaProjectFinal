@@ -5,7 +5,7 @@ import com.senla.project.dto.AdCurrentResponse;
 import com.senla.project.dto.AdPurchasedResponse;
 import com.senla.project.dto.AdRequest;
 import com.senla.project.dto.AdResponse;
-import com.senla.project.entities.Ad;
+import com.senla.project.entity.Ad;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

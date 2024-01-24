@@ -3,7 +3,7 @@ package com.senla.project.mapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.senla.project.dto.UserScoreRequest;
-import com.senla.project.entities.UserScore;
+import com.senla.project.entity.UserScore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
