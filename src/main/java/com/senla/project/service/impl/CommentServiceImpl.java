@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   public List<CommentResponse> getAllCommentsByAdId(Long adId) {
-    List<Comment> comments = commentRepository.findAllByAdId(adId);
+    List<Comment> comments = commentRepository.findAllByAd_Id(adId);
 
     return comments.stream()
         .map(commentMapper::mapToCommentResponse)
