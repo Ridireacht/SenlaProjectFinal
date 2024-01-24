@@ -39,6 +39,9 @@ public class CommentServiceTest {
   @MockBean
   UserRepository userRepository;
 
+  @MockBean
+  CommentMapper commentMapper;
+
   @Autowired
   CommentService commentService;
 
@@ -53,12 +56,20 @@ public class CommentServiceTest {
     comment1.setContent("testContent1");
     comment2.setContent("testContent2");
 
+    CommentResponse expectedCommentResponse1 = new CommentResponse();
+    CommentResponse expectedCommentResponse2 = new CommentResponse();
+
+    expectedCommentResponse1.setContent(comment1.getContent());
+    expectedCommentResponse2.setContent(comment2.getContent());
+
     when(commentRepository.findAllByAd_Id(adId)).thenReturn(Arrays.asList(comment1, comment2));
+    when(commentMapper.mapToCommentResponse(comment1)).thenReturn(expectedCommentResponse1);
+    when(commentMapper.mapToCommentResponse(comment2)).thenReturn(expectedCommentResponse2);
 
-    List<CommentResponse> result = commentService.getAllCommentsByAdId(adId);
+    List<CommentResponse> actualCommentResponses = commentService.getAllCommentsByAdId(adId);
 
-    assertEquals(2, result.size());
-    assertThat(result, contains(
+    assertEquals(2, actualCommentResponses.size());
+    assertThat(actualCommentResponses, contains(
         hasProperty("content", is("testContent1")),
         hasProperty("content", is("testContent2"))
     ));
