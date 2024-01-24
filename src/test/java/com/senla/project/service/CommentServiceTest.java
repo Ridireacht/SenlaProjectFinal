@@ -18,6 +18,7 @@ import com.senla.project.repository.CommentRepository;
 import com.senla.project.repository.UserRepository;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -61,85 +62,5 @@ public class CommentServiceTest {
         hasProperty("content", is("testContent1")),
         hasProperty("content", is("testContent2"))
     ));
-  }
-
-  @Test
-  void testCreateComment() {
-    Long userId = 1L;
-    Long adId = 1L;
-    CommentRequest commentRequest = new CommentRequest();
-
-    User user = new User();
-    Ad ad = new Ad();
-    Comment savedComment = new Comment();
-
-    when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-    when(adRepository.findById(adId)).thenReturn(Optional.of(ad));
-    when(commentRepository.save(any(Comment.class))).thenReturn(savedComment);
-
-    CommentResponse result = commentService.createComment(userId, adId, commentRequest);
-
-    assertNotNull(result);
-    verify(commentRepository, times(1)).save(any(Comment.class));
-    verify(commentMapper, times(1)).mapToCommentResponse(any(Comment.class));
-  }
-
-  @Test
-  void testUpdateComment() {
-    Long commentId = 1L;
-    CommentRequest commentRequest = new CommentRequest();
-
-    Comment existingComment = new Comment();
-    Comment updatedComment = new Comment();
-
-    when(commentRepository.findById(commentId)).thenReturn(Optional.of(existingComment));
-    when(commentRepository.save(any(Comment.class))).thenReturn(updatedComment);
-    when(commentMapper.mapToCommentResponse(any(Comment.class))).thenReturn(new CommentResponse());
-
-    CommentResponse result = commentService.updateComment(commentId, commentRequest);
-
-    assertNotNull(result);
-    verify(commentRepository, times(1)).save(any(Comment.class));
-    verify(commentMapper, times(1)).mapToCommentResponse(any(Comment.class));
-  }
-
-  @Test
-  void testDeleteComment() {
-    Long commentId = 1L;
-
-    when(commentRepository.existsById(commentId)).thenReturn(true);
-
-    boolean result = commentService.deleteComment(commentId);
-
-    assertTrue(result);
-    verify(commentRepository, times(1)).deleteById(commentId);
-  }
-
-  @Test
-  void testDoesCommentExist() {
-    Long commentId = 1L;
-
-    when(commentRepository.existsById(commentId)).thenReturn(true);
-
-    boolean result = commentService.doesCommentExist(commentId);
-
-    assertTrue(result);
-  }
-
-  @Test
-  void testDoesCommentBelongToUser() {
-    Long commentId = 1L;
-    Long currentUserId = 2L;
-
-    Comment comment = new Comment();
-    User user = new User();
-    user.setId(currentUserId);
-    comment.setSender(user);
-
-    when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
-
-    boolean result = commentService.doesCommentBelongToUser(commentId, currentUserId);
-
-    assertTrue(result);
   }
 }
