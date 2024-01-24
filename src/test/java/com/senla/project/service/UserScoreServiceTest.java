@@ -40,7 +40,7 @@ public class UserScoreServiceTest {
     userScoreRequest.setScore(score);
 
     when(adRepository.findById(adId)).thenReturn(Optional.of(ad));
-    doNothing().when(adRepository.save(ad));
+    when(adRepository.save(ad)).thenReturn(ad);
 
     AdPurchasedResponse result = userScoreService.setUserScoreByAdId(userId, adId, userScoreRequest);
 
