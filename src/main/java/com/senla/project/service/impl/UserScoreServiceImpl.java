@@ -7,7 +7,6 @@ import com.senla.project.entity.UserScore;
 import com.senla.project.mapper.AdMapper;
 import com.senla.project.mapper.UserScoreMapper;
 import com.senla.project.repository.AdRepository;
-import com.senla.project.repository.UserScoreRepository;
 import com.senla.project.service.UserScoreService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserScoreServiceImpl implements UserScoreService {
 
-  private final UserScoreRepository userScoreRepository;
   private final AdRepository adRepository;
 
   private final UserScoreMapper userScoreMapper;
