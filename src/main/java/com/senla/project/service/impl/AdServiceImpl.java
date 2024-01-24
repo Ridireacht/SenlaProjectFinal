@@ -6,6 +6,7 @@ import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.request.AdRequest;
 import com.senla.project.dto.response.AdResponse;
 import com.senla.project.repository.AdRepository;
+import com.senla.project.repository.UserRepository;
 import com.senla.project.service.AdService;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class AdServiceImpl implements AdService {
 
   final AdRepository adRepository;
+  final UserRepository userRepository;
 
 
   @Override
@@ -54,17 +56,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public boolean setScoreForAd(Long adId, int score) {
-    return false;
-  }
-
-  @Override
   public AdResponse makeAdPremium(Long adId) {
-    return null;
-  }
-
-  @Override
-  public AdResponse closeAd(Long adId, Long buyerId) {
     return null;
   }
 
