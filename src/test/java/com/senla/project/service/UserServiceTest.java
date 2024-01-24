@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import com.senla.project.dto.response.UserResponse;
 import com.senla.project.entity.User;
+import com.senla.project.mapper.UserMapper;
 import com.senla.project.repository.UserRepository;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,9 @@ public class UserServiceTest {
   @MockBean
   UserRepository userRepository;
 
+  @MockBean
+  UserMapper userMapper;
+
   @Autowired
   UserService userService;
 
@@ -40,12 +44,20 @@ public class UserServiceTest {
     user1.setUsername("testUsername1");
     user2.setUsername("testUsername2");
 
+    UserResponse expectedUserResponse1 = new UserResponse();
+    UserResponse expectedUserResponse2 = new UserResponse();
+
+    expectedUserResponse1.setUsername(user1.getUsername());
+    expectedUserResponse2.setUsername(user2.getUsername());
+
     when(userRepository.findAll()).thenReturn(Arrays.asList(user1, user2));
+    when(userMapper.mapToUserResponse(user1)).thenReturn(expectedUserResponse1);
+    when(userMapper.mapToUserResponse(user2)).thenReturn(expectedUserResponse2);
 
-    List<UserResponse> result = userService.getAllUsers();
+    List<UserResponse> actualUserResponses = userService.getAllUsers();
 
-    assertEquals(2, result.size());
-    assertThat(result, contains(
+    assertEquals(2, actualUserResponses.size());
+    assertThat(actualUserResponses, contains(
         hasProperty("username", is("testUsername1")),
         hasProperty("username", is("testUsername2"))
     ));
@@ -59,12 +71,17 @@ public class UserServiceTest {
     user.setId(userId);
     user.setUsername("testUsername");
 
+    UserResponse expectedUserResponse = new UserResponse();
+    expectedUserResponse.setId(user.getId());
+    expectedUserResponse.setUsername(user.getUsername());
+
     when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+    when(userMapper.mapToUserResponse(user)).thenReturn(expectedUserResponse);
 
-    UserResponse result = userService.getUserById(userId);
+    UserResponse actualUserResponse = userService.getUserById(userId);
 
-    assertEquals(user.getId(), result.getId());
-    assertEquals(user.getUsername(), result.getUsername());
+    assertEquals(expectedUserResponse.getId(), actualUserResponse.getId());
+    assertEquals(expectedUserResponse.getUsername(), actualUserResponse.getUsername());
   }
 
   @Test
@@ -73,7 +90,7 @@ public class UserServiceTest {
 
     User user = new User();
     user.setId(1L);
-    user.setUsername("testUsername");
+    user.setUsername(username);
 
     when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
 
