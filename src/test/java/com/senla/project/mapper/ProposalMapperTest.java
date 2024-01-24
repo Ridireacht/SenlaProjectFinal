@@ -1,6 +1,7 @@
 package com.senla.project.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.request.ProposalRequest;
@@ -9,17 +10,23 @@ import com.senla.project.entity.Ad;
 import com.senla.project.entity.Proposal;
 import com.senla.project.entity.User;
 import com.senla.project.repository.AdRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ProposalMapperTest {
 
   @Autowired
   ProposalMapper mapper;
 
-  @Autowired
+  @MockBean
   AdRepository adRepository;
 
 
@@ -70,8 +77,10 @@ public class ProposalMapperTest {
   @Test
   public void testMapToProposal() {
     Ad ad = new Ad();
+    ad.setId(1L);
     ad.setContent("testContent");
-    adRepository.save(ad);
+
+    when(adRepository.findById(1L)).thenReturn(Optional.of(ad));
 
     ProposalRequest proposalRequest = new ProposalRequest();
     proposalRequest.setAdId(ad.getId());
@@ -82,8 +91,6 @@ public class ProposalMapperTest {
     expectedEntity.setPrice(100);
 
     Proposal actualEntity = mapper.mapToProposal(proposalRequest);
-
-    adRepository.deleteById(ad.getId());
 
     assertEquals(expectedEntity.getAd().getId(), actualEntity.getAd().getId());
     assertEquals(expectedEntity.getAd().getContent(), actualEntity.getAd().getContent());
