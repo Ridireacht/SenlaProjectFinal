@@ -44,7 +44,7 @@ public class UserScoreServiceTest {
 
     AdPurchasedResponse result = userScoreService.setUserScoreByAdId(userId, adId, userScoreRequest);
 
-    assertEquals(result.getId(), adId);
-    assertEquals(result.getScore(), score);
+    assertEquals(adId, result.getId());
+    assertEquals(score, result.getScore());
   }
 }
