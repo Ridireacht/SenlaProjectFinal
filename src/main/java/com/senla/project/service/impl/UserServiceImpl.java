@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-  private final UserMapper mapper;
+  private final UserMapper userMapper;
 
 
   @Override
@@ -24,14 +24,14 @@ public class UserServiceImpl implements UserService {
     List<User> users = userRepository.findAll();
 
     return users.stream()
-        .map(mapper::mapToUserResponse)
+        .map(userMapper::mapToUserResponse)
         .collect(Collectors.toList());
   }
 
   @Override
   public UserResponse getUserById(Long userId) {
     User user = userRepository.findById(userId).orElse(null);
-    return mapper.mapToUserResponse(user);
+    return userMapper.mapToUserResponse(user);
   }
 
   @Override
