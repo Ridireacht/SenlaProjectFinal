@@ -2,8 +2,8 @@ package com.senla.project.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.senla.project.dto.MessageRequest;
-import com.senla.project.dto.MessageResponse;
+import com.senla.project.dto.request.MessageRequest;
+import com.senla.project.dto.response.MessageResponse;
 import com.senla.project.entity.Message;
 import com.senla.project.entity.User;
 import java.time.LocalDateTime;

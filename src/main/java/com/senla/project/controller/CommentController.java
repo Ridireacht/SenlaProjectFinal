@@ -1,7 +1,7 @@
 package com.senla.project.controller;
 
-import com.senla.project.dto.CommentRequest;
-import com.senla.project.dto.CommentResponse;
+import com.senla.project.dto.request.CommentRequest;
+import com.senla.project.dto.response.CommentResponse;
 import com.senla.project.service.AdService;
 import com.senla.project.service.CommentService;
 import com.senla.project.service.UserService;

@@ -1,6 +1,6 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.UserResponse;
+import com.senla.project.dto.response.UserResponse;
 import com.senla.project.repository.RatingRepository;
 import com.senla.project.service.RatingService;
 import lombok.AllArgsConstructor;

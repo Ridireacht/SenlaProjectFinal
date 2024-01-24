@@ -1,4 +1,4 @@
-package com.senla.project.dto;
+package com.senla.project.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

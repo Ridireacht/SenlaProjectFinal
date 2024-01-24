@@ -1,4 +1,4 @@
-package com.senla.project.dto;
+package com.senla.project.dto.response;
 
 import java.util.ArrayList;
 import java.util.List;

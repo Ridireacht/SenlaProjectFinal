@@ -1,6 +1,6 @@
 package com.senla.project.mapper;
 
-import com.senla.project.dto.UserResponse;
+import com.senla.project.dto.response.UserResponse;
 import com.senla.project.entity.User;
 import org.mapstruct.Mapper;
 

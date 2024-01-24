@@ -1,7 +1,7 @@
 package com.senla.project.service;
 
-import com.senla.project.dto.CommentRequest;
-import com.senla.project.dto.CommentResponse;
+import com.senla.project.dto.request.CommentRequest;
+import com.senla.project.dto.response.CommentResponse;
 import java.util.List;
 
 public interface CommentService {

@@ -1,7 +1,7 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.ConversationResponse;
-import com.senla.project.dto.MessageRequest;
+import com.senla.project.dto.response.ConversationResponse;
+import com.senla.project.dto.request.MessageRequest;
 import com.senla.project.repository.MessageRepository;
 import com.senla.project.service.MessageService;
 import lombok.AllArgsConstructor;

@@ -1,12 +1,11 @@
-package com.senla.project.dto;
+package com.senla.project.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ProposalReceivedResponse {
+public class ProposalSentResponse {
   private Long adId;
-  private Long senderId;
   private int price;
 }

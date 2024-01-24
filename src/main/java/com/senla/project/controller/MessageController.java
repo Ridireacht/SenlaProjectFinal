@@ -1,7 +1,7 @@
 package com.senla.project.controller;
 
-import com.senla.project.dto.ConversationResponse;
-import com.senla.project.dto.MessageRequest;
+import com.senla.project.dto.response.ConversationResponse;
+import com.senla.project.dto.request.MessageRequest;
 import com.senla.project.service.ConversationService;
 import com.senla.project.service.MessageService;
 import com.senla.project.service.UserService;

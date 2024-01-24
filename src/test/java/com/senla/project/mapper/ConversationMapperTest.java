@@ -2,8 +2,8 @@ package com.senla.project.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.senla.project.dto.ConversationResponse;
-import com.senla.project.dto.MessageResponse;
+import com.senla.project.dto.response.ConversationResponse;
+import com.senla.project.dto.response.MessageResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Conversation;
 import com.senla.project.entity.Message;

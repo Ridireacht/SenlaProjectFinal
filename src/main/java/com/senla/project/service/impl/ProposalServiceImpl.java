@@ -1,8 +1,8 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.ProposalReceivedResponse;
-import com.senla.project.dto.ProposalRequest;
-import com.senla.project.dto.ProposalSentResponse;
+import com.senla.project.dto.response.ProposalReceivedResponse;
+import com.senla.project.dto.request.ProposalRequest;
+import com.senla.project.dto.response.ProposalSentResponse;
 import com.senla.project.repository.ProposalRepository;
 import com.senla.project.service.ProposalService;
 import java.util.List;

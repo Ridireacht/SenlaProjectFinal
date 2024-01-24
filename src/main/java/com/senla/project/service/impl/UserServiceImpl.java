@@ -1,6 +1,6 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.UserResponse;
+import com.senla.project.dto.response.UserResponse;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.UserService;
 import java.util.List;

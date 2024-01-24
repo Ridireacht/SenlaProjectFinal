@@ -2,9 +2,9 @@ package com.senla.project.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.senla.project.dto.ProposalReceivedResponse;
-import com.senla.project.dto.ProposalRequest;
-import com.senla.project.dto.ProposalSentResponse;
+import com.senla.project.dto.response.ProposalReceivedResponse;
+import com.senla.project.dto.request.ProposalRequest;
+import com.senla.project.dto.response.ProposalSentResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Proposal;
 import com.senla.project.entity.User;

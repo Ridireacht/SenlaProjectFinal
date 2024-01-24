@@ -2,11 +2,11 @@ package com.senla.project.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.senla.project.dto.AdClosedResponse;
-import com.senla.project.dto.AdCurrentResponse;
-import com.senla.project.dto.AdPurchasedResponse;
-import com.senla.project.dto.AdRequest;
-import com.senla.project.dto.AdResponse;
+import com.senla.project.dto.response.AdClosedResponse;
+import com.senla.project.dto.response.AdCurrentResponse;
+import com.senla.project.dto.response.AdPurchasedResponse;
+import com.senla.project.dto.request.AdRequest;
+import com.senla.project.dto.response.AdResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.User;
 import com.senla.project.entity.UserScore;

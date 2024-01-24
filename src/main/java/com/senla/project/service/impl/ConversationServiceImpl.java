@@ -1,6 +1,6 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.ConversationResponse;
+import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.repository.ConversationRepository;
 import com.senla.project.service.ConversationService;
 import java.util.List;

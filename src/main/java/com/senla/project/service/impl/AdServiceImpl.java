@@ -1,10 +1,10 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.AdClosedResponse;
-import com.senla.project.dto.AdCurrentResponse;
-import com.senla.project.dto.AdPurchasedResponse;
-import com.senla.project.dto.AdRequest;
-import com.senla.project.dto.AdResponse;
+import com.senla.project.dto.response.AdClosedResponse;
+import com.senla.project.dto.response.AdCurrentResponse;
+import com.senla.project.dto.response.AdPurchasedResponse;
+import com.senla.project.dto.request.AdRequest;
+import com.senla.project.dto.response.AdResponse;
 import com.senla.project.repository.AdRepository;
 import com.senla.project.service.AdService;
 import java.util.List;

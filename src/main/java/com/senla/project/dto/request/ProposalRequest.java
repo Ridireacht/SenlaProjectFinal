@@ -1,4 +1,4 @@
-package com.senla.project.dto;
+package com.senla.project.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
