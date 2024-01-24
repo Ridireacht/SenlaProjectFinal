@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import com.senla.project.dto.request.UserScoreRequest;
@@ -47,6 +48,7 @@ public class UserScoreServiceTest {
     userScoreRequest.setScore(score);
 
     when(adRepository.findById(adId)).thenReturn(Optional.of(ad));
+    doNothing().when(adRepository.save(ad));
 
     AdPurchasedResponse result = userScoreService.setUserScoreByAdId(userId, adId, userScoreRequest);
 
