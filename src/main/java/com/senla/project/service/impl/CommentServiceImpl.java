@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -36,6 +37,7 @@ public class CommentServiceImpl implements CommentService {
         .collect(Collectors.toList());
   }
 
+  @Transactional
   @Override
   public CommentResponse createComment(Long userId, Long adId, CommentRequest commentRequest) {
     User sender = userRepository.findById(userId).get();
@@ -51,6 +53,7 @@ public class CommentServiceImpl implements CommentService {
     return commentMapper.mapToCommentResponse(savedComment);
   }
 
+  @Transactional
   @Override
   public CommentResponse updateComment(Long commentId, CommentRequest commentRequest) {
     Comment existingComment = commentRepository.findById(commentId).get();
@@ -62,6 +65,7 @@ public class CommentServiceImpl implements CommentService {
     return commentMapper.mapToCommentResponse(updatedComment);
   }
 
+  @Transactional
   @Override
   public boolean deleteComment(Long commentId) {
     if (commentRepository.existsById(commentId)) {

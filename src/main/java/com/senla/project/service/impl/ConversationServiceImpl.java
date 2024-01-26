@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -40,6 +41,7 @@ public class ConversationServiceImpl implements ConversationService {
     return conversationMapper.mapToConversationResponse(conversation);
   }
 
+  @Transactional
   @Override
   public ConversationResponse createConversationByAdId(Long userId, Long adId) {
     Ad ad = adRepository.findById(adId).get();
@@ -54,6 +56,7 @@ public class ConversationServiceImpl implements ConversationService {
     return conversationMapper.mapToConversationResponse(savedConversation);
   }
 
+  @Transactional
   @Override
   public boolean deleteConversation(Long conversationId) {
     if (conversationRepository.existsById(conversationId)) {

@@ -7,6 +7,7 @@ import com.senla.project.service.RatingService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -14,7 +15,8 @@ public class RatingServiceImpl implements RatingService {
 
   private final RatingRepository ratingRepository;
 
-
+  @Transactional
+  @Override
   public void updateRatingForUser(Long userId) {
     Rating rating = ratingRepository.findByUserId(userId).get();
     List<UserScore> userRatings = rating.getUserRatings();

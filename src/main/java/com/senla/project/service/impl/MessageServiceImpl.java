@@ -13,6 +13,7 @@ import com.senla.project.service.MessageService;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -25,6 +26,7 @@ public class MessageServiceImpl implements MessageService {
   private final ConversationMapper conversationMapper;
 
 
+  @Transactional
   @Override
   public ConversationResponse sendMessageWithConversationId(Long userId, Long conversationId,
       MessageRequest messageRequest) {

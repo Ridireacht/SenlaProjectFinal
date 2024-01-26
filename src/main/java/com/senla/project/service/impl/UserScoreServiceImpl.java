@@ -11,6 +11,7 @@ import com.senla.project.service.RatingService;
 import com.senla.project.service.UserScoreService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +25,7 @@ public class UserScoreServiceImpl implements UserScoreService {
   private final AdMapper adMapper;
 
 
+  @Transactional
   @Override
   public AdPurchasedResponse setUserScoreByAdId(Long userId, Long adId,
       UserScoreRequest userScoreRequest) {

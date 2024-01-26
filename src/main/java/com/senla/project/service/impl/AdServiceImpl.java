@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -65,6 +66,7 @@ public class AdServiceImpl implements AdService {
     return adMapper.mapToAdResponse(ad);
   }
 
+  @Transactional
   @Override
   public AdResponse createAd(Long userId, AdRequest adRequest) {
     User seller = userRepository.findById(userId).get();
@@ -77,6 +79,7 @@ public class AdServiceImpl implements AdService {
     return adMapper.mapToAdResponse(savedAd);
   }
 
+  @Transactional
   @Override
   public AdResponse updateAd(Long adId, AdRequest adRequest) {
     Ad existingAd = adRepository.findById(adId).orElse(null);
@@ -90,6 +93,7 @@ public class AdServiceImpl implements AdService {
     return null;
   }
 
+  @Transactional
   @Override
   public AdResponse makeAdPremium(Long adId) {
     Ad ad = adRepository.findById(adId).get();
@@ -100,6 +104,7 @@ public class AdServiceImpl implements AdService {
     return adMapper.mapToAdResponse(ad);
   }
 
+  @Transactional
   @Override
   public boolean deleteAd(Long adId) {
     if (adRepository.existsById(adId)) {

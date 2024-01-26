@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -46,6 +47,7 @@ public class ProposalServiceImpl implements ProposalService {
         .collect(Collectors.toList());
   }
 
+  @Transactional
   @Override
   public ProposalSentResponse createProposal(Long userId, ProposalRequest proposalRequest) {
     User sender = userRepository.findById(userId).get();
@@ -60,6 +62,7 @@ public class ProposalServiceImpl implements ProposalService {
     return proposalMapper.mapToProposalSentResponse(savedProposal);
   }
 
+  @Transactional
   @Override
   public boolean acceptProposalById(Long proposalId) {
     Proposal proposal = proposalRepository.findById(proposalId).get();
@@ -72,6 +75,7 @@ public class ProposalServiceImpl implements ProposalService {
     return true;
   }
 
+  @Transactional
   @Override
   public boolean declineProposalById(Long proposalId) {
     proposalRepository.deleteById(proposalId);
@@ -89,4 +93,5 @@ public class ProposalServiceImpl implements ProposalService {
 
     return proposal.getAd().getSeller().getId().equals(currentUserId);
   }
+
 }
