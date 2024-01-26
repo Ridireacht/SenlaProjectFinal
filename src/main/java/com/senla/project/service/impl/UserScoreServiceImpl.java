@@ -7,6 +7,7 @@ import com.senla.project.entity.UserScore;
 import com.senla.project.mapper.AdMapper;
 import com.senla.project.mapper.UserScoreMapper;
 import com.senla.project.repository.AdRepository;
+import com.senla.project.service.RatingService;
 import com.senla.project.service.UserScoreService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class UserScoreServiceImpl implements UserScoreService {
+
+  private final RatingService ratingService;
 
   private final AdRepository adRepository;
 
@@ -28,6 +31,8 @@ public class UserScoreServiceImpl implements UserScoreService {
 
     Ad ad = adRepository.findById(adId).get();
     ad.setScore(userScore);
+
+    ratingService.updateRatingForUser(userScore.getUser().getId());
 
     Ad savedAd = adRepository.save(ad);
     return adMapper.mapToAdPurchasedResponse(savedAd);
