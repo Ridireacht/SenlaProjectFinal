@@ -44,6 +44,19 @@ public class ProposalController {
     return proposalService.createProposal(getCurrentUserId(), proposalRequest);
   }
 
+  @PostMapping("/received/{id}")
+  public ResponseEntity<Boolean> acceptProposal(@PathVariable("{id}") Long proposalId) {
+    if (!proposalService.doesProposalExist(proposalId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    if (!proposalService.wasProposalSentToUser(proposalId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    return ResponseEntity.ok(proposalService.acceptProposalById(proposalId));
+  }
+
   @DeleteMapping("/received/{id}")
   public ResponseEntity<Boolean> declineProposal(@PathVariable("{id}") Long proposalId) {
     if (!proposalService.doesProposalExist(proposalId)) {

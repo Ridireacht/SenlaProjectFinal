@@ -32,6 +32,11 @@ public class ProposalServiceImpl implements ProposalService {
   }
 
   @Override
+  public boolean acceptProposalById(Long proposalId) {
+    return false;
+  }
+
+  @Override
   public boolean declineProposalById(Long proposalId) {
     return false;
   }
