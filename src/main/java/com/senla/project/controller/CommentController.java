@@ -44,7 +44,7 @@ public class CommentController {
 
     // Здесь, в отличие от прочих использований этой конструкции, не используется отрицание -
     // создатель объявления НЕ должен иметь возможности оставить комментарий у себя же.
-    if (adService.isAdAvailableForUser(adId, getCurrentUserId())) {
+    if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 

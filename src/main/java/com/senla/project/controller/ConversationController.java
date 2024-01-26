@@ -51,7 +51,7 @@ public class ConversationController {
 
     // Здесь, в отличие от прочих использований этой конструкции, не используется отрицание -
     // создатель объявления НЕ должен иметь возможности начать с собой переписку.
-    if (adService.isAdAvailableForUser(adId, getCurrentUserId())) {
+    if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 

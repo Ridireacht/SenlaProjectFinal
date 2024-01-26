@@ -76,7 +76,7 @@ public class AdController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    if (!adService.isAdAvailableForUser(adId, getCurrentUserId())) {
+    if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
@@ -89,7 +89,7 @@ public class AdController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    if (!adService.isAdAvailableForUser(adId, getCurrentUserId())) {
+    if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
@@ -102,7 +102,7 @@ public class AdController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    if (!adService.isAdAvailableForUser(adId, getCurrentUserId())) {
+    if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
