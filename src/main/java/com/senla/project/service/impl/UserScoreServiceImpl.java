@@ -32,4 +32,5 @@ public class UserScoreServiceImpl implements UserScoreService {
     Ad savedAd = adRepository.save(ad);
     return adMapper.mapToAdPurchasedResponse(savedAd);
   }
+
 }

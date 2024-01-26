@@ -37,7 +37,9 @@ public class MessageServiceImpl implements MessageService {
     message.setContent(messageRequest.getContent());
     message.setPostedAt(LocalDateTime.now());
 
-    Message savedMessage = messageRepository.save(message);
+    messageRepository.save(message);
+
     return conversationMapper.mapToConversationResponse(conversation);
   }
+
 }
