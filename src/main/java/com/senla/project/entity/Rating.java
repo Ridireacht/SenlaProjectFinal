@@ -30,7 +30,7 @@ public class Rating {
   private User user;
 
   @Column(name = "average_score")
-  private double averageScore = 0.0;
+  private double averageScore = 2.5;
 
   @OneToMany(mappedBy = "rating", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<UserScore> userRatings = new ArrayList<>();
