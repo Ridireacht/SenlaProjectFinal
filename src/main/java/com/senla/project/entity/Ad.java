@@ -36,7 +36,7 @@ public class Ad {
   private int price;
 
   @Column(name = "is_premium")
-  private boolean isPremium;
+  private boolean isPremium = false;
 
   @Column(name = "posted_at")
   private LocalDateTime postedAt;
