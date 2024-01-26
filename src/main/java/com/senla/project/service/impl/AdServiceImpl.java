@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AdServiceImpl implements AdService {
 
-  final AdRepository adRepository;
-  final UserRepository userRepository;
+  private final AdRepository adRepository;
+  private final UserRepository userRepository;
 
 
   @Override
