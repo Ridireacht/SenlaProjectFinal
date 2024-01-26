@@ -17,12 +17,12 @@ public abstract class ProposalMapper {
 
 
   @Mapping(source = "ad.id", target = "adId")
-  abstract ProposalSentResponse mapToProposalSentResponse(Proposal proposal);
+  public abstract ProposalSentResponse mapToProposalSentResponse(Proposal proposal);
 
   @Mapping(source = "ad.id", target = "adId")
   @Mapping(source = "sender.id", target = "senderId")
-  abstract ProposalReceivedResponse mapToReceivedResponse(Proposal proposal);
+  public abstract ProposalReceivedResponse mapToProposalReceivedResponse(Proposal proposal);
 
   @Mapping(target = "ad", expression = "java(adRepository.findById(proposalRequest.getAdId()).get())")
-  abstract Proposal mapToProposal(ProposalRequest proposalRequest);
+  public abstract Proposal mapToProposal(ProposalRequest proposalRequest);
 }

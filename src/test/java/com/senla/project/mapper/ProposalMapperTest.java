@@ -66,7 +66,7 @@ public class ProposalMapperTest {
     expectedResponse.setSenderId(3L);
     expectedResponse.setPrice(100);
 
-    ProposalReceivedResponse actualResponse = mapper.mapToReceivedResponse(proposal);
+    ProposalReceivedResponse actualResponse = mapper.mapToProposalReceivedResponse(proposal);
 
     assertEquals(expectedResponse.getAdId(), actualResponse.getAdId());
     assertEquals(expectedResponse.getSenderId(), actualResponse.getSenderId());
