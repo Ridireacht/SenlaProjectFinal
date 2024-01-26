@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface AdRepository extends JpaRepository<Ad, Long> {
 
   @Query("SELECT a FROM Ad a WHERE a.isClosed = false AND a.seller.id = :userId")
-  List<Ad> findAllCurrentAdsBySellerId(@Param("userId") Long userId);
+  List<Ad> findAllBySellerIdAndIsClosedFalse(@Param("userId") Long userId);
 }

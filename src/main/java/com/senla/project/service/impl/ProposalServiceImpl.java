@@ -38,7 +38,7 @@ public class ProposalServiceImpl implements ProposalService {
 
   @Override
   public List<ProposalReceivedResponse> getAllReceivedProposalsByUserId(Long userId) {
-    List<Ad> userAds = adRepository.findAllCurrentAdsBySellerId(userId);
+    List<Ad> userAds = adRepository.findAllBySellerIdAndIsClosedFalse(userId);
     List<Proposal> receivedProposals = proposalRepository.findAllByAds(userAds);
 
     return receivedProposals.stream()
