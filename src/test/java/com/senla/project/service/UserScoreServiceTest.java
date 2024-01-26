@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import com.senla.project.dto.request.UserScoreRequest;
 import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.entity.Ad;
+import com.senla.project.entity.User;
 import com.senla.project.entity.UserScore;
 import com.senla.project.mapper.AdMapper;
 import com.senla.project.mapper.UserScoreMapper;
@@ -21,6 +22,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class UserScoreServiceTest {
+
+  @MockBean
+  RatingService ratingService;
 
   @MockBean
   AdRepository adRepository;
@@ -44,11 +48,15 @@ public class UserScoreServiceTest {
     Ad ad = new Ad();
     ad.setId(adId);
 
+    User user = new User();
+    user.setId(userId);
+
     UserScoreRequest userScoreRequest = new UserScoreRequest();
     userScoreRequest.setScore(score);
 
     UserScore expectedUserScore = new UserScore();
     expectedUserScore.setScore(score);
+    expectedUserScore.setUser(user);
 
     AdPurchasedResponse expectedAdPurchasedResponse = new AdPurchasedResponse();
     expectedAdPurchasedResponse.setId(adId);
