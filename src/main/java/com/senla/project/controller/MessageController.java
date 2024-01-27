@@ -34,7 +34,7 @@ public class MessageController {
     }
 
     if (!conversationService.doesConversationBelongToUser(conversationId, getCurrentUserId())) {
-      throw new ForbiddenException("This conversation is not available for you");
+      throw new ForbiddenException("You can't push messages to conversation not available for you");
     }
 
     return messageService.sendMessageWithConversationId(getCurrentUserId(), conversationId, messageRequest);

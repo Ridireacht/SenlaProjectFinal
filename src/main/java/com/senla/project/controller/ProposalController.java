@@ -3,6 +3,8 @@ package com.senla.project.controller;
 import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.request.ProposalRequest;
 import com.senla.project.dto.response.ProposalSentResponse;
+import com.senla.project.exception.ForbiddenException;
+import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
 import com.senla.project.service.ProposalService;
 import com.senla.project.service.UserService;
@@ -10,8 +12,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,42 +44,42 @@ public class ProposalController {
   }
 
   @PostMapping
-  public ResponseEntity<ProposalSentResponse> sendProposal(@Valid @RequestBody ProposalRequest proposalRequest) {
+  public ProposalSentResponse sendProposal(@Valid @RequestBody ProposalRequest proposalRequest) {
     if(adService.doesAdBelongToUser(proposalRequest.getAdId(), getCurrentUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new NotFoundException("Ad", proposalRequest.getAdId());
     }
 
     if (adService.isAdClosed(proposalRequest.getAdId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't make proposals for a closed ad");
     }
     
-    return ResponseEntity.ok(proposalService.createProposal(getCurrentUserId(), proposalRequest));
+    return proposalService.createProposal(getCurrentUserId(), proposalRequest);
   }
 
   @PostMapping("/received/{id}")
-  public ResponseEntity<Boolean> acceptProposal(@PathVariable("{id}") Long proposalId) {
+  public Boolean acceptProposal(@PathVariable("{id}") Long proposalId) {
     if (!proposalService.doesProposalExist(proposalId)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      throw new NotFoundException("Proposal", proposalId);
     }
 
     if (!proposalService.wasProposalSentToUser(proposalId, getCurrentUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't accept someone else's proposal");
     }
 
-    return ResponseEntity.ok(proposalService.acceptProposalById(proposalId));
+    return proposalService.acceptProposalById(proposalId);
   }
 
   @DeleteMapping("/received/{id}")
-  public ResponseEntity<Boolean> declineProposal(@PathVariable("{id}") Long proposalId) {
+  public Boolean declineProposal(@PathVariable("{id}") Long proposalId) {
     if (!proposalService.doesProposalExist(proposalId)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      throw new NotFoundException("Proposal", proposalId);
     }
 
     if (!proposalService.wasProposalSentToUser(proposalId, getCurrentUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't decline someone else's proposal");
     }
 
-    return ResponseEntity.ok(proposalService.declineProposalById(proposalId));
+    return proposalService.declineProposalById(proposalId);
   }
 
   private Long getCurrentUserId() {
