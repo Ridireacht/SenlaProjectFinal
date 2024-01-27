@@ -40,7 +40,7 @@ public class CommentController {
     return commentService.getAllCommentsByAdId(adId);
   }
 
-  @Operation(summary = "Создать комментарий", description = "Создать новый комментарий для указанного объявления")
+  @Operation(summary = "Создать комментарий", description = "Создать новый комментарий для указанного объявления. Возвращает этот комментарий.")
   @PostMapping
   public CommentResponse createComment(@PathVariable("adId") Long adId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -60,7 +60,7 @@ public class CommentController {
     return commentService.createComment(getCurrentUserId(), adId, commentRequest);
   }
 
-  @Operation(summary = "Обновить комментарий", description = "Обновить существующий комментарий")
+  @Operation(summary = "Обновить комментарий", description = "Обновить существующий комментарий. Возвращает этот комментарий.")
   @PutMapping("/{commentId}")
   public CommentResponse updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!commentService.doesCommentExist(commentId)) {
@@ -78,7 +78,7 @@ public class CommentController {
     return commentService.updateComment(commentId, commentRequest);
   }
 
-  @Operation(summary = "Удалить комментарий", description = "Удалить существующий комментарий")
+  @Operation(summary = "Удалить комментарий", description = "Удалить существующий комментарий. Возвращает boolean-результат операции.")
   @DeleteMapping("/{commentId}")
   public Boolean deleteComment(@PathVariable("commentId") Long commentId) {
     if (!commentService.doesCommentExist(commentId)) {

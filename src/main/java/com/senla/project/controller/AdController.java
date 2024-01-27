@@ -73,13 +73,13 @@ public class AdController {
     return adService.getAdById(adId);
   }
 
-  @Operation(summary = "Создать объявление", description = "Создать новое объявление по форме-реквесту")
+  @Operation(summary = "Создать объявление", description = "Создать новое объявление по форме-реквесту. Возвращает это объявление.")
   @PostMapping
   public AdResponse createAd(@Valid @RequestBody AdRequest adRequest) {
     return adService.createAd(getCurrentUserId(), adRequest);
   }
 
-  @Operation(summary = "Обновить объявление", description = "Обновить существующее объявление по форме-реквесту")
+  @Operation(summary = "Обновить объявление", description = "Обновить существующее объявление по форме-реквесту. Возвращает это объявление.")
   @PutMapping("/{id}")
   public AdResponse updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -97,7 +97,7 @@ public class AdController {
     return adService.updateAd(adId, adRequest);
   }
 
-  @Operation(summary = "Сделать объявление премиальным", description = "Сделать объявление премиальным по его id")
+  @Operation(summary = "Сделать объявление премиальным", description = "Сделать объявление премиальным по его id. Возвращает это объявление")
   @PutMapping("/{id}/premium")
   public AdResponse makeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -115,7 +115,7 @@ public class AdController {
     return adService.makeAdPremium(adId);
   }
 
-  @Operation(summary = "Удалить объявление", description = "Полностью удалить объявление по его id")
+  @Operation(summary = "Удалить объявление", description = "Полностью удалить объявление по его id. Возвращает boolean-результат операции.")
   @DeleteMapping("/{id}")
   public Boolean deleteAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
