@@ -10,14 +10,10 @@ import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -85,7 +81,7 @@ public class AdController {
 
   @Operation(summary = "Update ad", description = "Обновить существующее объявление по форме-реквесту")
   @PutMapping("/{id}")
-  public ResponseEntity<AdResponse> updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
+  public AdResponse updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }
@@ -98,12 +94,12 @@ public class AdController {
       throw new ForbiddenException("You can't update a closed ad");
     }
 
-    return ResponseEntity.ok(adService.updateAd(adId, adRequest));
+    return adService.updateAd(adId, adRequest);
   }
 
   @Operation(summary = "Make ad premium", description = "Сделать объявление премиальным по его id")
   @PutMapping("/{id}/premium")
-  public ResponseEntity<AdResponse> makeAdPremium(@PathVariable("id") Long adId) {
+  public AdResponse makeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }
@@ -116,12 +112,12 @@ public class AdController {
       throw new ForbiddenException("You can't make a closed ad premium one");
     }
 
-    return ResponseEntity.ok(adService.makeAdPremium(adId));
+    return adService.makeAdPremium(adId);
   }
 
   @Operation(summary = "Delete ad", description = "Полностью удалить объявление по его id")
   @DeleteMapping("/{id}")
-  public ResponseEntity<Boolean> deleteAd(@PathVariable("id") Long adId) {
+  public Boolean deleteAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }
@@ -134,7 +130,7 @@ public class AdController {
       throw new ForbiddenException("You can't delete a closed ad");
     }
 
-    return ResponseEntity.ok(adService.deleteAd(adId));
+    return adService.deleteAd(adId);
   }
 
 
