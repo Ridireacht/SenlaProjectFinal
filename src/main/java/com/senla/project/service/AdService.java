@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AdService {
 
-  List<AdResponse> getAllAds();
+  List<AdResponse> getAllAdsFromOthers(Long userId);
 
   List<AdCurrentResponse> getCurrentAdsByUserId(Long userId);
 

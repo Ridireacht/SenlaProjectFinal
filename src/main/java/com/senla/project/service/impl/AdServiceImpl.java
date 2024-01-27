@@ -29,8 +29,8 @@ public class AdServiceImpl implements AdService {
 
 
   @Override
-  public List<AdResponse> getAllAds() {
-    List<Ad> ads = adRepository.findAll();
+  public List<AdResponse> getAllAdsFromOthers(Long userId) {
+    List<Ad> ads = adRepository.findAllByNotSellerIdAndIsClosedFalse(userId);
     return ads.stream()
         .map(adMapper::mapToAdResponse)
         .collect(Collectors.toList());

@@ -35,8 +35,8 @@ public class AdController {
 
 
   @GetMapping
-  public List<AdResponse> getAllAds() {
-    return adService.getAllAds();
+  public List<AdResponse> getAllAdsFromOthers() {
+    return adService.getAllAdsFromOthers(getCurrentUserId());
   }
 
   @GetMapping("/current")
