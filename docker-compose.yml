@@ -48,7 +48,10 @@ services:
 
   tomcat-deployer:
     depends_on:
-      - postgres
+      postgres:
+        condition: service_started
+      maven-builder:
+        condition: service_completed_successfully
     image: tomcat:10-jre17
     volumes:
       - maven-target:/usr/local/tomcat/webapps
