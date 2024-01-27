@@ -7,6 +7,7 @@ import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
 import com.senla.project.service.CommentService;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -33,11 +34,13 @@ public class CommentController {
   private final AdService adService;
 
 
+  @Operation(summary = "Получить все комментарии", description = "Получить список всех комментариев для указанного объявления")
   @GetMapping
   public List<CommentResponse> getAllComments(@PathVariable("adId") Long adId) {
     return commentService.getAllCommentsByAdId(adId);
   }
 
+  @Operation(summary = "Создать комментарий", description = "Создать новый комментарий для указанного объявления")
   @PostMapping
   public CommentResponse createComment(@PathVariable("adId") Long adId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -57,6 +60,7 @@ public class CommentController {
     return commentService.createComment(getCurrentUserId(), adId, commentRequest);
   }
 
+  @Operation(summary = "Обновить комментарий", description = "Обновить существующий комментарий")
   @PutMapping("/{commentId}")
   public CommentResponse updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!commentService.doesCommentExist(commentId)) {
@@ -74,6 +78,7 @@ public class CommentController {
     return commentService.updateComment(commentId, commentRequest);
   }
 
+  @Operation(summary = "Удалить комментарий", description = "Удалить существующий комментарий")
   @DeleteMapping("/{commentId}")
   public Boolean deleteComment(@PathVariable("commentId") Long commentId) {
     if (!commentService.doesCommentExist(commentId)) {
