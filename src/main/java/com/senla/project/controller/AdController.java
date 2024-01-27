@@ -7,6 +7,7 @@ import com.senla.project.dto.request.AdRequest;
 import com.senla.project.dto.response.AdResponse;
 import com.senla.project.service.AdService;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -34,26 +35,31 @@ public class AdController {
   private final UserService userService;
 
 
+  @Operation(summary = "Get all ads from others", description = "Получить список всех активных объявлений, которые не принадлежат текущему пользователю")
   @GetMapping
   public List<AdResponse> getAllAdsFromOthers() {
     return adService.getAllAdsFromOthers(getCurrentUserId());
   }
 
+  @Operation(summary = "Get current ads", description = "Получить список всех активных объявлений текущего пользователя")
   @GetMapping("/current")
   public List<AdCurrentResponse> getCurrentAds() {
     return adService.getCurrentAdsByUserId(getCurrentUserId());
   }
 
+  @Operation(summary = "Get closed ads", description = "Получить список всех неактивных (закрытых) объявлений текущего пользователя")
   @GetMapping("/closed")
   public List<AdClosedResponse> getClosedAds() {
     return adService.getClosedAdsByUserId(getCurrentUserId());
   }
 
+  @Operation(summary = "Get purchased ads", description = "Получить список всех выкупленных текущим пользователем объявлений")
   @GetMapping("/purchased")
   public List<AdPurchasedResponse> getPurchasedAds() {
     return adService.getPurchasedAdsByUserId(getCurrentUserId());
   }
 
+  @Operation(summary = "Get ad", description = "Получить конкретное объявление по его id")
   @GetMapping("/{id}")
   public ResponseEntity<AdResponse> getAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -67,11 +73,13 @@ public class AdController {
     return ResponseEntity.ok(adService.getAdById(adId));
   }
 
+  @Operation(summary = "Create ad", description = "Создать новое объявление")
   @PostMapping
   public AdResponse createAd(@Valid @RequestBody AdRequest adRequest) {
     return adService.createAd(getCurrentUserId(), adRequest);
   }
 
+  @Operation(summary = "Update ad", description = "Обновить существующее объявление")
   @PutMapping("/{id}")
   public ResponseEntity<AdResponse> updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -89,6 +97,7 @@ public class AdController {
     return ResponseEntity.ok(adService.updateAd(adId, adRequest));
   }
 
+  @Operation(summary = "Make ad premium", description = "Сделать объявление премиальным")
   @PutMapping("/{id}/premium")
   public ResponseEntity<AdResponse> makeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -106,6 +115,7 @@ public class AdController {
     return ResponseEntity.ok(adService.makeAdPremium(adId));
   }
 
+  @Operation(summary = "Delete ad", description = "Полностью удалить объявление")
   @DeleteMapping("/{id}")
   public ResponseEntity<Boolean> deleteAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
