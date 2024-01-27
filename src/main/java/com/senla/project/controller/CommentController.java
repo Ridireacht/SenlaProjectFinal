@@ -2,6 +2,8 @@ package com.senla.project.controller;
 
 import com.senla.project.dto.request.CommentRequest;
 import com.senla.project.dto.response.CommentResponse;
+import com.senla.project.exception.ForbiddenException;
+import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
 import com.senla.project.service.CommentService;
 import com.senla.project.service.UserService;
@@ -9,8 +11,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,56 +39,56 @@ public class CommentController {
   }
 
   @PostMapping
-  public ResponseEntity<CommentResponse> createComment(@PathVariable("adId") Long adId, @Valid @RequestBody CommentRequest commentRequest) {
+  public CommentResponse createComment(@PathVariable("adId") Long adId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!adService.doesAdExist(adId)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      throw new NotFoundException("Ad", adId);
     }
 
     // Здесь, в отличие от прочих использований этой конструкции, не используется отрицание -
     // создатель объявления НЕ должен иметь возможности оставить комментарий у себя же.
     if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't leave a comment on your own ad");
     }
 
     if (adService.isAdClosed(adId)) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't leave a comment on a closed ad");
     }
 
-    return ResponseEntity.ok(commentService.createComment(getCurrentUserId(), adId, commentRequest));
+    return commentService.createComment(getCurrentUserId(), adId, commentRequest);
   }
 
   @PutMapping("/{commentId}")
-  public ResponseEntity<CommentResponse> updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
+  public CommentResponse updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!commentService.doesCommentExist(commentId)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      throw new NotFoundException("Comment", commentId);
     }
 
     if (!commentService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't update someone else's comment");
     }
 
     if (adService.isAdClosed(commentService.getAdId(commentId))) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't update a comment on a closed ad");
     }
 
-    return ResponseEntity.ok(commentService.updateComment(commentId, commentRequest));
+    return commentService.updateComment(commentId, commentRequest);
   }
 
   @DeleteMapping("/{commentId}")
-  public ResponseEntity<Boolean> deleteComment(@PathVariable("commentId") Long commentId) {
+  public Boolean deleteComment(@PathVariable("commentId") Long commentId) {
     if (!commentService.doesCommentExist(commentId)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      throw new NotFoundException("Comment", commentId);
     }
 
     if (!commentService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't delete someone else's comment");
     }
 
     if (adService.isAdClosed(commentService.getAdId(commentId))) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't delete a comment on a closed ad");
     }
 
-    return ResponseEntity.ok(commentService.deleteComment(commentId));
+    return commentService.deleteComment(commentId);
   }
 
 
