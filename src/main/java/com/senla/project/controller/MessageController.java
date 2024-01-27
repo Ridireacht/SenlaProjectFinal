@@ -2,15 +2,14 @@ package com.senla.project.controller;
 
 import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.dto.request.MessageRequest;
-import com.senla.project.service.AdService;
+import com.senla.project.exception.ForbiddenException;
+import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.ConversationService;
 import com.senla.project.service.MessageService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,16 +28,16 @@ public class MessageController {
 
 
   @PostMapping("/conversations/{id}/messages")
-  public ResponseEntity<ConversationResponse> sendMessage(@PathVariable("id") Long conversationId, @Valid @RequestBody MessageRequest messageRequest) {
+  public ConversationResponse sendMessage(@PathVariable("id") Long conversationId, @Valid @RequestBody MessageRequest messageRequest) {
     if (!conversationService.doesConversationExist(conversationId)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      throw new NotFoundException("Conversation", conversationId);
     }
 
     if (!conversationService.doesConversationBelongToUser(conversationId, getCurrentUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("This conversation is not available for you");
     }
 
-    return ResponseEntity.ok(messageService.sendMessageWithConversationId(getCurrentUserId(), conversationId, messageRequest));
+    return messageService.sendMessageWithConversationId(getCurrentUserId(), conversationId, messageRequest);
   }
 
   private Long getCurrentUserId() {
