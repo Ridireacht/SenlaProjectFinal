@@ -82,6 +82,10 @@ public class AdController {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+    if (adService.isAdClosed(adId)) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
     return ResponseEntity.ok(adService.updateAd(adId, adRequest));
   }
 
@@ -95,6 +99,10 @@ public class AdController {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+    if (adService.isAdClosed(adId)) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
     return ResponseEntity.ok(adService.makeAdPremium(adId));
   }
 
@@ -105,6 +113,10 @@ public class AdController {
     }
 
     if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    if (adService.isAdClosed(adId)) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 

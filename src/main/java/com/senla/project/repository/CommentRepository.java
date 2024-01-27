@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-  @Query("SELECT FROM Comment c WHERE c.ad.id = :adId")
+  @Query("SELECT c FROM Comment c WHERE c.ad.id = :adId")
   List<Comment> findAllByAdId(Long adId);
 }
