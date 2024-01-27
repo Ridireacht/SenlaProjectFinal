@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Предложение", description = "API для управления предложениями")
+@Tag(name = "Proposal", description = "Предоставляет API для управления предложениями")
 @RestController
 @RequestMapping("/proposals")
 @AllArgsConstructor

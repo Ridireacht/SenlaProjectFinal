@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Переписка", description = "API для управления переписками")
+@Tag(name = "Conversation", description = "Предоставляет API для управления переписками")
 @RestController
 @AllArgsConstructor
 public class ConversationController {

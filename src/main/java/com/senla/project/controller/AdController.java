@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Объявление", description = "API для управления объявлениями")
+@Tag(name = "Ad", description = "Предоставляет API для управления объявлениями")
 @RestController
 @RequestMapping("/ads")
 @AllArgsConstructor

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Комментарий", description = "API для управления комментариями")
+@Tag(name = "Comment", description = "Предоставляет API для управления комментариями")
 @RestController
 @RequestMapping("/ads/{adId}/comments")
 @AllArgsConstructor

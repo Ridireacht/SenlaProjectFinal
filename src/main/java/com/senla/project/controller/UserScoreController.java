@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Оценка объявлению", description = "API для управления оценками объявлений")
+@Tag(name = "UserScore", description = "Предоставляет API для управления оценками объявлений")
 @RestController
 @RequestMapping("/ads/purchased/{id}")
 @AllArgsConstructor
