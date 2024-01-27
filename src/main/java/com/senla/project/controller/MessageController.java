@@ -26,7 +26,6 @@ public class MessageController {
   private final MessageService messageService;
   private final UserService userService;
   private final ConversationService conversationService;
-  private final AdService adService;
 
 
   @PostMapping("/conversations/{id}/messages")
@@ -36,10 +35,6 @@ public class MessageController {
     }
 
     if (!conversationService.doesConversationBelongToUser(conversationId, getCurrentUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
-
-    if (adService.isAdClosed(conversationService.getAdId(conversationId))) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 

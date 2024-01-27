@@ -8,6 +8,7 @@ import com.senla.project.entity.Proposal;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.ProposalMapper;
 import com.senla.project.repository.AdRepository;
+import com.senla.project.repository.ConversationRepository;
 import com.senla.project.repository.ProposalRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.ProposalService;
@@ -24,6 +25,7 @@ public class ProposalServiceImpl implements ProposalService {
   private final ProposalRepository proposalRepository;
   private final AdRepository adRepository;
   private final UserRepository userRepository;
+  private final ConversationRepository conversationRepository;
 
   private final ProposalMapper proposalMapper;
 
@@ -72,6 +74,7 @@ public class ProposalServiceImpl implements ProposalService {
     adRepository.save(ad);
 
     proposalRepository.deleteAllByAd(ad);
+    conversationRepository.deleteAllByAd(ad);
     return true;
   }
 
