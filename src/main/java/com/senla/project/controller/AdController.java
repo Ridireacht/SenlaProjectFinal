@@ -73,13 +73,13 @@ public class AdController {
     return ResponseEntity.ok(adService.getAdById(adId));
   }
 
-  @Operation(summary = "Create ad", description = "Создать новое объявление")
+  @Operation(summary = "Create ad", description = "Создать новое объявление по форме-реквесту")
   @PostMapping
   public AdResponse createAd(@Valid @RequestBody AdRequest adRequest) {
     return adService.createAd(getCurrentUserId(), adRequest);
   }
 
-  @Operation(summary = "Update ad", description = "Обновить существующее объявление")
+  @Operation(summary = "Update ad", description = "Обновить существующее объявление по форме-реквесту")
   @PutMapping("/{id}")
   public ResponseEntity<AdResponse> updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -97,7 +97,7 @@ public class AdController {
     return ResponseEntity.ok(adService.updateAd(adId, adRequest));
   }
 
-  @Operation(summary = "Make ad premium", description = "Сделать объявление премиальным")
+  @Operation(summary = "Make ad premium", description = "Сделать объявление премиальным по его id")
   @PutMapping("/{id}/premium")
   public ResponseEntity<AdResponse> makeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -115,7 +115,7 @@ public class AdController {
     return ResponseEntity.ok(adService.makeAdPremium(adId));
   }
 
-  @Operation(summary = "Delete ad", description = "Полностью удалить объявление")
+  @Operation(summary = "Delete ad", description = "Полностью удалить объявление по его id")
   @DeleteMapping("/{id}")
   public ResponseEntity<Boolean> deleteAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
