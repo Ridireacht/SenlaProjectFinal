@@ -5,6 +5,7 @@ import com.senla.project.dto.response.CommentResponse;
 import com.senla.project.service.AdService;
 import com.senla.project.service.CommentService;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Комментарий", description = "API для управления комментариями")
 @RestController
 @RequestMapping("/ads/{adId}/comments")
 @AllArgsConstructor

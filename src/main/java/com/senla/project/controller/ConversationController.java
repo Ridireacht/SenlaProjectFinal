@@ -4,6 +4,7 @@ import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.service.AdService;
 import com.senla.project.service.ConversationService;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Переписка", description = "API для управления переписками")
 @RestController
 @AllArgsConstructor
 public class ConversationController {

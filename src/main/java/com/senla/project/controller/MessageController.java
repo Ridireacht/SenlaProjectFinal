@@ -5,6 +5,7 @@ import com.senla.project.dto.request.MessageRequest;
 import com.senla.project.service.ConversationService;
 import com.senla.project.service.MessageService;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Сообщение", description = "API для управления сообщениями")
 @RestController
 @AllArgsConstructor
 public class MessageController {

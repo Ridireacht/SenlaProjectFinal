@@ -5,6 +5,7 @@ import com.senla.project.dto.request.UserScoreRequest;
 import com.senla.project.service.AdService;
 import com.senla.project.service.UserScoreService;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Оценка объявлению", description = "API для управления оценками объявлений")
 @RestController
 @RequestMapping("/ads/purchased/{id}")
 @AllArgsConstructor
