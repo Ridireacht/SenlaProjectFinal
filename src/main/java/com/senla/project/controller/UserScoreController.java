@@ -2,14 +2,14 @@ package com.senla.project.controller;
 
 import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.request.UserScoreRequest;
+import com.senla.project.exception.ForbiddenException;
+import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
 import com.senla.project.service.UserScoreService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,20 +30,20 @@ public class UserScoreController {
 
 
   @PostMapping
-  public ResponseEntity<AdPurchasedResponse> setUserScore(@PathVariable("{id}") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
+  public AdPurchasedResponse setUserScore(@PathVariable("{id}") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
     if (!adService.doesAdExist(adId)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      throw new NotFoundException("Ad", adId);
     }
 
     if (!adService.didUserBoughtAd(adId, getCurrentUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't set a score on ad you didn't buy");
     }
 
     if (adService.isAdAlreadyScored(adId)) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+      throw new ForbiddenException("You can't set a new score, ad already has one");
     }
 
-    return ResponseEntity.ok(userScoreService.setUserScoreByAdId(getCurrentUserId(), adId, userScoreRequest));
+    return userScoreService.setUserScoreByAdId(getCurrentUserId(), adId, userScoreRequest);
   }
 
   private Long getCurrentUserId() {

@@ -1,12 +1,11 @@
 package com.senla.project.controller;
 
 import com.senla.project.dto.response.UserResponse;
+import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +26,11 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<UserResponse> getUser(@PathVariable("id") Long userId) {
+  public UserResponse getUser(@PathVariable("id") Long userId) {
     if (!userService.doesUserExist(userId)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      throw new NotFoundException("User", userId);
     }
 
-    return ResponseEntity.ok(userService.getUserById(userId));
+    return userService.getUserById(userId);
   }
 }
