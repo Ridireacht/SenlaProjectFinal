@@ -34,7 +34,11 @@ public class UserScoreController {
     }
 
     if (!adService.didUserBoughtAd(adId, getCurrentUserId())) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    if (adService.isAdAlreadyScored(adId)) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
     return ResponseEntity.ok(userScoreService.setUserScoreByAdId(getCurrentUserId(), adId, userScoreRequest));

@@ -138,4 +138,10 @@ public class AdServiceImpl implements AdService {
     return ad.getBuyer().getId().equals(currentUserId);
   }
 
+  @Override
+  public boolean isAdAlreadyScored(Long adId) {
+    Ad ad = adRepository.findById(adId).get();
+    return ad.getScore() != null;
+  }
+
 }

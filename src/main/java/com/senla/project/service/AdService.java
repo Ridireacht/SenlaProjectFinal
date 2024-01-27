@@ -34,4 +34,6 @@ public interface AdService {
   boolean doesAdBelongToUser(Long adId, Long currentUserId);
 
   boolean didUserBoughtAd(Long adId, Long currentUserId);
+
+  boolean isAdAlreadyScored(Long adId);
 }
