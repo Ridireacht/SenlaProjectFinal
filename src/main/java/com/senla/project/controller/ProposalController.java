@@ -3,6 +3,7 @@ package com.senla.project.controller;
 import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.request.ProposalRequest;
 import com.senla.project.dto.response.ProposalSentResponse;
+import com.senla.project.service.AdService;
 import com.senla.project.service.ProposalService;
 import com.senla.project.service.UserService;
 import jakarta.validation.Valid;
@@ -27,6 +28,7 @@ public class ProposalController {
 
   private final ProposalService proposalService;
   private final UserService userService;
+  private final AdService adService;
 
 
   @GetMapping("/sent")
@@ -40,8 +42,12 @@ public class ProposalController {
   }
 
   @PostMapping
-  public ProposalSentResponse sendProposal(@Valid @RequestBody ProposalRequest proposalRequest) {
-    return proposalService.createProposal(getCurrentUserId(), proposalRequest);
+  public ResponseEntity<ProposalSentResponse> sendProposal(@Valid @RequestBody ProposalRequest proposalRequest) {
+    if(adService.doesAdBelongToUser(proposalRequest.getAdId(), getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+    
+    return ResponseEntity.ok(proposalService.createProposal(getCurrentUserId(), proposalRequest));
   }
 
   @PostMapping("/received/{id}")
