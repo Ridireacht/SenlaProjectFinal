@@ -50,6 +50,10 @@ public class CommentController {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+    if (adService.isAdClosed(adId)) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
     return ResponseEntity.ok(commentService.createComment(getCurrentUserId(), adId, commentRequest));
   }
 
@@ -63,6 +67,10 @@ public class CommentController {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+    if (adService.isAdClosed(commentService.getAdId(commentId))) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
     return ResponseEntity.ok(commentService.updateComment(commentId, commentRequest));
   }
 
@@ -73,6 +81,10 @@ public class CommentController {
     }
 
     if (!commentService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    if (adService.isAdClosed(commentService.getAdId(commentId))) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 

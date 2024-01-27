@@ -27,6 +27,12 @@ public class ConversationServiceImpl implements ConversationService {
 
 
   @Override
+  public Long getAdId(Long conversationId) {
+    Conversation conversation = conversationRepository.findById(conversationId).get();
+    return conversation.getAd().getId();
+  }
+
+  @Override
   public List<ConversationResponse> getConversationsByUserId(Long userId) {
     List<Conversation> conversations = conversationRepository.findByBuyerIdOrSellerId(userId);
 

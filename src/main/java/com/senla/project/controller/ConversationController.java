@@ -57,6 +57,10 @@ public class ConversationController {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+    if (adService.isAdClosed(adId)) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
     return ResponseEntity.ok(conversationService.createConversationByAdId(getCurrentUserId(), adId));
   }
 

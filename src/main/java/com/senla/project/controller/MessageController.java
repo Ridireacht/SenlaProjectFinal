@@ -2,6 +2,7 @@ package com.senla.project.controller;
 
 import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.dto.request.MessageRequest;
+import com.senla.project.service.AdService;
 import com.senla.project.service.ConversationService;
 import com.senla.project.service.MessageService;
 import com.senla.project.service.UserService;
@@ -25,6 +26,7 @@ public class MessageController {
   private final MessageService messageService;
   private final UserService userService;
   private final ConversationService conversationService;
+  private final AdService adService;
 
 
   @PostMapping("/conversations/{id}/messages")
@@ -34,6 +36,10 @@ public class MessageController {
     }
 
     if (!conversationService.doesConversationBelongToUser(conversationId, getCurrentUserId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    if (adService.isAdClosed(conversationService.getAdId(conversationId))) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 

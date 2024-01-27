@@ -29,6 +29,12 @@ public class CommentServiceImpl implements CommentService {
 
 
   @Override
+  public Long getAdId(Long commentId) {
+    Comment comment = commentRepository.findById(commentId).get();
+    return comment.getAd().getId();
+  }
+
+  @Override
   public List<CommentResponse> getAllCommentsByAdId(Long adId) {
     List<Comment> comments = commentRepository.findAllByAd_Id(adId);
 

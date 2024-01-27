@@ -36,4 +36,6 @@ public interface AdService {
   boolean didUserBoughtAd(Long adId, Long currentUserId);
 
   boolean isAdAlreadyScored(Long adId);
+
+  boolean isAdClosed(Long adId);
 }

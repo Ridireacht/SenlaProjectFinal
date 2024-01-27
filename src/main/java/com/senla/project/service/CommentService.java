@@ -5,6 +5,9 @@ import com.senla.project.dto.response.CommentResponse;
 import java.util.List;
 
 public interface CommentService {
+
+  Long getAdId(Long commentId);
+
   List<CommentResponse> getAllCommentsByAdId(Long adId);
 
   CommentResponse createComment(Long userId, Long adId, CommentRequest commentRequest);

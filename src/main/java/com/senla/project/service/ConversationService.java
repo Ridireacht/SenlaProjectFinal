@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface ConversationService {
 
+  Long getAdId(Long conversationId);
+
   List<ConversationResponse> getConversationsByUserId(Long userId);
 
   ConversationResponse getConversation(Long conversationId);

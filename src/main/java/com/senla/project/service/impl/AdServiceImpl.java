@@ -144,4 +144,10 @@ public class AdServiceImpl implements AdService {
     return ad.getScore() != null;
   }
 
+  @Override
+  public boolean isAdClosed(Long adId) {
+    Ad ad = adRepository.findById(adId).get();
+    return ad.isClosed();
+  }
+
 }

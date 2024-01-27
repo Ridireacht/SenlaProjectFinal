@@ -48,6 +48,10 @@ public class ProposalController {
     if(adService.doesAdBelongToUser(proposalRequest.getAdId(), getCurrentUserId())) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
+
+    if (adService.isAdClosed(proposalRequest.getAdId())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
     
     return ResponseEntity.ok(proposalService.createProposal(getCurrentUserId(), proposalRequest));
   }
