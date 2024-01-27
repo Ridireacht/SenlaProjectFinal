@@ -64,7 +64,7 @@ public class CommentServiceTest {
     expectedCommentResponse1.setContent(comment1.getContent());
     expectedCommentResponse2.setContent(comment2.getContent());
 
-    when(commentRepository.findAllByAd_Id(adId)).thenReturn(Arrays.asList(comment1, comment2));
+    when(commentRepository.findAllByAdId(adId)).thenReturn(Arrays.asList(comment1, comment2));
     when(commentMapper.mapToCommentResponse(comment1)).thenReturn(expectedCommentResponse1);
     when(commentMapper.mapToCommentResponse(comment2)).thenReturn(expectedCommentResponse2);
 
