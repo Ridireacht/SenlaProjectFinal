@@ -35,31 +35,31 @@ public class AdController {
   private final UserService userService;
 
 
-  @Operation(summary = "Get all ads from others", description = "Получить список всех активных объявлений, которые не принадлежат текущему пользователю")
+  @Operation(summary = "Получить объявления от других пользователей", description = "Получить список всех активных объявлений, которые не принадлежат текущему пользователю")
   @GetMapping
   public List<AdResponse> getAllAdsFromOthers() {
     return adService.getAllAdsFromOthers(getCurrentUserId());
   }
 
-  @Operation(summary = "Get current ads", description = "Получить список всех активных объявлений текущего пользователя")
+  @Operation(summary = "Получить свои активные объявления", description = "Получить список всех активных объявлений текущего пользователя")
   @GetMapping("/current")
   public List<AdCurrentResponse> getCurrentAds() {
     return adService.getCurrentAdsByUserId(getCurrentUserId());
   }
 
-  @Operation(summary = "Get closed ads", description = "Получить список всех неактивных (закрытых) объявлений текущего пользователя")
+  @Operation(summary = "Получить свои закрытые объявления", description = "Получить список всех неактивных (закрытых) объявлений текущего пользователя")
   @GetMapping("/closed")
   public List<AdClosedResponse> getClosedAds() {
     return adService.getClosedAdsByUserId(getCurrentUserId());
   }
 
-  @Operation(summary = "Get purchased ads", description = "Получить список всех выкупленных текущим пользователем объявлений")
+  @Operation(summary = "Получить выкупленные объявления", description = "Получить список всех выкупленных текущим пользователем объявлений")
   @GetMapping("/purchased")
   public List<AdPurchasedResponse> getPurchasedAds() {
     return adService.getPurchasedAdsByUserId(getCurrentUserId());
   }
 
-  @Operation(summary = "Get ad", description = "Получить конкретное объявление по его id")
+  @Operation(summary = "Получить конкретное объявление", description = "Получить конкретное объявление по его id")
   @GetMapping("/{id}")
   public AdResponse getAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -73,13 +73,13 @@ public class AdController {
     return adService.getAdById(adId);
   }
 
-  @Operation(summary = "Create ad", description = "Создать новое объявление по форме-реквесту")
+  @Operation(summary = "Создать объявление", description = "Создать новое объявление по форме-реквесту")
   @PostMapping
   public AdResponse createAd(@Valid @RequestBody AdRequest adRequest) {
     return adService.createAd(getCurrentUserId(), adRequest);
   }
 
-  @Operation(summary = "Update ad", description = "Обновить существующее объявление по форме-реквесту")
+  @Operation(summary = "Обновить объявление", description = "Обновить существующее объявление по форме-реквесту")
   @PutMapping("/{id}")
   public AdResponse updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -97,7 +97,7 @@ public class AdController {
     return adService.updateAd(adId, adRequest);
   }
 
-  @Operation(summary = "Make ad premium", description = "Сделать объявление премиальным по его id")
+  @Operation(summary = "Сделать объявление премиальным", description = "Сделать объявление премиальным по его id")
   @PutMapping("/{id}/premium")
   public AdResponse makeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -115,7 +115,7 @@ public class AdController {
     return adService.makeAdPremium(adId);
   }
 
-  @Operation(summary = "Delete ad", description = "Полностью удалить объявление по его id")
+  @Operation(summary = "Удалить объявление", description = "Полностью удалить объявление по его id")
   @DeleteMapping("/{id}")
   public Boolean deleteAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
