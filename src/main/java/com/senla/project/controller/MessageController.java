@@ -7,6 +7,7 @@ import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.ConversationService;
 import com.senla.project.service.MessageService;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class MessageController {
   private final ConversationService conversationService;
 
 
+  @Operation(summary = "Отправить сообщение в переписку", description = "Отправляет новое сообщение в указанной переписке. Возвращает эту переписку.")
   @PostMapping("/conversations/{id}/messages")
   public ConversationResponse sendMessage(@PathVariable("id") Long conversationId, @Valid @RequestBody MessageRequest messageRequest) {
     if (!conversationService.doesConversationExist(conversationId)) {

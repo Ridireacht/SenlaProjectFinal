@@ -6,6 +6,7 @@ import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
 import com.senla.project.service.ConversationService;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -27,11 +28,13 @@ public class ConversationController {
   private final AdService adService;
 
 
+  @Operation(summary = "Получить все переписки пользователя", description = "Возвращает список всех переписок пользователя.")
   @GetMapping("/conversations")
   public List<ConversationResponse> getAllUserConversations() {
     return conversationService.getConversationsByUserId(getCurrentUserId());
   }
 
+  @Operation(summary = "Получить конкретную переписку", description = "Возвращает информацию о конкретной переписке.")
   @GetMapping("/conversations/{id}")
   public ConversationResponse getConversation(@PathVariable("id") Long conversationId) {
     if (!conversationService.doesConversationExist(conversationId)) {
@@ -44,7 +47,8 @@ public class ConversationController {
 
     return conversationService.getConversation(conversationId);
   }
-  
+
+  @Operation(summary = "Начать переписку по объявлению", description = "Создает новую переписку по указанному объявлению. Возвращает эту переписку.")
   @PostMapping("/ads/{adId}/discuss")
   public ConversationResponse createConversation(@PathVariable("adId") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -64,6 +68,7 @@ public class ConversationController {
     return conversationService.createConversationByAdId(getCurrentUserId(), adId);
   }
 
+  @Operation(summary = "Удалить переписку", description = "Полностью удаляет указанную переписку. Возвращает boolean-результат операции.")
   @DeleteMapping("/conversations/{id}")
   public Boolean deleteConversation(@PathVariable("id") Long conversationId) {
     if (!conversationService.doesConversationExist(conversationId)) {

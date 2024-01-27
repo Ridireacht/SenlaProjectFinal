@@ -7,6 +7,7 @@ import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
 import com.senla.project.service.UserScoreService;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class UserScoreController {
   private final AdService adService;
 
 
+  @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем.")
   @PostMapping
   public AdPurchasedResponse setUserScore(@PathVariable("{id}") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
     if (!adService.doesAdExist(adId)) {

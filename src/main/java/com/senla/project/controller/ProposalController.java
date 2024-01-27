@@ -8,6 +8,7 @@ import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
 import com.senla.project.service.ProposalService;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -33,16 +34,19 @@ public class ProposalController {
   private final AdService adService;
 
 
+  @Operation(summary = "Получить все отправленные предложения", description = "Возвращает список всех отправленных пользователем предложений.")
   @GetMapping("/sent")
   public List<ProposalSentResponse> getAllSentProposals() {
     return proposalService.getAllSentProposalsByUserId(getCurrentUserId());
   }
 
+  @Operation(summary = "Получить все полученные предложения", description = "Возвращает список всех полученных пользователем предложений.")
   @GetMapping("/received")
   public List<ProposalReceivedResponse> getAllReceivedProposals() {
     return proposalService.getAllReceivedProposalsByUserId(getCurrentUserId());
   }
 
+  @Operation(summary = "Отправить предложение", description = "Отправляет новое предложение по указанному объявлению. Возвращает это предложение.")
   @PostMapping
   public ProposalSentResponse sendProposal(@Valid @RequestBody ProposalRequest proposalRequest) {
     if(adService.doesAdBelongToUser(proposalRequest.getAdId(), getCurrentUserId())) {
@@ -56,6 +60,7 @@ public class ProposalController {
     return proposalService.createProposal(getCurrentUserId(), proposalRequest);
   }
 
+  @Operation(summary = "Принять предложение", description = "Принимает предложение по его id. Возвращает boolean-результат операции.")
   @PostMapping("/received/{id}")
   public Boolean acceptProposal(@PathVariable("{id}") Long proposalId) {
     if (!proposalService.doesProposalExist(proposalId)) {
@@ -69,6 +74,7 @@ public class ProposalController {
     return proposalService.acceptProposalById(proposalId);
   }
 
+  @Operation(summary = "Отклонить предложение", description = "Отклоняет предложение по его id. Возвращает boolean-результат операции.")
   @DeleteMapping("/received/{id}")
   public Boolean declineProposal(@PathVariable("{id}") Long proposalId) {
     if (!proposalService.doesProposalExist(proposalId)) {

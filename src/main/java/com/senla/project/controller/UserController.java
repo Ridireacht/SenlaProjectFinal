@@ -3,6 +3,7 @@ package com.senla.project.controller;
 import com.senla.project.dto.response.UserResponse;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -20,11 +21,13 @@ public class UserController {
   private final UserService userService;
 
 
+  @Operation(summary = "Получить всех пользователей", description = "Возвращает список всех зарегистрированных пользователей.")
   @GetMapping
   public List<UserResponse> getAllUsers() {
     return userService.getAllUsers();
   }
 
+  @Operation(summary = "Получить пользователя по id", description = "Возвращает информацию о пользователе по его id.")
   @GetMapping("/{id}")
   public UserResponse getUser(@PathVariable("id") Long userId) {
     if (!userService.doesUserExist(userId)) {
