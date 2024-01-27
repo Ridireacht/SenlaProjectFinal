@@ -87,7 +87,7 @@ public class AdController {
     }
 
     if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
-      throw new ForbiddenException("This ad is not available for you to modify");
+      throw new ForbiddenException("You can't update someone else's ad");
     }
 
     if (adService.isAdClosed(adId)) {
@@ -105,11 +105,11 @@ public class AdController {
     }
 
     if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
-      throw new ForbiddenException("This ad is not available for you to modify");
+      throw new ForbiddenException("You can't make someone else's ad a premium one");
     }
 
     if (adService.isAdClosed(adId)) {
-      throw new ForbiddenException("You can't make a closed ad premium one");
+      throw new ForbiddenException("You can't make closed ad a premium one");
     }
 
     return adService.makeAdPremium(adId);
@@ -123,7 +123,7 @@ public class AdController {
     }
 
     if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
-      throw new ForbiddenException("This ad is not available for you to modify");
+      throw new ForbiddenException("You can't delete someone else's ad");
     }
 
     if (adService.isAdClosed(adId)) {
