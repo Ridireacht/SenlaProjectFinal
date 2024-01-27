@@ -30,7 +30,7 @@ public class UserScoreController {
   private final AdService adService;
 
 
-  @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем.")
+  @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем. Возвращает информацию об этом объявлении.")
   @PostMapping
   public AdPurchasedResponse setUserScore(@PathVariable("{id}") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -38,11 +38,11 @@ public class UserScoreController {
     }
 
     if (!adService.didUserBoughtAd(adId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't set a score on ad you didn't buy");
+      throw new ForbiddenException("You can't set a score on ad you didn't buy.");
     }
 
     if (adService.isAdAlreadyScored(adId)) {
-      throw new ForbiddenException("You can't set a new score, ad already has one");
+      throw new ForbiddenException("You can't set a new score, ad already has one.");
     }
 
     return userScoreService.setUserScoreByAdId(getCurrentUserId(), adId, userScoreRequest);

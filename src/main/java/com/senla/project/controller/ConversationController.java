@@ -34,7 +34,7 @@ public class ConversationController {
     return conversationService.getConversationsByUserId(getCurrentUserId());
   }
 
-  @Operation(summary = "Получить конкретную переписку", description = "Возвращает информацию о конкретной переписке.")
+  @Operation(summary = "Получить конкретную переписку", description = "Возвращает конкретную переписку.")
   @GetMapping("/conversations/{id}")
   public ConversationResponse getConversation(@PathVariable("id") Long conversationId) {
     if (!conversationService.doesConversationExist(conversationId)) {
@@ -42,7 +42,7 @@ public class ConversationController {
     }
 
     if (!conversationService.doesConversationBelongToUser(conversationId, getCurrentUserId())) {
-      throw new ForbiddenException("This conversation is not available to you");
+      throw new ForbiddenException("This conversation is not available to you.");
     }
 
     return conversationService.getConversation(conversationId);
@@ -58,11 +58,11 @@ public class ConversationController {
     // Здесь, в отличие от прочих использований этой конструкции, не используется отрицание -
     // создатель объявления НЕ должен иметь возможности начать с собой переписку.
     if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't start a conversation on your own ad");
+      throw new ForbiddenException("You can't start a conversation on your own ad.");
     }
 
     if (adService.isAdClosed(adId)) {
-      throw new ForbiddenException("You can't start a conversation on a closed ad");
+      throw new ForbiddenException("You can't start a conversation on a closed ad.");
     }
 
     return conversationService.createConversationByAdId(getCurrentUserId(), adId);
@@ -76,7 +76,7 @@ public class ConversationController {
     }
 
     if (!conversationService.doesConversationBelongToUser(conversationId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't delete someone else's conversation");
+      throw new ForbiddenException("You can't delete someone else's conversation.");
     }
 
     return conversationService.deleteConversation(conversationId);

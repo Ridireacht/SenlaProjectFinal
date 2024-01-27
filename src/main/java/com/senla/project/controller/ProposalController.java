@@ -46,7 +46,7 @@ public class ProposalController {
     return proposalService.getAllReceivedProposalsByUserId(getCurrentUserId());
   }
 
-  @Operation(summary = "Отправить предложение", description = "Отправляет новое предложение по указанному объявлению. Возвращает это предложение.")
+  @Operation(summary = "Отправить предложение", description = "Отправляет новое предложение по указанному объявлению. Возвращает информацию о посланном предложении.")
   @PostMapping
   public ProposalSentResponse sendProposal(@Valid @RequestBody ProposalRequest proposalRequest) {
     if(adService.doesAdBelongToUser(proposalRequest.getAdId(), getCurrentUserId())) {
@@ -54,7 +54,7 @@ public class ProposalController {
     }
 
     if (adService.isAdClosed(proposalRequest.getAdId())) {
-      throw new ForbiddenException("You can't make proposals for a closed ad");
+      throw new ForbiddenException("You can't make proposals for a closed ad.");
     }
     
     return proposalService.createProposal(getCurrentUserId(), proposalRequest);
@@ -68,7 +68,7 @@ public class ProposalController {
     }
 
     if (!proposalService.wasProposalSentToUser(proposalId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't accept someone else's proposal");
+      throw new ForbiddenException("You can't accept someone else's proposal.");
     }
 
     return proposalService.acceptProposalById(proposalId);
@@ -82,7 +82,7 @@ public class ProposalController {
     }
 
     if (!proposalService.wasProposalSentToUser(proposalId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't decline someone else's proposal");
+      throw new ForbiddenException("You can't decline someone else's proposal.");
     }
 
     return proposalService.declineProposalById(proposalId);

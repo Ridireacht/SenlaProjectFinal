@@ -47,19 +47,19 @@ public class AdController {
     return adService.getCurrentAdsByUserId(getCurrentUserId());
   }
 
-  @Operation(summary = "Получить свои закрытые объявления", description = "Получить список всех неактивных (закрытых) объявлений текущего пользователя")
+  @Operation(summary = "Получить свои закрытые объявления", description = "Получает список всех неактивных (закрытых) объявлений текущего пользователя.")
   @GetMapping("/closed")
   public List<AdClosedResponse> getClosedAds() {
     return adService.getClosedAdsByUserId(getCurrentUserId());
   }
 
-  @Operation(summary = "Получить выкупленные объявления", description = "Получить список всех выкупленных текущим пользователем объявлений")
+  @Operation(summary = "Получить выкупленные объявления", description = "Получает список всех выкупленных текущим пользователем объявлений.")
   @GetMapping("/purchased")
   public List<AdPurchasedResponse> getPurchasedAds() {
     return adService.getPurchasedAdsByUserId(getCurrentUserId());
   }
 
-  @Operation(summary = "Получить конкретное объявление", description = "Получить конкретное объявление по его id")
+  @Operation(summary = "Получить конкретное объявление", description = "Получает конкретное объявление по его id.")
   @GetMapping("/{id}")
   public AdResponse getAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -67,19 +67,19 @@ public class AdController {
     }
 
     if (!adService.isAdAvailableForUser(adId, getCurrentUserId())) {
-      throw new ForbiddenException("This ad is not available for you");
+      throw new ForbiddenException("This ad is not available for you.");
     }
 
     return adService.getAdById(adId);
   }
 
-  @Operation(summary = "Создать объявление", description = "Создать новое объявление по форме-реквесту. Возвращает это объявление.")
+  @Operation(summary = "Создать объявление", description = "Создаёт новое объявление по форме-реквесту. Возвращает информацию об этом объявлении.")
   @PostMapping
   public AdResponse createAd(@Valid @RequestBody AdRequest adRequest) {
     return adService.createAd(getCurrentUserId(), adRequest);
   }
 
-  @Operation(summary = "Обновить объявление", description = "Обновить существующее объявление по форме-реквесту. Возвращает это объявление.")
+  @Operation(summary = "Обновить объявление", description = "Обновляет существующее объявление по форме-реквесту. Возвращает информацию об этом объявлении.")
   @PutMapping("/{id}")
   public AdResponse updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -87,17 +87,17 @@ public class AdController {
     }
 
     if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't update someone else's ad");
+      throw new ForbiddenException("You can't update someone else's ad.");
     }
 
     if (adService.isAdClosed(adId)) {
-      throw new ForbiddenException("You can't update a closed ad");
+      throw new ForbiddenException("You can't update a closed ad.");
     }
 
     return adService.updateAd(adId, adRequest);
   }
 
-  @Operation(summary = "Сделать объявление премиальным", description = "Сделать объявление премиальным по его id. Возвращает это объявление")
+  @Operation(summary = "Сделать объявление премиальным", description = "Делает объявление премиальным по его id. Возвращает информацию об этом объявлении.")
   @PutMapping("/{id}/premium")
   public AdResponse makeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -105,17 +105,17 @@ public class AdController {
     }
 
     if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't make someone else's ad a premium one");
+      throw new ForbiddenException("You can't make someone else's ad a premium one.");
     }
 
     if (adService.isAdClosed(adId)) {
-      throw new ForbiddenException("You can't make closed ad a premium one");
+      throw new ForbiddenException("You can't make closed ad a premium.");
     }
 
     return adService.makeAdPremium(adId);
   }
 
-  @Operation(summary = "Удалить объявление", description = "Полностью удалить объявление по его id. Возвращает boolean-результат операции.")
+  @Operation(summary = "Удалить объявление", description = "Полностью удаляет объявление по его id. Возвращает boolean-результат операции.")
   @DeleteMapping("/{id}")
   public Boolean deleteAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -123,11 +123,11 @@ public class AdController {
     }
 
     if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't delete someone else's ad");
+      throw new ForbiddenException("You can't delete someone else's ad.");
     }
 
     if (adService.isAdClosed(adId)) {
-      throw new ForbiddenException("You can't delete a closed ad");
+      throw new ForbiddenException("You can't delete a closed ad.");
     }
 
     return adService.deleteAd(adId);

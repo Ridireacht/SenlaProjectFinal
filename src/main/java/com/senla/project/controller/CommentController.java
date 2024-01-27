@@ -34,13 +34,13 @@ public class CommentController {
   private final AdService adService;
 
 
-  @Operation(summary = "Получить все комментарии", description = "Получить список всех комментариев для указанного объявления")
+  @Operation(summary = "Получить все комментарии", description = "Получает список всех комментариев для указанного объявления.")
   @GetMapping
   public List<CommentResponse> getAllComments(@PathVariable("adId") Long adId) {
     return commentService.getAllCommentsByAdId(adId);
   }
 
-  @Operation(summary = "Создать комментарий", description = "Создать новый комментарий для указанного объявления. Возвращает этот комментарий.")
+  @Operation(summary = "Создать комментарий", description = "Создаёт новый комментарий для указанного объявления. Возвращает этот комментарий.")
   @PostMapping
   public CommentResponse createComment(@PathVariable("adId") Long adId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -50,17 +50,17 @@ public class CommentController {
     // Здесь, в отличие от прочих использований этой конструкции, не используется отрицание -
     // создатель объявления НЕ должен иметь возможности оставить комментарий у себя же.
     if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't leave a comment on your own ad");
+      throw new ForbiddenException("You can't leave a comment on your own ad.");
     }
 
     if (adService.isAdClosed(adId)) {
-      throw new ForbiddenException("You can't leave a comment on a closed ad");
+      throw new ForbiddenException("You can't leave a comment on a closed ad.");
     }
 
     return commentService.createComment(getCurrentUserId(), adId, commentRequest);
   }
 
-  @Operation(summary = "Обновить комментарий", description = "Обновить существующий комментарий. Возвращает этот комментарий.")
+  @Operation(summary = "Обновить комментарий", description = "Обновляет существующий комментарий. Возвращает этот комментарий.")
   @PutMapping("/{commentId}")
   public CommentResponse updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!commentService.doesCommentExist(commentId)) {
@@ -68,17 +68,17 @@ public class CommentController {
     }
 
     if (!commentService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't update someone else's comment");
+      throw new ForbiddenException("You can't update someone else's comment.");
     }
 
     if (adService.isAdClosed(commentService.getAdId(commentId))) {
-      throw new ForbiddenException("You can't update a comment on a closed ad");
+      throw new ForbiddenException("You can't update a comment on a closed ad.");
     }
 
     return commentService.updateComment(commentId, commentRequest);
   }
 
-  @Operation(summary = "Удалить комментарий", description = "Удалить существующий комментарий. Возвращает boolean-результат операции.")
+  @Operation(summary = "Удалить комментарий", description = "Удаляет существующий комментарий. Возвращает boolean-результат операции.")
   @DeleteMapping("/{commentId}")
   public Boolean deleteComment(@PathVariable("commentId") Long commentId) {
     if (!commentService.doesCommentExist(commentId)) {
@@ -86,11 +86,11 @@ public class CommentController {
     }
 
     if (!commentService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
-      throw new ForbiddenException("You can't delete someone else's comment");
+      throw new ForbiddenException("You can't delete someone else's comment.");
     }
 
     if (adService.isAdClosed(commentService.getAdId(commentId))) {
-      throw new ForbiddenException("You can't delete a comment on a closed ad");
+      throw new ForbiddenException("You can't delete a comment on a closed ad.");
     }
 
     return commentService.deleteComment(commentId);
