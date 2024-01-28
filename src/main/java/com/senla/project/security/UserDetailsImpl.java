@@ -1,4 +1,4 @@
-package com.senla.project.service.impl.security;
+package com.senla.project.security;
 
 import com.senla.project.entity.User;
 import java.util.ArrayList;

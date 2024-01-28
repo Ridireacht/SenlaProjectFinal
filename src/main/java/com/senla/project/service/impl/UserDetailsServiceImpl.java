@@ -1,7 +1,8 @@
-package com.senla.project.service.impl.security;
+package com.senla.project.service.impl;
 
 import com.senla.project.entity.User;
 import com.senla.project.repository.UserRepository;
+import com.senla.project.security.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
