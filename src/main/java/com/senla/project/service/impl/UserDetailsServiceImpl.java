@@ -1,11 +1,13 @@
 package com.senla.project.service.impl;
 
+import com.senla.project.dto.request.RegisterRequest;
+import com.senla.project.entity.Role;
 import com.senla.project.entity.User;
+import com.senla.project.repository.RoleRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.security.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +22,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   private UserRepository userRepository;
 
   @Autowired
+  private RoleRepository roleRepository;
+
+  @Autowired
   private PasswordEncoder passwordEncoder;
 
 
@@ -32,10 +37,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   }
 
   @Transactional
-  public String addUser(User user) {
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
+  public String registerNewUser(RegisterRequest registerRequest) {
+    Role role = roleRepository.findByName(registerRequest.getRole());
+
+    User user = new User();
+    user.setUsername(registerRequest.getUsername());
+    user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+    user.setRole(role);
+
     userRepository.save(user);
-    return "User added successfully. Now log in.";
+    return "New user registered successfully. Now log in, using /auth/login.";
   }
 
 }
