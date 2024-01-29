@@ -40,6 +40,8 @@ public class SecurityConfig {
         .authorizeHttpRequests()
         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/auth/**").permitAll()
         .and()
+        .authorizeHttpRequests().requestMatchers("/**").authenticated()
+        .and()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()

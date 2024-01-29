@@ -1,8 +1,10 @@
 package com.senla.project.service.impl;
 
 import com.senla.project.dto.request.RegisterRequest;
+import com.senla.project.entity.Rating;
 import com.senla.project.entity.Role;
 import com.senla.project.entity.User;
+import com.senla.project.repository.RatingRepository;
 import com.senla.project.repository.RoleRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.security.UserDetailsImpl;
@@ -23,6 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Autowired
   private RoleRepository roleRepository;
+
+  @Autowired
+  private RatingRepository ratingRepository;
 
   @Autowired
   private PasswordEncoder passwordEncoder;
@@ -47,7 +52,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
     user.setRole(role);
 
-    userRepository.save(user);
+    User savedUser = userRepository.save(user);
+
+    Rating rating = new Rating();
+    rating.setUser(savedUser);
+    ratingRepository.save(rating);
+
     return "New user registered successfully. Now log in, using /auth/login.";
   }
 
