@@ -31,6 +31,7 @@ public class UserMapperTest {
     User user = new User();
     user.setId(1L);
     user.setUsername("testUser");
+    user.setAddress("Sample city");
 
     Rating rating = new Rating();
     rating.setAverageScore(3.5);
@@ -40,12 +41,14 @@ public class UserMapperTest {
     UserResponse expectedResponse = new UserResponse();
     expectedResponse.setId(1L);
     expectedResponse.setUsername("testUser");
+    expectedResponse.setUsername("Sample city");
     expectedResponse.setRating(3.5);
 
     UserResponse actualResponse = mapper.mapToUserResponse(user);
 
     assertEquals(expectedResponse.getId(), actualResponse.getId());
     assertEquals(expectedResponse.getUsername(), actualResponse.getUsername());
+    assertEquals(expectedResponse.getAddress(), actualResponse.getAddress());
     assertEquals(expectedResponse.getRating(), actualResponse.getRating());
   }
 }
