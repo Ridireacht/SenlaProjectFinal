@@ -22,7 +22,7 @@ public class AdminController {
 
 
   @Operation(summary = "Получить всех пользователей", description = "Возвращает список всех зарегистрированных пользователей.")
-  @GetMapping
+  @GetMapping("/users")
   @PreAuthorize("hasAuthority('ADMIN')")
   public List<UserProfileResponse> getAllUserProfiles() {
     return userService.getAllUserProfiles();
