@@ -24,11 +24,11 @@ public class UserServiceImpl implements UserService {
 
 
   @Override
-  public List<UserResponse> getAllUsers() {
+  public List<UserProfileResponse> getAllUserProfiles() {
     List<User> users = userRepository.findAll();
 
     return users.stream()
-        .map(userMapper::mapToUserResponse)
+        .map(userMapper::mapToUserProfileResponse)
         .collect(Collectors.toList());
   }
 

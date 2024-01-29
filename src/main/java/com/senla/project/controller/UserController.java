@@ -28,12 +28,6 @@ public class UserController {
   private final UserService userService;
 
 
-  @Operation(summary = "Получить всех пользователей", description = "Возвращает список всех зарегистрированных пользователей.")
-  @GetMapping
-  public List<UserResponse> getAllUsers() {
-    return userService.getAllUsers();
-  }
-
   @Operation(summary = "Получить пользователя по id", description = "Возвращает информацию о пользователе по его id.")
   @GetMapping("/{id}")
   public UserResponse getUser(@PathVariable("id") Long userId) {
