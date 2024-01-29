@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(ConflictException.class)
   @ResponseStatus(HttpStatus.CONFLICT)
-  @ApiResponse(responseCode = "409", description = "Tried to create a user with existing username")
+  @ApiResponse(responseCode = "409", description = "Tried to create a user with existing username or email")
   public ResponseEntity<String> handleConflictException(ConflictException ex) {
     return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
   }
