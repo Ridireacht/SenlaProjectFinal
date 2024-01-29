@@ -51,5 +51,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     return "New user registered successfully. Now log in, using /auth/login.";
   }
 
+  public String encodePassword(String password) {
+    return passwordEncoder.encode(password);
+  }
+
 }
 
