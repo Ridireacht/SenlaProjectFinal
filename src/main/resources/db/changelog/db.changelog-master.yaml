@@ -36,6 +36,9 @@ databaseChangeLog:
                   name: email
                   type: VARCHAR(255)
               - column:
+                  name: address
+                  type: VARCHAR(255)
+              - column:
                   name: password
                   type: VARCHAR(255)
               - column:

@@ -37,6 +37,10 @@ public class AuthController {
       throw new ConflictException("This username is already taken.");
     }
 
+    if (userRepository.existsByEmail(registerRequest.getEmail())) {
+      throw new ConflictException("This email is already taken.");
+    }
+
     if (!roleRepository.existsByName(registerRequest.getRole())) {
       throw new ConflictException("This role doesn't exist.");
     }
