@@ -1,6 +1,7 @@
 package com.senla.project.dto.request;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,10 +10,11 @@ import lombok.Setter;
 public class UserProfileRequest {
   // Используется иной regex, нежели в RegisterRequest - чтобы пройти валидацию, поле должно быть
   // либо null, либо соответствовать формату email
-  @Email(message = "Email format is not valid", regexp = "^(|.*[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+.*)$")
+  @Email(regexp = "^(|.*[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+.*)$", message = "Email must be either null or follow format")
   private String email;
 
   private String address;
 
+  @Pattern(regexp = "^(.{6,}|null)$", message = "Password must be either null or at least 6 characters long")
   private String password;
 }
