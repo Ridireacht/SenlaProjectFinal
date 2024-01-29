@@ -3,6 +3,7 @@ package com.senla.project.controller;
 import com.senla.project.dto.request.UserProfileRequest;
 import com.senla.project.dto.response.UserProfileResponse;
 import com.senla.project.dto.response.UserResponse;
+import com.senla.project.exception.ConflictException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,9 +45,13 @@ public class UserController {
     return userService.getUserProfileById(getCurrentUserId());
   }
 
-  @Operation(summary = "Обновить профиль текущего пользователя", description = "Обновляет информацию о текущем пользователе.")
+  @Operation(summary = "Обновить профиль текущего пользователя", description = "Обновляет информацию о текущем пользователе. Обновляются только не-пустые указанные поля, соответствующие валидации.")
   @PutMapping("/current")
   public boolean updateCurrentUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest) {
+    if (userService.doesUserExistByEmail(userProfileRequest.getEmail())) {
+      throw new ConflictException("This email is already taken.");
+    }
+
     return userService.updateUserProfileById(userProfileRequest, getCurrentUserId());
   }
 

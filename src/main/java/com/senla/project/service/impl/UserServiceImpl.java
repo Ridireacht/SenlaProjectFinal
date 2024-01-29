@@ -56,15 +56,15 @@ public class UserServiceImpl implements UserService {
 
     User user = userRepository.findById(userId).get();
 
-    if (userProfileRequest.getEmail() != null) {
+    if (userProfileRequest.getEmail() != null && userProfileRequest.getEmail() != "") {
       user.setEmail(userProfileRequest.getEmail());
     }
 
-    if (userProfileRequest.getAddress() != null) {
+    if (userProfileRequest.getAddress() != null && userProfileRequest.getAddress() != "") {
       user.setAddress(userProfileRequest.getAddress());
     }
 
-    if (userProfileRequest.getPassword() != null) {
+    if (userProfileRequest.getPassword() != null && userProfileRequest.getPassword() != "") {
       user.setPassword(userDetailsService.encodePassword(userProfileRequest.getPassword()));
     }
 
@@ -76,6 +76,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean doesUserExist(Long userId) {
     return userRepository.existsById(userId);
+  }
+
+  @Override
+  public boolean doesUserExistByEmail(String email) {
+    return userRepository.existsByEmail(email);
   }
 
 }

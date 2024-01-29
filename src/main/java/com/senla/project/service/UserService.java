@@ -18,4 +18,6 @@ public interface UserService {
   boolean updateUserProfileById(UserProfileRequest userProfileRequest, Long userId);
 
   boolean doesUserExist(Long userId);
+
+  boolean doesUserExistByEmail(String email);
 }
