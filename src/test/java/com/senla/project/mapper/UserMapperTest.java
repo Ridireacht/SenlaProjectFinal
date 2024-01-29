@@ -41,7 +41,7 @@ public class UserMapperTest {
     UserResponse expectedResponse = new UserResponse();
     expectedResponse.setId(1L);
     expectedResponse.setUsername("testUser");
-    expectedResponse.setUsername("Sample city");
+    expectedResponse.setAddress("Sample city");
     expectedResponse.setRating(3.5);
 
     UserResponse actualResponse = mapper.mapToUserResponse(user);
