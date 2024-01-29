@@ -4,8 +4,8 @@ import com.senla.project.dto.request.LoginRequest;
 import com.senla.project.dto.request.RegisterRequest;
 import com.senla.project.exception.ConflictException;
 import com.senla.project.repository.RoleRepository;
-import com.senla.project.repository.UserRepository;
 import com.senla.project.security.JwtService;
+import com.senla.project.service.AuthService;
 import com.senla.project.service.impl.UserDetailsServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,22 +30,21 @@ public class AuthController {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
-  private final UserRepository userRepository;
-  private final RoleRepository roleRepository;
+  private final AuthService authService;
 
 
   @Operation(summary = "Зарегистрировать нового пользователя", description = "Регистрирует пользователя с данными из формы.")
   @PostMapping("/register")
   public String register(@Valid @RequestBody RegisterRequest registerRequest) {
-    if (userRepository.existsByUsername(registerRequest.getUsername())) {
+    if (authService.doesUserExistByUsername(registerRequest.getUsername())) {
       throw new ConflictException("This username is already taken.");
     }
 
-    if (userRepository.existsByEmail(registerRequest.getEmail())) {
+    if (authService.doesUserExistByEmail(registerRequest.getEmail())) {
       throw new ConflictException("This email is already taken.");
     }
 
-    if (!roleRepository.existsByName(registerRequest.getRole())) {
+    if (!authService.doesRoleExistByName(registerRequest.getRole())) {
       throw new ConflictException("This role doesn't exist.");
     }
 
