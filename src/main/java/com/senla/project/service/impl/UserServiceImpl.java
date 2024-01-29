@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserProfileResponse updateUserProfileById(UserProfileRequest userProfileRequest,
+  public boolean updateUserProfileById(UserProfileRequest userProfileRequest,
       Long userId) {
 
     User user = userRepository.findById(userId).get();
@@ -68,8 +68,9 @@ public class UserServiceImpl implements UserService {
       user.setPassword(userDetailsService.encodePassword(userProfileRequest.getPassword()));
     }
 
-    User updatedUser = userRepository.save(user);
-    return userMapper.mapToUserProfileResponse(updatedUser);
+    userRepository.save(user);
+
+    return true;
   }
 
   @Override

@@ -15,7 +15,7 @@ public interface UserService {
 
   UserProfileResponse getUserProfileById(Long userId);
 
-  UserProfileResponse updateUserProfileById(UserProfileRequest userProfileRequest, Long userId);
+  boolean updateUserProfileById(UserProfileRequest userProfileRequest, Long userId);
 
   boolean doesUserExist(Long userId);
 }

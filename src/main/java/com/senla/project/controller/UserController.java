@@ -46,7 +46,7 @@ public class UserController {
 
   @Operation(summary = "Обновить профиль текущего пользователя", description = "Обновляет информацию о текущем пользователе.")
   @PutMapping("/current")
-  public UserProfileResponse updateCurrentUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest) {
+  public boolean updateCurrentUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest) {
     return userService.updateUserProfileById(userProfileRequest, getCurrentUserId());
   }
 
