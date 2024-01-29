@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+import com.senla.project.dto.response.UserProfileResponse;
 import com.senla.project.dto.response.UserResponse;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.UserMapper;
@@ -37,24 +38,24 @@ public class UserServiceTest {
 
 
   @Test
-  void testGetAllUsers() {
+  void testGetAllUserProfiles() {
     User user1 = new User();
     User user2 = new User();
 
     user1.setUsername("testUsername1");
     user2.setUsername("testUsername2");
 
-    UserResponse expectedUserResponse1 = new UserResponse();
-    UserResponse expectedUserResponse2 = new UserResponse();
+    UserProfileResponse expectedUserResponse1 = new UserProfileResponse();
+    UserProfileResponse expectedUserResponse2 = new UserProfileResponse();
 
     expectedUserResponse1.setUsername(user1.getUsername());
     expectedUserResponse2.setUsername(user2.getUsername());
 
     when(userRepository.findAll()).thenReturn(Arrays.asList(user1, user2));
-    when(userMapper.mapToUserResponse(user1)).thenReturn(expectedUserResponse1);
-    when(userMapper.mapToUserResponse(user2)).thenReturn(expectedUserResponse2);
+    when(userMapper.mapToUserProfileResponse(user1)).thenReturn(expectedUserResponse1);
+    when(userMapper.mapToUserProfileResponse(user2)).thenReturn(expectedUserResponse2);
 
-    List<UserResponse> actualUserResponses = userService.getAllUsers();
+    List<UserProfileResponse> actualUserResponses = userService.getAllUserProfiles();
 
     assertEquals(2, actualUserResponses.size());
     assertThat(actualUserResponses, contains(
