@@ -87,6 +87,7 @@ public class AdServiceImpl implements AdService {
       existingAd.setTitle(adRequest.getTitle());
       existingAd.setContent(adRequest.getContent());
       existingAd.setPrice(adRequest.getPrice());
+      existingAd.setPostedAt(LocalDateTime.now());
       Ad updatedAd = adRepository.save(existingAd);
       return adMapper.mapToAdCurrentResponse(updatedAd);
     }
