@@ -29,3 +29,6 @@
   - **Контейнер с pgAdmin** (образ dpage/pgadmin4:7.2)
   - **Контейнер с Maven** (образ maven:3.9.5-amazoncorretto-17)
   - **Контейнер с Apache Tomcat** (образ tomcat:10-jre17)
+
+<br><br>
+## Инструкция по запуску
