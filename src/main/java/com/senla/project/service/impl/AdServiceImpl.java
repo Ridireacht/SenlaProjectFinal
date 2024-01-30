@@ -68,7 +68,7 @@ public class AdServiceImpl implements AdService {
 
   @Transactional
   @Override
-  public AdResponse createAd(Long userId, AdRequest adRequest) {
+  public AdCurrentResponse createAd(Long userId, AdRequest adRequest) {
     User seller = userRepository.findById(userId).get();
 
     Ad ad = adMapper.mapToAd(adRequest);
@@ -76,32 +76,32 @@ public class AdServiceImpl implements AdService {
     ad.setPostedAt(LocalDateTime.now());
 
     Ad savedAd = adRepository.save(ad);
-    return adMapper.mapToAdResponse(savedAd);
+    return adMapper.mapToAdCurrentResponse(savedAd);
   }
 
   @Transactional
   @Override
-  public AdResponse updateAd(Long adId, AdRequest adRequest) {
+  public AdCurrentResponse updateAd(Long adId, AdRequest adRequest) {
     Ad existingAd = adRepository.findById(adId).orElse(null);
     if (existingAd != null) {
       existingAd.setTitle(adRequest.getTitle());
       existingAd.setContent(adRequest.getContent());
       existingAd.setPrice(adRequest.getPrice());
       Ad updatedAd = adRepository.save(existingAd);
-      return adMapper.mapToAdResponse(updatedAd);
+      return adMapper.mapToAdCurrentResponse(updatedAd);
     }
     return null;
   }
 
   @Transactional
   @Override
-  public AdResponse makeAdPremium(Long adId) {
+  public AdCurrentResponse makeAdPremium(Long adId) {
     Ad ad = adRepository.findById(adId).get();
 
     ad.setPremium(true);
     adRepository.save(ad);
 
-    return adMapper.mapToAdResponse(ad);
+    return adMapper.mapToAdCurrentResponse(ad);
   }
 
   @Transactional

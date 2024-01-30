@@ -77,13 +77,13 @@ public class AdController {
 
   @Operation(summary = "Создать объявление", description = "Создаёт новое объявление по форме-реквесту. Возвращает информацию об этом объявлении.")
   @PostMapping
-  public AdResponse createAd(@Valid @RequestBody AdRequest adRequest) {
+  public AdCurrentResponse createAd(@Valid @RequestBody AdRequest adRequest) {
     return adService.createAd(getCurrentUserId(), adRequest);
   }
 
   @Operation(summary = "Обновить объявление", description = "Обновляет существующее объявление по форме-реквесту. Возвращает информацию об этом объявлении.")
   @PutMapping("/{id}")
-  public AdResponse updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
+  public AdCurrentResponse updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }
@@ -101,7 +101,7 @@ public class AdController {
 
   @Operation(summary = "Сделать объявление премиальным", description = "Делает объявление премиальным по его id. Возвращает информацию об этом объявлении.")
   @PutMapping("/{id}/premium")
-  public AdResponse makeAdPremium(@PathVariable("id") Long adId) {
+  public AdCurrentResponse makeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }

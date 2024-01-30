@@ -19,11 +19,11 @@ public interface AdService {
 
   AdResponse getAdById(Long adId);
 
-  AdResponse createAd(Long userId, AdRequest adRequest);
+  AdCurrentResponse createAd(Long userId, AdRequest adRequest);
 
-  AdResponse updateAd(Long adId, AdRequest adRequest);
+  AdCurrentResponse updateAd(Long adId, AdRequest adRequest);
 
-  AdResponse makeAdPremium(Long adId);
+  AdCurrentResponse makeAdPremium(Long adId);
 
   boolean deleteAd(Long adId);
 
