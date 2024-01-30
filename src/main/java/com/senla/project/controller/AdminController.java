@@ -145,6 +145,10 @@ public class AdminController {
       throw new ForbiddenException("You can't remove premium status from a closed ad.");
     }
 
+    if (adService.isAdPremium(adId)) {
+      throw new ForbiddenException("You can't make ad a premium one if it already has a premium status.");
+    }
+
     return adminService.removePremiumByAdId(adId);
   }
 }

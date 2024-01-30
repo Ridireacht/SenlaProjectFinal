@@ -114,6 +114,10 @@ public class AdController {
       throw new ForbiddenException("You can't make closed ad a premium.");
     }
 
+    if (adService.isAdPremium(adId)) {
+      throw new ForbiddenException("You can't make ad a premium one if it already has a premium status.");
+    }
+
     return adService.makeAdPremium(adId);
   }
 

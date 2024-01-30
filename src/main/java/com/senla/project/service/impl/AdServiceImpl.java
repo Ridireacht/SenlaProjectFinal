@@ -150,4 +150,10 @@ public class AdServiceImpl implements AdService {
     return ad.isClosed();
   }
 
+  @Override
+  public boolean isAdPremium(Long adId) {
+    Ad ad = adRepository.findById(adId).get();
+    return ad.isPremium();
+  }
+
 }

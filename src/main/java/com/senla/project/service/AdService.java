@@ -38,4 +38,6 @@ public interface AdService {
   boolean isAdAlreadyScored(Long adId);
 
   boolean isAdClosed(Long adId);
+
+  boolean isAdPremium(Long adId);
 }
