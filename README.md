@@ -14,7 +14,7 @@
 - **Liquibase** (версия **4.25.0**)
 - **PostgreSQL** (версия **42.7.1**)
 - **H2 Database** (версия **2.2.224**), используется только в тестах
-- **Hibernate** (**6.1.7.Final**), в составе *Spring Boot Starter Data JPA*
+- **Hibernate** (версия **6.1.7.Final**), в составе *Spring Boot Starter Data JPA*
 
 ### Прочие библиотеки
 - **Jackson** (версия **2.14.3**), в составе *Spring Boot Starter Web* и *Spring Boot Starter Security*
