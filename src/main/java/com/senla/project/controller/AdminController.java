@@ -118,4 +118,18 @@ public class AdminController {
 
     return adminService.getFullAdInfoByAdId(adId);
   }
+
+  @Operation(summary = "Удалить объявление", description = "Полностью удаляет объявление по его id. Возвращает boolean-результат операции.")
+  @DeleteMapping("/ads/{id}")
+  public Boolean deleteAd(@PathVariable("id") Long adId) {
+    if (!adService.doesAdExist(adId)) {
+      throw new NotFoundException("Ad", adId);
+    }
+
+    if (adService.isAdClosed(adId)) {
+      throw new ForbiddenException("You can't delete a closed ad.");
+    }
+
+    return adService.deleteAd(adId);
+  }
 }
