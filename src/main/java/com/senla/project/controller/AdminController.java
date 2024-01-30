@@ -22,6 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -131,5 +132,19 @@ public class AdminController {
     }
 
     return adService.deleteAd(adId);
+  }
+
+  @Operation(summary = "Убрать премиальный статус у объявления", description = "Убирает премиальный статус у объявления по его id. Возвращает boolean-результат операции.")
+  @PutMapping("/ads/{id}/premium")
+  public Boolean removePremiumFromAd(@PathVariable("id") Long adId) {
+    if (!adService.doesAdExist(adId)) {
+      throw new NotFoundException("Ad", adId);
+    }
+
+    if (adService.isAdClosed(adId)) {
+      throw new ForbiddenException("You can't remove premium status from a closed ad.");
+    }
+
+    return adminService.removePremiumByAdId(adId);
   }
 }

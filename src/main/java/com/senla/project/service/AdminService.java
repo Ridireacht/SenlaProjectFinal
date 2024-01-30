@@ -12,5 +12,7 @@ public interface AdminService {
 
   ResponseEntity<?> getFullAdInfoByAdId(Long adId);
 
+  boolean removePremiumByAdId(Long adId);
+
   boolean deleteUserById(Long userId);
 }

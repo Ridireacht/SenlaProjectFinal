@@ -55,6 +55,20 @@ public class AdminServiceImpl implements AdminService {
 
   @Override
   @Transactional
+  public boolean removePremiumByAdId(Long adId) {
+    if (adRepository.existsById(adId)) {
+      Ad ad = adRepository.findById(adId).get();
+      ad.setPremium(false);
+      adRepository.save(ad);
+
+      return true;
+    }
+
+    return false;
+  }
+
+  @Override
+  @Transactional
   public boolean deleteUserById(Long userId) {
     if (userRepository.existsById(userId)) {
       userRepository.deleteById(userId);
