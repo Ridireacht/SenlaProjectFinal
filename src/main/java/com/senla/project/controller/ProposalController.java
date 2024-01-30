@@ -51,6 +51,10 @@ public class ProposalController {
   @Operation(summary = "Отправить предложение", description = "Отправляет новое предложение по указанному объявлению. Возвращает информацию о посланном предложении.")
   @PostMapping
   public ProposalSentResponse sendProposal(@Valid @RequestBody ProposalRequest proposalRequest) {
+    if (!adService.doesAdExist(proposalRequest.getAdId())) {
+      throw new NotFoundException("Ad", proposalRequest.getAdId());
+    }
+
     if(adService.doesAdBelongToUser(proposalRequest.getAdId(), getCurrentUserId())) {
       throw new NotFoundException("Ad", proposalRequest.getAdId());
     }
