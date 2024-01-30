@@ -2,6 +2,7 @@ package com.senla.project.controller;
 
 import com.senla.project.dto.response.UserProfileResponse;
 import com.senla.project.dto.response.UserResponse;
+import com.senla.project.service.AdminService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -20,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AdminController {
 
-  private final UserService userService;
+  private final AdminService adminService;
 
 
   @Operation(summary = "Получить всех пользователей", description = "Возвращает список всех зарегистрированных пользователей.")
   @GetMapping("/users")
   @PreAuthorize("hasAuthority('ADMIN')")
   public List<UserProfileResponse> getAllUserProfiles() {
-    return userService.getAllUserProfiles();
+    return adminService.getAllUserProfiles();
   }
 }

@@ -35,34 +35,7 @@ public class UserServiceTest {
 
   @Autowired
   UserService userService;
-
-
-  @Test
-  void testGetAllUserProfiles() {
-    User user1 = new User();
-    User user2 = new User();
-
-    user1.setUsername("testUsername1");
-    user2.setUsername("testUsername2");
-
-    UserProfileResponse expectedUserResponse1 = new UserProfileResponse();
-    UserProfileResponse expectedUserResponse2 = new UserProfileResponse();
-
-    expectedUserResponse1.setUsername(user1.getUsername());
-    expectedUserResponse2.setUsername(user2.getUsername());
-
-    when(userRepository.findAll()).thenReturn(Arrays.asList(user1, user2));
-    when(userMapper.mapToUserProfileResponse(user1)).thenReturn(expectedUserResponse1);
-    when(userMapper.mapToUserProfileResponse(user2)).thenReturn(expectedUserResponse2);
-
-    List<UserProfileResponse> actualUserResponses = userService.getAllUserProfiles();
-
-    assertEquals(2, actualUserResponses.size());
-    assertThat(actualUserResponses, contains(
-        hasProperty("username", is("testUsername1")),
-        hasProperty("username", is("testUsername2"))
-    ));
-  }
+  
 
   @Test
   void testGetUserById() {

@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface UserService {
 
-  List<UserProfileResponse> getAllUserProfiles();
-
   UserResponse getUserById(Long userId);
 
   Long getUserIdByUsername(String username);
