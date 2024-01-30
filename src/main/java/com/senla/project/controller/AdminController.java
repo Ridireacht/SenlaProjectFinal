@@ -78,7 +78,7 @@ public class AdminController {
   }
 
   @Operation(summary = "Получить активные объявления пользователя", description = "Получает список всех активных объявлений выбранного пользователя")
-  @GetMapping("/users/ads/current/{id}")
+  @GetMapping("/users/{id}/ads/current")
   public List<AdCurrentResponse> getCurrentAdsOfUser(@PathVariable("id") Long userId) {
     if (!userService.doesUserExist(userId)) {
       throw new NotFoundException("User", userId);
@@ -88,7 +88,7 @@ public class AdminController {
   }
 
   @Operation(summary = "Получить закрытые объявления пользователя", description = "Получает список всех неактивных (закрытых) объявлений выбранного пользователя.")
-  @GetMapping("/users/ads/closed/{id}")
+  @GetMapping("/users/{id}/ads/closed")
   public List<AdClosedResponse> getClosedAdsOfUser(@PathVariable("id") Long userId) {
     if (!userService.doesUserExist(userId)) {
       throw new NotFoundException("User", userId);
@@ -98,7 +98,7 @@ public class AdminController {
   }
 
   @Operation(summary = "Получить выкупленные объявления пользователя", description = "Получает список всех выкупленных выбранным пользователем объявлений.")
-  @GetMapping("/users/ads/purchased/{id}")
+  @GetMapping("/users/{id}/ads/purchased")
   public List<AdPurchasedResponse> getPurchasedAdsOfUser(@PathVariable("id") Long userId) {
     if (!userService.doesUserExist(userId)) {
       throw new NotFoundException("User", userId);
