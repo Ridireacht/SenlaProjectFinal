@@ -3,6 +3,7 @@ package com.senla.project.controller;
 import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
+import com.senla.project.dto.response.AdResponse;
 import com.senla.project.dto.response.UserProfileResponse;
 import com.senla.project.dto.response.UserResponse;
 import com.senla.project.exception.ForbiddenException;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -105,5 +107,15 @@ public class AdminController {
     }
 
     return adService.getPurchasedAdsByUserId(userId);
+  }
+
+  @Operation(summary = "Получить информацию по конкретному объявлению", description = "Получает полную информацию о конкретном объявлении по его id.")
+  @GetMapping("/ads/{id}")
+  public ResponseEntity<?> getAd(@PathVariable("id") Long adId) {
+    if (!adService.doesAdExist(adId)) {
+      throw new NotFoundException("Ad", adId);
+    }
+
+    return adminService.getFullAdInfoByAdId(adId);
   }
 }
