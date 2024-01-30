@@ -6,4 +6,8 @@ import java.util.List;
 public interface AdminService {
 
   List<UserProfileResponse> getAllUserProfiles();
+
+  UserProfileResponse getUserProfileByUserId(Long userId);
+
+  boolean deleteUserById(Long userId);
 }
