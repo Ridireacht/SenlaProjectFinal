@@ -4,7 +4,9 @@ import com.senla.project.dto.response.UserProfileResponse;
 import com.senla.project.dto.response.UserResponse;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
+import com.senla.project.service.AdService;
 import com.senla.project.service.AdminService;
+import com.senla.project.service.CommentService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -27,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
 
   private final UserService userService;
+  private final CommentService commentService;
+  private final AdService adService;
   private final AdminService adminService;
 
 
@@ -54,5 +58,19 @@ public class AdminController {
     }
 
     return adminService.deleteUserById(userId);
+  }
+
+  @Operation(summary = "Удалить комментарий", description = "Удаляет существующий комментарий. Возвращает boolean-результат операции.")
+  @DeleteMapping("/comments/{id}")
+  public Boolean deleteComment(@PathVariable("id") Long commentId) {
+    if (!commentService.doesCommentExist(commentId)) {
+      throw new NotFoundException("Comment", commentId);
+    }
+
+    if (adService.isAdClosed(commentService.getAdId(commentId))) {
+      throw new ForbiddenException("You can't delete a comment on a closed ad.");
+    }
+
+    return commentService.deleteComment(commentId);
   }
 }
