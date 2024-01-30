@@ -1,5 +1,8 @@
 package com.senla.project.controller;
 
+import com.senla.project.dto.response.AdClosedResponse;
+import com.senla.project.dto.response.AdCurrentResponse;
+import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.response.UserProfileResponse;
 import com.senla.project.dto.response.UserResponse;
 import com.senla.project.exception.ForbiddenException;
@@ -72,5 +75,35 @@ public class AdminController {
     }
 
     return commentService.deleteComment(commentId);
+  }
+
+  @Operation(summary = "Получить активные объявления пользователя", description = "Получает список всех активных объявлений выбранного пользователя")
+  @GetMapping("/users/ads/current/{id}")
+  public List<AdCurrentResponse> getCurrentAdsOfUser(@PathVariable("id") Long userId) {
+    if (!userService.doesUserExist(userId)) {
+      throw new NotFoundException("User", userId);
+    }
+
+    return adService.getCurrentAdsByUserId(userId);
+  }
+
+  @Operation(summary = "Получить закрытые объявления пользователя", description = "Получает список всех неактивных (закрытых) объявлений выбранного пользователя.")
+  @GetMapping("/users/ads/closed/{id}")
+  public List<AdClosedResponse> getClosedAdsOfUser(@PathVariable("id") Long userId) {
+    if (!userService.doesUserExist(userId)) {
+      throw new NotFoundException("User", userId);
+    }
+
+    return adService.getClosedAdsByUserId(userId);
+  }
+
+  @Operation(summary = "Получить выкупленные объявления пользователя", description = "Получает список всех выкупленных выбранным пользователем объявлений.")
+  @GetMapping("/users/ads/purchased/{id}")
+  public List<AdPurchasedResponse> getPurchasedAdsOfUser(@PathVariable("id") Long userId) {
+    if (!userService.doesUserExist(userId)) {
+      throw new NotFoundException("User", userId);
+    }
+
+    return adService.getPurchasedAdsByUserId(userId);
   }
 }
