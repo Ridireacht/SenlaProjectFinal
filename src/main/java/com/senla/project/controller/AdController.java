@@ -37,13 +37,13 @@ public class AdController {
   private final UserService userService;
 
 
-  @Operation(summary = "Получить объявления от других пользователей", description = "Получить список всех активных объявлений, которые не принадлежат текущему пользователю")
+  @Operation(summary = "Получить объявления от других пользователей", description = "Получает список всех активных объявлений, которые не принадлежат текущему пользователю")
   @GetMapping
   public List<AdResponse> getAllAdsFromOthers() {
     return adService.getAllAdsFromOthers(getCurrentUserId());
   }
 
-  @Operation(summary = "Получить свои активные объявления", description = "Получить список всех активных объявлений текущего пользователя")
+  @Operation(summary = "Получить свои активные объявления", description = "Получает список всех активных объявлений текущего пользователя")
   @GetMapping("/current")
   public List<AdCurrentResponse> getCurrentAds() {
     return adService.getCurrentAdsByUserId(getCurrentUserId());
