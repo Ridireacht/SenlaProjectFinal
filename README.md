@@ -5,6 +5,10 @@
 
 ### Фреймворки
 - **Spring Boot**  (версия 3.0.8)
+  - **Spring Boot Starter Data JPA**
+  - **Spring Boot Starter Security**
+  - **Spring Boot Starter Web**
+  - **Spring Boot Starter Test**
 
 ### Библиотеки для работы с БД
 - **Liquibase** (версия 4.25.0)
