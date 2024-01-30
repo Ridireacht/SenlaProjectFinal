@@ -55,7 +55,7 @@ public class AdController {
     return adService.getClosedAdsByUserId(getCurrentUserId());
   }
 
-  @Operation(summary = "Получить выкупленные объявления", description = "Получает список всех выкупленных текущим пользователем объявлений.")
+  @Operation(summary = "Получить свои выкупленные объявления", description = "Получает список всех выкупленных текущим пользователем объявлений.")
   @GetMapping("/purchased")
   public List<AdPurchasedResponse> getPurchasedAds() {
     return adService.getPurchasedAdsByUserId(getCurrentUserId());
