@@ -34,7 +34,7 @@ public class UserScoreController {
 
   @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем. Возвращает информацию об этом объявлении.")
   @PostMapping
-  public AdPurchasedResponse setUserScore(@PathVariable("{id}") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
+  public AdPurchasedResponse setUserScore(@PathVariable("id") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }
