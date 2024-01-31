@@ -3,8 +3,8 @@ package com.senla.project.mapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.request.ProposalRequest;
+import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.response.ProposalSentResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Proposal;

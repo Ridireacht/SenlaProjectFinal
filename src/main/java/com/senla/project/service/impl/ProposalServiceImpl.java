@@ -1,7 +1,7 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.request.ProposalRequest;
+import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.response.ProposalSentResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Proposal;

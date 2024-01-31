@@ -1,7 +1,7 @@
 package com.senla.project.mapper;
 
-import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.request.ProposalRequest;
+import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.response.ProposalSentResponse;
 import com.senla.project.entity.Proposal;
 import com.senla.project.repository.AdRepository;

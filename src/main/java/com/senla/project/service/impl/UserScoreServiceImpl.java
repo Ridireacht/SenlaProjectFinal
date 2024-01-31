@@ -1,7 +1,7 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.request.UserScoreRequest;
+import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.UserScore;
 import com.senla.project.mapper.AdMapper;

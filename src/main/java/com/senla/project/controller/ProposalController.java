@@ -1,7 +1,7 @@
 package com.senla.project.controller;
 
-import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.request.ProposalRequest;
+import com.senla.project.dto.response.ProposalReceivedResponse;
 import com.senla.project.dto.response.ProposalSentResponse;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;

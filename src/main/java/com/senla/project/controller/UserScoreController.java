@@ -1,7 +1,7 @@
 package com.senla.project.controller;
 
-import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.request.UserScoreRequest;
+import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
