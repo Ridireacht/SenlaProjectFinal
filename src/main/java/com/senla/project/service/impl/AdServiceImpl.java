@@ -126,15 +126,15 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public boolean isAdAvailableToUser(long adId, long currentUserId) {
-    Ad ad = adRepository.findById(adId).get();
-    return ad.getSeller().getId().equals(currentUserId) || ad.getBuyer().getId().equals(currentUserId);
-  }
-
-  @Override
   public boolean doesAdBelongToUser(long adId, long currentUserId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.getSeller().getId().equals(currentUserId);
+  }
+
+  @Override
+  public boolean isAdAvailableToUser(long adId, long currentUserId) {
+    Ad ad = adRepository.findById(adId).get();
+    return ad.getSeller().getId().equals(currentUserId) || ad.getBuyer().getId().equals(currentUserId);
   }
 
   @Override
