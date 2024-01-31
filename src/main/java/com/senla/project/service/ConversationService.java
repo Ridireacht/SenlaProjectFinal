@@ -18,5 +18,5 @@ public interface ConversationService {
 
   boolean doesConversationExist(long conversationId);
 
-  boolean doesConversationBelongToUser(long conversationId, long currentUserId);
+  boolean doesConversationBelongToUser(long conversationId, long userId);
 }

@@ -30,11 +30,11 @@ public interface AdService {
 
   boolean doesAdExist(long adId);
 
-  boolean doesAdBelongToUser(long adId, long currentUserId);
+  boolean doesAdBelongToUser(long adId, long userId);
 
-  boolean isAdAvailableToUser(long adId, long currentUserId);
+  boolean isAdAvailableToUser(long adId, long userId);
 
-  boolean isAdSoldToUser(long adId, long currentUserId);
+  boolean isAdSoldToUser(long adId, long userId);
 
   boolean isAdScored(long adId);
 

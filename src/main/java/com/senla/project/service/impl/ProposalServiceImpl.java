@@ -91,10 +91,10 @@ public class ProposalServiceImpl implements ProposalService {
   }
 
   @Override
-  public boolean isProposalSentToUser(long proposalId, long currentUserId) {
+  public boolean isProposalSentToUser(long proposalId, long userId) {
     Proposal proposal = proposalRepository.findById(proposalId).get();
 
-    return proposal.getAd().getSeller().getId().equals(currentUserId);
+    return proposal.getAd().getSeller().getId().equals(userId);
   }
 
 }

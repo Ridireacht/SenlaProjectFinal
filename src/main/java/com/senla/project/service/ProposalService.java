@@ -19,5 +19,5 @@ public interface ProposalService {
 
   boolean doesProposalExist(long proposalId);
 
-  boolean isProposalSentToUser(long proposalId, long currentUserId);
+  boolean isProposalSentToUser(long proposalId, long userId);
 }

@@ -80,11 +80,11 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
-  public boolean doesConversationBelongToUser(long conversationId, long currentUserId) {
+  public boolean doesConversationBelongToUser(long conversationId, long userId) {
     Conversation conversation = conversationRepository.findById(conversationId).get();
 
-    return conversation.getBuyer().getId().equals(currentUserId)
-        || conversation.getSeller().getId().equals(currentUserId);
+    return conversation.getBuyer().getId().equals(userId)
+        || conversation.getSeller().getId().equals(userId);
   }
 
 }

@@ -88,10 +88,10 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public boolean doesCommentBelongToUser(long commentId, long currentUserId) {
+  public boolean doesCommentBelongToUser(long commentId, long userId) {
     Comment comment = commentRepository.findById(commentId).get();
 
-    return comment.getSender().getId().equals(currentUserId);
+    return comment.getSender().getId().equals(userId);
   }
 
 }
