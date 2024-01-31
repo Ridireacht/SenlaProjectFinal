@@ -62,7 +62,7 @@ public class CommentController {
 
   @Operation(summary = "Обновить комментарий", description = "Обновляет существующий комментарий. Возвращает этот комментарий.")
   @PutMapping("/{commentId}")
-  public CommentResponse updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
+  public Boolean updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!commentService.doesCommentExist(commentId)) {
       throw new NotFoundException("Comment", commentId);
     }

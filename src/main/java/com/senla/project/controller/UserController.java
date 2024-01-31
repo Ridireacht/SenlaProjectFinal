@@ -48,7 +48,7 @@ public class UserController {
 
   @Operation(summary = "Обновить профиль текущего пользователя", description = "Обновляет информацию о текущем пользователе. Обновляются только не-пустые указанные поля, соответствующие валидации.")
   @PutMapping("/current")
-  public boolean updateCurrentUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest) {
+  public Boolean updateCurrentUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest) {
     if (userService.doesUserExistByEmail(userProfileRequest.getEmail())) {
       throw new ConflictException("This email is already taken.");
     }

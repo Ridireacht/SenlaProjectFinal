@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,7 +65,7 @@ public class AdController {
 
   @Operation(summary = "Получить конкретное объявление", description = "Получает конкретное объявление по его id.")
   @GetMapping("/{id}")
-  public AdOpenResponse getAd(@PathVariable("id") Long adId) {
+  public ResponseEntity<?> getAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }
@@ -82,9 +83,9 @@ public class AdController {
     return adService.createAd(getCurrentUserId(), adRequest);
   }
 
-  @Operation(summary = "Обновить объявление", description = "Обновляет существующее объявление по форме-реквесту. Возвращает информацию об этом объявлении.")
+  @Operation(summary = "Обновить объявление", description = "Обновляет существующее объявление по форме-реквесту. Возвращает boolean-результат операции.")
   @PutMapping("/{id}")
-  public AdCurrentResponse updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
+  public Boolean updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }
