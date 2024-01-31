@@ -38,8 +38,8 @@ public class CommentController {
 
   @Operation(summary = "Получить все комментарии", description = "Получает список всех комментариев для указанного объявления.")
   @GetMapping
-  public List<CommentResponse> getAllCommentsOnAd(@PathVariable("adId") Long adId) {
-    return commentService.getAllCommentsOnAd(adId);
+  public List<CommentResponse> getCommentsOnAd(@PathVariable("adId") Long adId) {
+    return commentService.getCommentsOnAd(adId);
   }
 
   @Operation(summary = "Создать комментарий", description = "Создаёт новый комментарий для указанного объявления. Возвращает этот комментарий.")

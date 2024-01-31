@@ -38,13 +38,13 @@ public class ProposalController {
 
   @Operation(summary = "Получить все отправленные предложения", description = "Возвращает список всех отправленных пользователем предложений.")
   @GetMapping("/sent")
-  public List<ProposalSentResponse> getAllSentProposalsOfCurrentUser() {
+  public List<ProposalSentResponse> getSentProposalsOfCurrentUser() {
     return proposalService.getSentProposalsOfUser(getCurrentUserId());
   }
 
   @Operation(summary = "Получить все полученные предложения", description = "Возвращает список всех полученных пользователем предложений.")
   @GetMapping("/received")
-  public List<ProposalReceivedResponse> getAllReceivedProposalsOfCurrentUser() {
+  public List<ProposalReceivedResponse> getReceivedProposalsOfCurrentUser() {
     return proposalService.getReceivedProposalsOfUser(getCurrentUserId());
   }
 

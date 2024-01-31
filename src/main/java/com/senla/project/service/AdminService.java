@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 
 public interface AdminService {
 
-  List<UserProfileResponse> getAllUserProfiles();
+  List<UserProfileResponse> getUserFullProfiles();
 
-  UserProfileResponse getUserProfile(Long userId);
+  UserProfileResponse getUserFullProfile(Long userId);
 
   ResponseEntity<?> getAd(Long adId);
 

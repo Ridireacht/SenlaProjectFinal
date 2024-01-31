@@ -35,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public List<CommentResponse> getAllCommentsOnAd(Long adId) {
+  public List<CommentResponse> getCommentsOnAd(Long adId) {
     List<Comment> comments = commentRepository.findAllByAdId(adId);
 
     return comments.stream()

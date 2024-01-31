@@ -33,7 +33,7 @@ public class ConversationController {
 
   @Operation(summary = "Получить все переписки пользователя", description = "Возвращает список всех переписок пользователя.")
   @GetMapping("/conversations")
-  public List<ConversationResponse> getAllCurrentUserConversations() {
+  public List<ConversationResponse> getCurrentUserConversations() {
     return conversationService.getConversationsOfUser(getCurrentUserId());
   }
 

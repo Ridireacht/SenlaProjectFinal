@@ -41,18 +41,18 @@ public class AdminController {
 
   @Operation(summary = "Получить профили всех пользователей", description = "Возвращает список профилей всех зарегистрированных пользователей.")
   @GetMapping("/users")
-  public List<UserProfileResponse> getAllUserProfiles() {
-    return adminService.getAllUserProfiles();
+  public List<UserProfileResponse> getUserFullProfiles() {
+    return adminService.getUserFullProfiles();
   }
 
   @Operation(summary = "Получить профиль пользователя по id", description = "Возвращает полную информацию о пользователе по его id.")
   @GetMapping("/users/{id}")
-  public UserProfileResponse getUserProfile(@PathVariable("id") Long userId) {
+  public UserProfileResponse getUserFullProfile(@PathVariable("id") Long userId) {
     if (!userService.doesUserExist(userId)) {
       throw new NotFoundException("User", userId);
     }
 
-    return adminService.getUserProfile(userId);
+    return adminService.getUserFullProfile(userId);
   }
 
   @Operation(summary = "Удалить пользователя", description = "Удаляет пользователя. Возвращает boolean-результат операции.")

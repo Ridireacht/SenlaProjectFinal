@@ -68,7 +68,7 @@ public class CommentServiceTest {
     when(commentMapper.mapToCommentResponse(comment1)).thenReturn(expectedCommentResponse1);
     when(commentMapper.mapToCommentResponse(comment2)).thenReturn(expectedCommentResponse2);
 
-    List<CommentResponse> actualCommentResponses = commentService.getAllCommentsOnAd(adId);
+    List<CommentResponse> actualCommentResponses = commentService.getCommentsOnAd(adId);
 
     assertEquals(2, actualCommentResponses.size());
     assertThat(actualCommentResponses, contains(

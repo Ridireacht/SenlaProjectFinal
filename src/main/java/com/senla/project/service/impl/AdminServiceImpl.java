@@ -27,7 +27,7 @@ public class AdminServiceImpl implements AdminService {
 
 
   @Override
-  public List<UserProfileResponse> getAllUserProfiles() {
+  public List<UserProfileResponse> getUserFullProfiles() {
     List<User> users = userRepository.findAll();
 
     return users.stream()
@@ -36,7 +36,7 @@ public class AdminServiceImpl implements AdminService {
   }
 
   @Override
-  public UserProfileResponse getUserProfile(Long userId) {
+  public UserProfileResponse getUserFullProfile(Long userId) {
     User user = userRepository.findById(userId).get();
     return userMapper.mapToUserProfileResponse(user);
   }

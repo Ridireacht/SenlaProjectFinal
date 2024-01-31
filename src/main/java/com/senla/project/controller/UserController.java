@@ -32,7 +32,7 @@ public class UserController {
 
   @Operation(summary = "Получить пользователя по id", description = "Возвращает информацию о пользователе по его id.")
   @GetMapping("/{id}")
-  public UserResponse getUserBriefInfo(@PathVariable("id") Long userId) {
+  public UserResponse getUserBriefProfile(@PathVariable("id") Long userId) {
     if (!userService.doesUserExist(userId)) {
       throw new NotFoundException("User", userId);
     }
@@ -42,7 +42,7 @@ public class UserController {
 
   @Operation(summary = "Получить профиль текущего пользователя", description = "Возвращает информацию о текущем пользователе.")
   @GetMapping("/current")
-  public UserProfileResponse getCurrentUserProfile() {
+  public UserProfileResponse getCurrentUserFullProfile() {
     return userService.getUserFullProfile(getCurrentUserId());
   }
 
