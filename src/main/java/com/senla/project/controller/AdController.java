@@ -70,11 +70,11 @@ public class AdController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (!adService.isAdAvailableToUser(adId, getCurrentUserId())) {
-      throw new ForbiddenException("This ad is not available for you.");
+    if (adService.isAdClosed(adId) && !userService.isUserBuyerOrSellerOfAd(getCurrentUserId(), adId)) {
+      throw new ForbiddenException("This ad is closed and not available for you.");
     }
 
-    return adService.getAd(adId);
+    return adService.getAd(adId, getCurrentUserId());
   }
 
   @Operation(summary = "Создать объявление", description = "Создаёт новое объявление по форме-реквесту. Возвращает информацию об этом объявлении.")

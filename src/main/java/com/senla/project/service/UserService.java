@@ -17,4 +17,6 @@ public interface UserService {
   boolean doesUserExist(long userId);
 
   boolean doesUserExistByEmail(String email);
+
+  boolean isUserBuyerOrSellerOfAd (long userId, long adId);
 }

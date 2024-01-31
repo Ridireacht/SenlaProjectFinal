@@ -18,7 +18,7 @@ public interface AdService {
 
   List<AdPurchasedResponse> getPurchasedAdsOfUser(long userId);
 
-  ResponseEntity<?> getAd(long adId);
+  ResponseEntity<?> getAd(long adId, long userId);
 
   AdCurrentResponse createAd(long userId, AdRequest adRequest);
 
@@ -31,8 +31,6 @@ public interface AdService {
   boolean doesAdExist(long adId);
 
   boolean doesAdBelongToUser(long adId, long userId);
-
-  boolean isAdAvailableToUser(long adId, long userId);
 
   boolean isAdSoldToUser(long adId, long userId);
 

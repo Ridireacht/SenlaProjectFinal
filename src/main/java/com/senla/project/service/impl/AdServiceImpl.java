@@ -13,8 +13,10 @@ import com.senla.project.repository.UserRepository;
 import com.senla.project.service.AdService;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +34,7 @@ public class AdServiceImpl implements AdService {
   public List<AdOpenResponse> getOpenAdsFromOtherUsers(long userId) {
     List<Ad> ads = adRepository.findAllByNotSellerIdAndIsClosedFalse(userId);
     return ads.stream()
-        .map(adMapper::mapToAdResponse)
+        .map(adMapper::mapToAdOpenResponse)
         .collect(Collectors.toList());
   }
 
@@ -61,9 +63,23 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public AdOpenResponse getAd(long adId) {
+  public ResponseEntity<?> getAd(long adId, long userId) {
     Ad ad = adRepository.findById(adId).get();
-    return adMapper.mapToAdResponse(ad);
+    User user = userRepository.findById(userId).get();
+
+    if (Objects.equals(ad.getSeller().getId(), user.getId())) {
+      if (ad.isClosed()) {
+        return ResponseEntity.ok(adMapper.mapToAdClosedResponse(ad));
+      } else {
+        return ResponseEntity.ok(adMapper.mapToAdCurrentResponse(ad));
+      }
+    }
+
+    if (Objects.equals(ad.getBuyer().getId(), user.getId())) {
+      return ResponseEntity.ok(adMapper.mapToAdPurchasedResponse(ad));
+    }
+
+    return ResponseEntity.ok(adMapper.mapToAdBriefResponse(ad));
   }
 
   @Transactional
@@ -81,22 +97,25 @@ public class AdServiceImpl implements AdService {
 
   @Transactional
   @Override
-  public AdCurrentResponse updateAd(long adId, AdRequest adRequest) {
-    Ad existingAd = adRepository.findById(adId).orElse(null);
-    if (existingAd != null) {
-      existingAd.setTitle(adRequest.getTitle());
-      existingAd.setContent(adRequest.getContent());
-      existingAd.setPrice(adRequest.getPrice());
-      existingAd.setPostedAt(LocalDateTime.now());
-      Ad updatedAd = adRepository.save(existingAd);
-      return adMapper.mapToAdCurrentResponse(updatedAd);
+  public boolean updateAd(long adId, AdRequest adRequest) {
+    if (adRepository.existsById(adId)) {
+      Ad ad = adRepository.findById(adId).get();
+
+      ad.setTitle(adRequest.getTitle());
+      ad.setContent(adRequest.getContent());
+      ad.setPrice(adRequest.getPrice());
+      ad.setPostedAt(LocalDateTime.now());
+
+      adRepository.save(ad);
+      return true;
     }
-    return null;
+
+    return false;
   }
 
   @Transactional
   @Override
-  public Boolean makeAdPremium(long adId) {
+  public boolean makeAdPremium(long adId) {
     if (adRepository.existsById(adId)) {
       Ad ad = adRepository.findById(adId).get();
 
@@ -129,12 +148,6 @@ public class AdServiceImpl implements AdService {
   public boolean doesAdBelongToUser(long adId, long userId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.getSeller().getId().equals(userId);
-  }
-
-  @Override
-  public boolean isAdAvailableToUser(long adId, long userId) {
-    Ad ad = adRepository.findById(adId).get();
-    return ad.getSeller().getId().equals(userId) || ad.getBuyer().getId().equals(userId);
   }
 
   @Override
