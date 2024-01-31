@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.senla.project.dto.request.AdRequest;
 import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
+import com.senla.project.dto.response.AdOpenResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
-import com.senla.project.dto.response.AdResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.User;
 import com.senla.project.entity.UserScore;
@@ -131,7 +131,7 @@ public class AdMapperTest {
     ad.setContent("testContent");
     ad.setPrice(100);
 
-    AdResponse expectedResponse = new AdResponse();
+    AdOpenResponse expectedResponse = new AdOpenResponse();
     expectedResponse.setId(1L);
     expectedResponse.setSellerId(2L);
     expectedResponse.setPostedAt(LocalDateTime.of(2022, 1, 17, 15, 30));
@@ -139,7 +139,7 @@ public class AdMapperTest {
     expectedResponse.setContent("testContent");
     expectedResponse.setPrice(100);
 
-    AdResponse actualResponse = mapper.mapToAdResponse(ad);
+    AdOpenResponse actualResponse = mapper.mapToAdResponse(ad);
 
     assertEquals(expectedResponse.getId(), actualResponse.getId());
     assertEquals(expectedResponse.getSellerId(), actualResponse.getSellerId());

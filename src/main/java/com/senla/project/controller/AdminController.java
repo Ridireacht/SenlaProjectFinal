@@ -3,7 +3,7 @@ package com.senla.project.controller;
 import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
-import com.senla.project.dto.response.UserProfileResponse;
+import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.exception.ConflictException;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
@@ -41,13 +41,13 @@ public class AdminController {
 
   @Operation(summary = "Получить профили всех пользователей", description = "Возвращает список профилей всех зарегистрированных пользователей.")
   @GetMapping("/users")
-  public List<UserProfileResponse> getUserFullProfiles() {
+  public List<UserFullProfileResponse> getUserFullProfiles() {
     return adminService.getUserFullProfiles();
   }
 
   @Operation(summary = "Получить профиль пользователя по id", description = "Возвращает полную информацию о пользователе по его id.")
   @GetMapping("/users/{id}")
-  public UserProfileResponse getUserFullProfile(@PathVariable("id") Long userId) {
+  public UserFullProfileResponse getUserFullProfile(@PathVariable("id") Long userId) {
     if (!userService.doesUserExist(userId)) {
       throw new NotFoundException("User", userId);
     }

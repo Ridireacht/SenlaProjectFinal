@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AdResponse {
+public class AdOpenResponse {
   private Long id;
   private Long sellerId;
   private LocalDateTime postedAt;

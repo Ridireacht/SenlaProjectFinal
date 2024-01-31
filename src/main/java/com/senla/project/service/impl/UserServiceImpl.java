@@ -1,8 +1,8 @@
 package com.senla.project.service.impl;
 
 import com.senla.project.dto.request.UserProfileRequest;
-import com.senla.project.dto.response.UserProfileResponse;
-import com.senla.project.dto.response.UserResponse;
+import com.senla.project.dto.response.UserFullProfileResponse;
+import com.senla.project.dto.response.UserBriefProfileResponse;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.UserMapper;
 import com.senla.project.repository.UserRepository;
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
 
   @Override
-  public UserResponse getUserBriefProfile(Long userId) {
+  public UserBriefProfileResponse getUserBriefProfile(Long userId) {
     User user = userRepository.findById(userId).get();
     return userMapper.mapToUserResponse(user);
   }
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserProfileResponse getUserFullProfile(Long userId) {
+  public UserFullProfileResponse getUserFullProfile(Long userId) {
     User user = userRepository.findById(userId).get();
     return userMapper.mapToUserProfileResponse(user);
   }

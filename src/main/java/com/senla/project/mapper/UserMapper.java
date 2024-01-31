@@ -1,7 +1,7 @@
 package com.senla.project.mapper;
 
-import com.senla.project.dto.response.UserProfileResponse;
-import com.senla.project.dto.response.UserResponse;
+import com.senla.project.dto.response.UserBriefProfileResponse;
+import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.entity.User;
 import com.senla.project.repository.RatingRepository;
 import org.mapstruct.Mapper;
@@ -16,8 +16,8 @@ public abstract class UserMapper {
 
 
   @Mapping(target = "rating", expression = "java(ratingRepository.findByUserId(user.getId()).get().getAverageScore())")
-  public abstract UserResponse mapToUserResponse(User user);
+  public abstract UserBriefProfileResponse mapToUserResponse(User user);
 
   @Mapping(target = "rating", expression = "java(ratingRepository.findByUserId(user.getId()).get().getAverageScore())")
-  public abstract UserProfileResponse mapToUserProfileResponse(User user);
+  public abstract UserFullProfileResponse mapToUserProfileResponse(User user);
 }

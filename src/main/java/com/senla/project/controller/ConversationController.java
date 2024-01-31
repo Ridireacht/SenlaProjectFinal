@@ -1,7 +1,7 @@
 package com.senla.project.controller;
 
-import com.senla.project.dto.response.ConversationFullResponse;
 import com.senla.project.dto.response.ConversationResponse;
+import com.senla.project.dto.response.ConversationInfoResponse;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
@@ -33,13 +33,13 @@ public class ConversationController {
 
   @Operation(summary = "Получить все переписки пользователя", description = "Возвращает список всех переписок пользователя.")
   @GetMapping("/conversations")
-  public List<ConversationResponse> getCurrentUserConversations() {
+  public List<ConversationInfoResponse> getCurrentUserConversations() {
     return conversationService.getConversationsOfUser(getCurrentUserId());
   }
 
   @Operation(summary = "Получить конкретную переписку", description = "Возвращает конкретную переписку.")
   @GetMapping("/conversations/{id}")
-  public ConversationFullResponse getConversation(@PathVariable("id") Long conversationId) {
+  public ConversationResponse getConversation(@PathVariable("id") Long conversationId) {
     if (!conversationService.doesConversationExist(conversationId)) {
       throw new NotFoundException("Conversation", conversationId);
     }
@@ -53,7 +53,7 @@ public class ConversationController {
 
   @Operation(summary = "Начать переписку по объявлению", description = "Создает новую переписку по указанному объявлению. Возвращает эту переписку.")
   @PostMapping("/ads/{adId}/discuss")
-  public ConversationFullResponse createConversationByAd(@PathVariable("adId") Long adId) {
+  public ConversationResponse createConversationByAd(@PathVariable("adId") Long adId) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }

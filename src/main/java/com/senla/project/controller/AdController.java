@@ -4,7 +4,7 @@ import com.senla.project.dto.request.AdRequest;
 import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
-import com.senla.project.dto.response.AdResponse;
+import com.senla.project.dto.response.AdOpenResponse;
 import com.senla.project.exception.ConflictException;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
@@ -40,8 +40,8 @@ public class AdController {
 
   @Operation(summary = "Получить объявления от других пользователей", description = "Получает список всех активных объявлений, которые не принадлежат текущему пользователю")
   @GetMapping
-  public List<AdResponse> getCurrentAdsFromOtherUsers() {
-    return adService.getCurrentAdsFromOtherUsers(getCurrentUserId());
+  public List<AdOpenResponse> getOpenAdsFromOtherUsers() {
+    return adService.getOpenAdsFromOtherUsers(getCurrentUserId());
   }
 
   @Operation(summary = "Получить свои активные объявления", description = "Получает список всех активных объявлений текущего пользователя")
@@ -64,7 +64,7 @@ public class AdController {
 
   @Operation(summary = "Получить конкретное объявление", description = "Получает конкретное объявление по его id.")
   @GetMapping("/{id}")
-  public AdResponse getAd(@PathVariable("id") Long adId) {
+  public AdOpenResponse getAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }

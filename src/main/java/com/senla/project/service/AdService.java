@@ -3,13 +3,13 @@ package com.senla.project.service;
 import com.senla.project.dto.request.AdRequest;
 import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
+import com.senla.project.dto.response.AdOpenResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
-import com.senla.project.dto.response.AdResponse;
 import java.util.List;
 
 public interface AdService {
 
-  List<AdResponse> getCurrentAdsFromOtherUsers(Long userId);
+  List<AdOpenResponse> getOpenAdsFromOtherUsers(Long userId);
 
   List<AdCurrentResponse> getCurrentAdsOfUser(Long userId);
 
@@ -17,7 +17,7 @@ public interface AdService {
 
   List<AdPurchasedResponse> getPurchasedAdsOfUser(Long userId);
 
-  AdResponse getAd(Long adId);
+  AdOpenResponse getAd(Long adId);
 
   AdCurrentResponse createAd(Long userId, AdRequest adRequest);
 

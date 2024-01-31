@@ -2,8 +2,8 @@ package com.senla.project.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.senla.project.dto.response.ConversationFullResponse;
 import com.senla.project.dto.response.ConversationResponse;
+import com.senla.project.dto.response.ConversationInfoResponse;
 import com.senla.project.dto.response.MessageResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Conversation;
@@ -42,11 +42,11 @@ public class ConversationMapperTest {
     conversation.setAd(ad);
     conversation.setMessages(messages);
 
-    ConversationResponse expectedResponse = new ConversationResponse();
+    ConversationInfoResponse expectedResponse = new ConversationInfoResponse();
     expectedResponse.setId(1L);
     expectedResponse.setAdId(2L);
 
-    ConversationResponse actualResponse = mapper.mapToConversationResponse(conversation);
+    ConversationInfoResponse actualResponse = mapper.mapToConversationResponse(conversation);
 
     assertEquals(expectedResponse.getId(), actualResponse.getId());
     assertEquals(expectedResponse.getAdId(), actualResponse.getAdId());
@@ -74,12 +74,12 @@ public class ConversationMapperTest {
     conversation.setAd(ad);
     conversation.setMessages(messages);
 
-    ConversationFullResponse expectedResponse = new ConversationFullResponse();
+    ConversationResponse expectedResponse = new ConversationResponse();
     expectedResponse.setId(1L);
     expectedResponse.setAdId(2L);
     expectedResponse.setMessages(messageResponses);
 
-    ConversationFullResponse actualResponse = mapper.mapToConversationFullResponse(conversation);
+    ConversationResponse actualResponse = mapper.mapToConversationFullResponse(conversation);
 
     assertEquals(expectedResponse.getId(), actualResponse.getId());
     assertEquals(expectedResponse.getAdId(), actualResponse.getAdId());

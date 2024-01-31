@@ -3,7 +3,7 @@ package com.senla.project.mapper;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import com.senla.project.dto.response.UserResponse;
+import com.senla.project.dto.response.UserBriefProfileResponse;
 import com.senla.project.entity.Rating;
 import com.senla.project.entity.User;
 import com.senla.project.repository.RatingRepository;
@@ -38,13 +38,13 @@ public class UserMapperTest {
 
     when(ratingRepository.findByUserId(1L)).thenReturn(Optional.of(rating));
 
-    UserResponse expectedResponse = new UserResponse();
+    UserBriefProfileResponse expectedResponse = new UserBriefProfileResponse();
     expectedResponse.setId(1L);
     expectedResponse.setUsername("testUser");
     expectedResponse.setAddress("Sample city");
     expectedResponse.setRating(3.5);
 
-    UserResponse actualResponse = mapper.mapToUserResponse(user);
+    UserBriefProfileResponse actualResponse = mapper.mapToUserResponse(user);
 
     assertEquals(expectedResponse.getId(), actualResponse.getId());
     assertEquals(expectedResponse.getUsername(), actualResponse.getUsername());

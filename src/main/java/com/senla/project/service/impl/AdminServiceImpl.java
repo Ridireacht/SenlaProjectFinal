@@ -1,6 +1,6 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.response.UserProfileResponse;
+import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.AdMapper;
@@ -27,7 +27,7 @@ public class AdminServiceImpl implements AdminService {
 
 
   @Override
-  public List<UserProfileResponse> getUserFullProfiles() {
+  public List<UserFullProfileResponse> getUserFullProfiles() {
     List<User> users = userRepository.findAll();
 
     return users.stream()
@@ -36,7 +36,7 @@ public class AdminServiceImpl implements AdminService {
   }
 
   @Override
-  public UserProfileResponse getUserFullProfile(Long userId) {
+  public UserFullProfileResponse getUserFullProfile(Long userId) {
     User user = userRepository.findById(userId).get();
     return userMapper.mapToUserProfileResponse(user);
   }

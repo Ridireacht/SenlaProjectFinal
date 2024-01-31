@@ -1,8 +1,8 @@
 package com.senla.project.controller;
 
 import com.senla.project.dto.request.UserProfileRequest;
-import com.senla.project.dto.response.UserProfileResponse;
-import com.senla.project.dto.response.UserResponse;
+import com.senla.project.dto.response.UserFullProfileResponse;
+import com.senla.project.dto.response.UserBriefProfileResponse;
 import com.senla.project.exception.ConflictException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.UserService;
@@ -32,7 +32,7 @@ public class UserController {
 
   @Operation(summary = "Получить пользователя по id", description = "Возвращает информацию о пользователе по его id.")
   @GetMapping("/{id}")
-  public UserResponse getUserBriefProfile(@PathVariable("id") Long userId) {
+  public UserBriefProfileResponse getUserBriefProfile(@PathVariable("id") Long userId) {
     if (!userService.doesUserExist(userId)) {
       throw new NotFoundException("User", userId);
     }
@@ -42,7 +42,7 @@ public class UserController {
 
   @Operation(summary = "Получить профиль текущего пользователя", description = "Возвращает информацию о текущем пользователе.")
   @GetMapping("/current")
-  public UserProfileResponse getCurrentUserFullProfile() {
+  public UserFullProfileResponse getCurrentUserFullProfile() {
     return userService.getUserFullProfile(getCurrentUserId());
   }
 

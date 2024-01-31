@@ -1,7 +1,7 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.response.ConversationFullResponse;
 import com.senla.project.dto.response.ConversationResponse;
+import com.senla.project.dto.response.ConversationInfoResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Conversation;
 import com.senla.project.entity.User;
@@ -34,7 +34,7 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
-  public List<ConversationResponse> getConversationsOfUser(Long userId) {
+  public List<ConversationInfoResponse> getConversationsOfUser(Long userId) {
     List<Conversation> conversations = conversationRepository.findByBuyerIdOrSellerId(userId);
 
     return conversations.stream()
@@ -43,14 +43,14 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
-  public ConversationFullResponse getConversation(Long conversationId) {
+  public ConversationResponse getConversation(Long conversationId) {
     Conversation conversation = conversationRepository.findById(conversationId).get();
     return conversationMapper.mapToConversationFullResponse(conversation);
   }
 
   @Transactional
   @Override
-  public ConversationFullResponse createConversationByAd(Long userId, Long adId) {
+  public ConversationResponse createConversationByAd(Long userId, Long adId) {
     Ad ad = adRepository.findById(adId).get();
     User buyer = userRepository.findById(userId).get();
 

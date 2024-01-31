@@ -1,7 +1,7 @@
 package com.senla.project.controller;
 
 import com.senla.project.dto.request.MessageRequest;
-import com.senla.project.dto.response.ConversationFullResponse;
+import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.ConversationService;
@@ -32,7 +32,7 @@ public class MessageController {
 
   @Operation(summary = "Отправить сообщение в переписку", description = "Отправляет новое сообщение в указанной переписке. Возвращает эту переписку.")
   @PostMapping("/conversations/{id}/messages")
-  public ConversationFullResponse sendMessageToConversation(@PathVariable("id") Long conversationId, @Valid @RequestBody MessageRequest messageRequest) {
+  public ConversationResponse sendMessageToConversation(@PathVariable("id") Long conversationId, @Valid @RequestBody MessageRequest messageRequest) {
     if (!conversationService.doesConversationExist(conversationId)) {
       throw new NotFoundException("Conversation", conversationId);
     }

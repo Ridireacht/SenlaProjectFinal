@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-import com.senla.project.dto.response.UserResponse;
+import com.senla.project.dto.response.UserBriefProfileResponse;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.UserMapper;
 import com.senla.project.repository.UserRepository;
@@ -38,17 +38,17 @@ public class UserServiceTest {
     user.setId(userId);
     user.setUsername("testUsername");
 
-    UserResponse expectedUserResponse = new UserResponse();
-    expectedUserResponse.setId(user.getId());
-    expectedUserResponse.setUsername(user.getUsername());
+    UserBriefProfileResponse expectedUserBriefProfileResponse = new UserBriefProfileResponse();
+    expectedUserBriefProfileResponse.setId(user.getId());
+    expectedUserBriefProfileResponse.setUsername(user.getUsername());
 
     when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-    when(userMapper.mapToUserResponse(user)).thenReturn(expectedUserResponse);
+    when(userMapper.mapToUserResponse(user)).thenReturn(expectedUserBriefProfileResponse);
 
-    UserResponse actualUserResponse = userService.getUserBriefProfile(userId);
+    UserBriefProfileResponse actualUserBriefProfileResponse = userService.getUserBriefProfile(userId);
 
-    assertEquals(expectedUserResponse.getId(), actualUserResponse.getId());
-    assertEquals(expectedUserResponse.getUsername(), actualUserResponse.getUsername());
+    assertEquals(expectedUserBriefProfileResponse.getId(), actualUserBriefProfileResponse.getId());
+    assertEquals(expectedUserBriefProfileResponse.getUsername(), actualUserBriefProfileResponse.getUsername());
   }
 
   @Test

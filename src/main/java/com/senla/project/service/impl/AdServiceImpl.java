@@ -3,8 +3,8 @@ package com.senla.project.service.impl;
 import com.senla.project.dto.request.AdRequest;
 import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
+import com.senla.project.dto.response.AdOpenResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
-import com.senla.project.dto.response.AdResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.AdMapper;
@@ -29,7 +29,7 @@ public class AdServiceImpl implements AdService {
 
 
   @Override
-  public List<AdResponse> getCurrentAdsFromOtherUsers(Long userId) {
+  public List<AdOpenResponse> getOpenAdsFromOtherUsers(Long userId) {
     List<Ad> ads = adRepository.findAllByNotSellerIdAndIsClosedFalse(userId);
     return ads.stream()
         .map(adMapper::mapToAdResponse)
@@ -61,7 +61,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public AdResponse getAd(Long adId) {
+  public AdOpenResponse getAd(Long adId) {
     Ad ad = adRepository.findById(adId).get();
     return adMapper.mapToAdResponse(ad);
   }
