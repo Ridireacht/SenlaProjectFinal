@@ -137,7 +137,7 @@ public class AdminController {
 
   @Operation(summary = "Убрать премиальный статус у объявления", description = "Убирает премиальный статус у объявления по его id. Возвращает boolean-результат операции.")
   @PutMapping("/ads/{id}/premium")
-  public Boolean removePremiumFromAd(@PathVariable("id") Long adId) {
+  public Boolean unmakeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }

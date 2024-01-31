@@ -33,7 +33,7 @@ public class MessageController {
 
   @Operation(summary = "Отправить сообщение в переписку", description = "Отправляет новое сообщение в указанной переписке. Возвращает эту переписку.")
   @PostMapping("/conversations/{id}/messages")
-  public ConversationFullResponse sendMessage(@PathVariable("id") Long conversationId, @Valid @RequestBody MessageRequest messageRequest) {
+  public ConversationFullResponse sendMessageToConversation(@PathVariable("id") Long conversationId, @Valid @RequestBody MessageRequest messageRequest) {
     if (!conversationService.doesConversationExist(conversationId)) {
       throw new NotFoundException("Conversation", conversationId);
     }

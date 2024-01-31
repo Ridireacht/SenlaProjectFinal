@@ -33,7 +33,7 @@ public class ConversationController {
 
   @Operation(summary = "Получить все переписки пользователя", description = "Возвращает список всех переписок пользователя.")
   @GetMapping("/conversations")
-  public List<ConversationResponse> getAllUserConversations() {
+  public List<ConversationResponse> getAllCurrentUserConversations() {
     return conversationService.getConversationsByUserId(getCurrentUserId());
   }
 
@@ -53,7 +53,7 @@ public class ConversationController {
 
   @Operation(summary = "Начать переписку по объявлению", description = "Создает новую переписку по указанному объявлению. Возвращает эту переписку.")
   @PostMapping("/ads/{adId}/discuss")
-  public ConversationFullResponse createConversation(@PathVariable("adId") Long adId) {
+  public ConversationFullResponse createConversationByAd(@PathVariable("adId") Long adId) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }

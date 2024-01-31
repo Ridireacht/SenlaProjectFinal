@@ -40,25 +40,25 @@ public class AdController {
 
   @Operation(summary = "Получить объявления от других пользователей", description = "Получает список всех активных объявлений, которые не принадлежат текущему пользователю")
   @GetMapping
-  public List<AdResponse> getAllAdsFromOthers() {
+  public List<AdResponse> getCurrentAdsFromOtherUsers() {
     return adService.getAllAdsFromOthers(getCurrentUserId());
   }
 
   @Operation(summary = "Получить свои активные объявления", description = "Получает список всех активных объявлений текущего пользователя")
   @GetMapping("/current")
-  public List<AdCurrentResponse> getCurrentAds() {
+  public List<AdCurrentResponse> getCurrentAdsOfCurrentUser() {
     return adService.getCurrentAdsByUserId(getCurrentUserId());
   }
 
   @Operation(summary = "Получить свои закрытые объявления", description = "Получает список всех неактивных (закрытых) объявлений текущего пользователя.")
   @GetMapping("/closed")
-  public List<AdClosedResponse> getClosedAds() {
+  public List<AdClosedResponse> getClosedAdsOfCurrentUser() {
     return adService.getClosedAdsByUserId(getCurrentUserId());
   }
 
   @Operation(summary = "Получить свои выкупленные объявления", description = "Получает список всех выкупленных текущим пользователем объявлений.")
   @GetMapping("/purchased")
-  public List<AdPurchasedResponse> getPurchasedAds() {
+  public List<AdPurchasedResponse> getPurchasedAdsOfCurrentUser() {
     return adService.getPurchasedAdsByUserId(getCurrentUserId());
   }
 

@@ -38,13 +38,13 @@ public class CommentController {
 
   @Operation(summary = "Получить все комментарии", description = "Получает список всех комментариев для указанного объявления.")
   @GetMapping
-  public List<CommentResponse> getAllComments(@PathVariable("adId") Long adId) {
+  public List<CommentResponse> getAllCommentsOnAd(@PathVariable("adId") Long adId) {
     return commentService.getAllCommentsByAdId(adId);
   }
 
   @Operation(summary = "Создать комментарий", description = "Создаёт новый комментарий для указанного объявления. Возвращает этот комментарий.")
   @PostMapping
-  public CommentResponse createComment(@PathVariable("adId") Long adId, @Valid @RequestBody CommentRequest commentRequest) {
+  public CommentResponse createCommentOnAd(@PathVariable("adId") Long adId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }

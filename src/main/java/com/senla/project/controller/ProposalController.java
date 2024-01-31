@@ -38,13 +38,13 @@ public class ProposalController {
 
   @Operation(summary = "Получить все отправленные предложения", description = "Возвращает список всех отправленных пользователем предложений.")
   @GetMapping("/sent")
-  public List<ProposalSentResponse> getAllSentProposals() {
+  public List<ProposalSentResponse> getAllSentProposalsOfCurrentUser() {
     return proposalService.getAllSentProposalsByUserId(getCurrentUserId());
   }
 
   @Operation(summary = "Получить все полученные предложения", description = "Возвращает список всех полученных пользователем предложений.")
   @GetMapping("/received")
-  public List<ProposalReceivedResponse> getAllReceivedProposals() {
+  public List<ProposalReceivedResponse> getAllReceivedProposalsOfCurrentUser() {
     return proposalService.getAllReceivedProposalsByUserId(getCurrentUserId());
   }
 
@@ -68,7 +68,7 @@ public class ProposalController {
 
   @Operation(summary = "Принять предложение", description = "Принимает предложение по его id. Возвращает boolean-результат операции.")
   @PostMapping("/received/{id}")
-  public Boolean acceptProposal(@PathVariable("id") Long proposalId) {
+  public Boolean acceptProposalById(@PathVariable("id") Long proposalId) {
     if (!proposalService.doesProposalExist(proposalId)) {
       throw new NotFoundException("Proposal", proposalId);
     }
@@ -82,7 +82,7 @@ public class ProposalController {
 
   @Operation(summary = "Отклонить предложение", description = "Отклоняет предложение по его id. Возвращает boolean-результат операции.")
   @DeleteMapping("/received/{id}")
-  public Boolean declineProposal(@PathVariable("id") Long proposalId) {
+  public Boolean declineProposalById(@PathVariable("id") Long proposalId) {
     if (!proposalService.doesProposalExist(proposalId)) {
       throw new NotFoundException("Proposal", proposalId);
     }

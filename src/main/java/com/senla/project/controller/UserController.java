@@ -33,7 +33,7 @@ public class UserController {
 
   @Operation(summary = "Получить пользователя по id", description = "Возвращает информацию о пользователе по его id.")
   @GetMapping("/{id}")
-  public UserResponse getUser(@PathVariable("id") Long userId) {
+  public UserResponse getUserBriefInfo(@PathVariable("id") Long userId) {
     if (!userService.doesUserExist(userId)) {
       throw new NotFoundException("User", userId);
     }
