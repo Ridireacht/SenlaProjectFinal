@@ -53,8 +53,8 @@ public class AdminServiceImpl implements AdminService {
     }
   }
 
-  @Override
   @Transactional
+  @Override
   public boolean removePremiumByAdId(Long adId) {
     if (adRepository.existsById(adId)) {
       Ad ad = adRepository.findById(adId).get();
@@ -67,8 +67,8 @@ public class AdminServiceImpl implements AdminService {
     return false;
   }
 
-  @Override
   @Transactional
+  @Override
   public boolean deleteUserById(Long userId) {
     if (userRepository.existsById(userId)) {
       userRepository.deleteById(userId);
