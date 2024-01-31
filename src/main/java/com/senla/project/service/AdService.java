@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface AdService {
 
-  List<AdResponse> getAllAdsFromOthers(Long userId);
+  List<AdResponse> getCurrentAdsFromOtherUsers(Long userId);
 
-  List<AdCurrentResponse> getCurrentAdsByUserId(Long userId);
+  List<AdCurrentResponse> getCurrentAdsOfUser(Long userId);
 
-  List<AdClosedResponse> getClosedAdsByUserId(Long userId);
+  List<AdClosedResponse> getClosedAdsOfUser(Long userId);
 
-  List<AdPurchasedResponse> getPurchasedAdsByUserId(Long userId);
+  List<AdPurchasedResponse> getPurchasedAdsOfUser(Long userId);
 
-  AdResponse getAdById(Long adId);
+  AdResponse getAd(Long adId);
 
   AdCurrentResponse createAd(Long userId, AdRequest adRequest);
 

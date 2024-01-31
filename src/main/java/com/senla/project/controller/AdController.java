@@ -41,25 +41,25 @@ public class AdController {
   @Operation(summary = "Получить объявления от других пользователей", description = "Получает список всех активных объявлений, которые не принадлежат текущему пользователю")
   @GetMapping
   public List<AdResponse> getCurrentAdsFromOtherUsers() {
-    return adService.getAllAdsFromOthers(getCurrentUserId());
+    return adService.getCurrentAdsFromOtherUsers(getCurrentUserId());
   }
 
   @Operation(summary = "Получить свои активные объявления", description = "Получает список всех активных объявлений текущего пользователя")
   @GetMapping("/current")
   public List<AdCurrentResponse> getCurrentAdsOfCurrentUser() {
-    return adService.getCurrentAdsByUserId(getCurrentUserId());
+    return adService.getCurrentAdsOfUser(getCurrentUserId());
   }
 
   @Operation(summary = "Получить свои закрытые объявления", description = "Получает список всех неактивных (закрытых) объявлений текущего пользователя.")
   @GetMapping("/closed")
   public List<AdClosedResponse> getClosedAdsOfCurrentUser() {
-    return adService.getClosedAdsByUserId(getCurrentUserId());
+    return adService.getClosedAdsOfUser(getCurrentUserId());
   }
 
   @Operation(summary = "Получить свои выкупленные объявления", description = "Получает список всех выкупленных текущим пользователем объявлений.")
   @GetMapping("/purchased")
   public List<AdPurchasedResponse> getPurchasedAdsOfCurrentUser() {
-    return adService.getPurchasedAdsByUserId(getCurrentUserId());
+    return adService.getPurchasedAdsOfUser(getCurrentUserId());
   }
 
   @Operation(summary = "Получить конкретное объявление", description = "Получает конкретное объявление по его id.")
@@ -73,7 +73,7 @@ public class AdController {
       throw new ForbiddenException("This ad is not available for you.");
     }
 
-    return adService.getAdById(adId);
+    return adService.getAd(adId);
   }
 
   @Operation(summary = "Создать объявление", description = "Создаёт новое объявление по форме-реквесту. Возвращает информацию об этом объявлении.")

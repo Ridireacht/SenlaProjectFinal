@@ -36,13 +36,13 @@ public class AdminServiceImpl implements AdminService {
   }
 
   @Override
-  public UserProfileResponse getUserProfileByUserId(Long userId) {
+  public UserProfileResponse getUserProfile(Long userId) {
     User user = userRepository.findById(userId).get();
     return userMapper.mapToUserProfileResponse(user);
   }
 
   @Override
-  public ResponseEntity<?> getFullAdInfoByAdId(Long adId) {
+  public ResponseEntity<?> getAd(Long adId) {
     Ad ad = adRepository.findById(adId).get();
 
     if (ad.isClosed()) {
@@ -54,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
 
   @Transactional
   @Override
-  public boolean removePremiumByAdId(Long adId) {
+  public boolean unmakeAdPremium(Long adId) {
     if (adRepository.existsById(adId)) {
       Ad ad = adRepository.findById(adId).get();
       ad.setPremium(false);
@@ -68,7 +68,7 @@ public class AdminServiceImpl implements AdminService {
 
   @Transactional
   @Override
-  public boolean deleteUserById(Long userId) {
+  public boolean deleteUser(Long userId) {
     if (userRepository.existsById(userId)) {
       userRepository.deleteById(userId);
       return true;

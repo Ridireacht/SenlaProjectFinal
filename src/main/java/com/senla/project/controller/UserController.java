@@ -37,13 +37,13 @@ public class UserController {
       throw new NotFoundException("User", userId);
     }
 
-    return userService.getUserById(userId);
+    return userService.getUserBriefProfile(userId);
   }
 
   @Operation(summary = "Получить профиль текущего пользователя", description = "Возвращает информацию о текущем пользователе.")
   @GetMapping("/current")
   public UserProfileResponse getCurrentUserProfile() {
-    return userService.getUserProfileById(getCurrentUserId());
+    return userService.getUserFullProfile(getCurrentUserId());
   }
 
   @Operation(summary = "Обновить профиль текущего пользователя", description = "Обновляет информацию о текущем пользователе. Обновляются только не-пустые указанные поля, соответствующие валидации.")
@@ -53,7 +53,7 @@ public class UserController {
       throw new ConflictException("This email is already taken.");
     }
 
-    return userService.updateUserProfileById(userProfileRequest, getCurrentUserId());
+    return userService.updateUserProfile(userProfileRequest, getCurrentUserId());
   }
 
   private Long getCurrentUserId() {

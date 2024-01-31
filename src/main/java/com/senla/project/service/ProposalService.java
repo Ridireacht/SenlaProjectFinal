@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ProposalService {
 
-  List<ProposalSentResponse> getAllSentProposalsByUserId(Long userId);
+  List<ProposalSentResponse> getSentProposalsOfUser(Long userId);
 
-  List<ProposalReceivedResponse> getAllReceivedProposalsByUserId(Long userId);
+  List<ProposalReceivedResponse> getReceivedProposalsOfUser(Long userId);
 
   ProposalSentResponse createProposal(Long userId, ProposalRequest proposalRequest);
 

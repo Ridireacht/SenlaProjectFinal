@@ -47,7 +47,7 @@ public class AuthController {
       throw new ConflictException("This role doesn't exist.");
     }
 
-    return userDetailsService.registerNewUser(registerRequest);
+    return userDetailsService.registerUser(registerRequest);
   }
 
   @Operation(summary = "Аутентифицировать и авторизовать существующего пользователя", description = "Аутентифицирует и авторизует пользователя и возвращает JWT-токен.")

@@ -34,7 +34,7 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
-  public List<ConversationResponse> getConversationsByUserId(Long userId) {
+  public List<ConversationResponse> getConversationsOfUser(Long userId) {
     List<Conversation> conversations = conversationRepository.findByBuyerIdOrSellerId(userId);
 
     return conversations.stream()
@@ -50,7 +50,7 @@ public class ConversationServiceImpl implements ConversationService {
 
   @Transactional
   @Override
-  public ConversationFullResponse createConversationByAdId(Long userId, Long adId) {
+  public ConversationFullResponse createConversationByAd(Long userId, Long adId) {
     Ad ad = adRepository.findById(adId).get();
     User buyer = userRepository.findById(userId).get();
 

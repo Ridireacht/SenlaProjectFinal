@@ -41,7 +41,7 @@ public class MessageController {
       throw new ForbiddenException("You can't push messages to conversation not available for you.");
     }
 
-    return messageService.sendMessageWithConversationId(getCurrentUserId(), conversationId, messageRequest);
+    return messageService.sendMessageToConversation(getCurrentUserId(), conversationId, messageRequest);
   }
 
   private Long getCurrentUserId() {

@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   }
 
   @Transactional
-  public String registerNewUser(RegisterRequest registerRequest) {
+  public String registerUser(RegisterRequest registerRequest) {
     Role role = roleRepository.findByName(registerRequest.getRole());
 
     User user = new User();

@@ -39,7 +39,7 @@ public class CommentController {
   @Operation(summary = "Получить все комментарии", description = "Получает список всех комментариев для указанного объявления.")
   @GetMapping
   public List<CommentResponse> getAllCommentsOnAd(@PathVariable("adId") Long adId) {
-    return commentService.getAllCommentsByAdId(adId);
+    return commentService.getAllCommentsOnAd(adId);
   }
 
   @Operation(summary = "Создать комментарий", description = "Создаёт новый комментарий для указанного объявления. Возвращает этот комментарий.")
@@ -57,7 +57,7 @@ public class CommentController {
       throw new ForbiddenException("You can't leave a comment on a closed ad.");
     }
 
-    return commentService.createComment(getCurrentUserId(), adId, commentRequest);
+    return commentService.createCommentOnAd(getCurrentUserId(), adId, commentRequest);
   }
 
   @Operation(summary = "Обновить комментарий", description = "Обновляет существующий комментарий. Возвращает этот комментарий.")

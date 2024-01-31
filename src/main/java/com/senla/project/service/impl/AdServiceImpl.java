@@ -29,7 +29,7 @@ public class AdServiceImpl implements AdService {
 
 
   @Override
-  public List<AdResponse> getAllAdsFromOthers(Long userId) {
+  public List<AdResponse> getCurrentAdsFromOtherUsers(Long userId) {
     List<Ad> ads = adRepository.findAllByNotSellerIdAndIsClosedFalse(userId);
     return ads.stream()
         .map(adMapper::mapToAdResponse)
@@ -37,7 +37,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public List<AdCurrentResponse> getCurrentAdsByUserId(Long userId) {
+  public List<AdCurrentResponse> getCurrentAdsOfUser(Long userId) {
     List<Ad> currentAds = adRepository.findAllBySellerIdAndIsClosedFalse(userId);
     return currentAds.stream()
         .map(adMapper::mapToAdCurrentResponse)
@@ -45,7 +45,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public List<AdClosedResponse> getClosedAdsByUserId(Long userId) {
+  public List<AdClosedResponse> getClosedAdsOfUser(Long userId) {
     List<Ad> closedAds = adRepository.findAllBySellerIdAndIsClosedTrue(userId);
     return closedAds.stream()
         .map(adMapper::mapToAdClosedResponse)
@@ -53,7 +53,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public List<AdPurchasedResponse> getPurchasedAdsByUserId(Long userId) {
+  public List<AdPurchasedResponse> getPurchasedAdsOfUser(Long userId) {
     List<Ad> purchasedAds = adRepository.findAllByBuyerId(userId);
     return purchasedAds.stream()
         .map(adMapper::mapToAdPurchasedResponse)
@@ -61,7 +61,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public AdResponse getAdById(Long adId) {
+  public AdResponse getAd(Long adId) {
     Ad ad = adRepository.findById(adId).get();
     return adMapper.mapToAdResponse(ad);
   }

@@ -8,11 +8,11 @@ public interface AdminService {
 
   List<UserProfileResponse> getAllUserProfiles();
 
-  UserProfileResponse getUserProfileByUserId(Long userId);
+  UserProfileResponse getUserProfile(Long userId);
 
-  ResponseEntity<?> getFullAdInfoByAdId(Long adId);
+  ResponseEntity<?> getAd(Long adId);
 
-  boolean removePremiumByAdId(Long adId);
+  boolean unmakeAdPremium(Long adId);
 
-  boolean deleteUserById(Long userId);
+  boolean deleteUser(Long userId);
 }

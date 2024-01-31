@@ -68,7 +68,7 @@ public class UserScoreServiceTest {
     when(userScoreMapper.mapToUserScore(userScoreRequest)).thenReturn(expectedUserScore);
     when(adMapper.mapToAdPurchasedResponse(ad)).thenReturn(expectedAdPurchasedResponse);
 
-    AdPurchasedResponse actualAdPurchasedResponse = userScoreService.setUserScoreByAdId(userId, adId, userScoreRequest);
+    AdPurchasedResponse actualAdPurchasedResponse = userScoreService.setUserScoreToAd(userId, adId, userScoreRequest);
 
     assertEquals(adId, actualAdPurchasedResponse.getId());
     assertEquals(score, actualAdPurchasedResponse.getScore());

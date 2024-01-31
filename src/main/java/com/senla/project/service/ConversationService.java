@@ -8,11 +8,11 @@ public interface ConversationService {
 
   Long getAdId(Long conversationId);
 
-  List<ConversationResponse> getConversationsByUserId(Long userId);
+  List<ConversationResponse> getConversationsOfUser(Long userId);
 
   ConversationFullResponse getConversation(Long conversationId);
 
-  ConversationFullResponse createConversationByAdId(Long userId, Long adId);
+  ConversationFullResponse createConversationByAd(Long userId, Long adId);
 
   boolean deleteConversation(Long conversationId);
 

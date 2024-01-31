@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
 
   @Override
-  public UserResponse getUserById(Long userId) {
+  public UserResponse getUserBriefProfile(Long userId) {
     User user = userRepository.findById(userId).get();
     return userMapper.mapToUserResponse(user);
   }
@@ -34,13 +34,13 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserProfileResponse getUserProfileById(Long userId) {
+  public UserProfileResponse getUserFullProfile(Long userId) {
     User user = userRepository.findById(userId).get();
     return userMapper.mapToUserProfileResponse(user);
   }
 
   @Override
-  public boolean updateUserProfileById(UserProfileRequest userProfileRequest,
+  public boolean updateUserProfile(UserProfileRequest userProfileRequest,
       Long userId) {
 
     User user = userRepository.findById(userId).get();

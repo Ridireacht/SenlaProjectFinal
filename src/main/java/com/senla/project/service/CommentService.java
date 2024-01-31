@@ -8,9 +8,9 @@ public interface CommentService {
 
   Long getAdId(Long commentId);
 
-  List<CommentResponse> getAllCommentsByAdId(Long adId);
+  List<CommentResponse> getAllCommentsOnAd(Long adId);
 
-  CommentResponse createComment(Long userId, Long adId, CommentRequest commentRequest);
+  CommentResponse createCommentOnAd(Long userId, Long adId, CommentRequest commentRequest);
 
   CommentResponse updateComment(Long commentId, CommentRequest commentRequest);
 

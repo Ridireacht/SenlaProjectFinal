@@ -47,7 +47,7 @@ public class UserScoreController {
       throw new ForbiddenException("You can't set a new score, ad already has one.");
     }
 
-    return userScoreService.setUserScoreByAdId(getCurrentUserId(), adId, userScoreRequest);
+    return userScoreService.setUserScoreToAd(getCurrentUserId(), adId, userScoreRequest);
   }
 
   private Long getCurrentUserId() {

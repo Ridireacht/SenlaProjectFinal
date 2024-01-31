@@ -45,7 +45,7 @@ public class UserServiceTest {
     when(userRepository.findById(userId)).thenReturn(Optional.of(user));
     when(userMapper.mapToUserResponse(user)).thenReturn(expectedUserResponse);
 
-    UserResponse actualUserResponse = userService.getUserById(userId);
+    UserResponse actualUserResponse = userService.getUserBriefProfile(userId);
 
     assertEquals(expectedUserResponse.getId(), actualUserResponse.getId());
     assertEquals(expectedUserResponse.getUsername(), actualUserResponse.getUsername());

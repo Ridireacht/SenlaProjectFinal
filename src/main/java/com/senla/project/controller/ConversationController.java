@@ -34,7 +34,7 @@ public class ConversationController {
   @Operation(summary = "Получить все переписки пользователя", description = "Возвращает список всех переписок пользователя.")
   @GetMapping("/conversations")
   public List<ConversationResponse> getAllCurrentUserConversations() {
-    return conversationService.getConversationsByUserId(getCurrentUserId());
+    return conversationService.getConversationsOfUser(getCurrentUserId());
   }
 
   @Operation(summary = "Получить конкретную переписку", description = "Возвращает конкретную переписку.")
@@ -66,7 +66,7 @@ public class ConversationController {
       throw new ForbiddenException("You can't start a conversation on a closed ad.");
     }
 
-    return conversationService.createConversationByAdId(getCurrentUserId(), adId);
+    return conversationService.createConversationByAd(getCurrentUserId(), adId);
   }
 
   @Operation(summary = "Удалить переписку", description = "Полностью удаляет указанную переписку. Возвращает boolean-результат операции.")

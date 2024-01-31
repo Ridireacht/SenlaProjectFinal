@@ -52,7 +52,7 @@ public class AdminController {
       throw new NotFoundException("User", userId);
     }
 
-    return adminService.getUserProfileByUserId(userId);
+    return adminService.getUserProfile(userId);
   }
 
   @Operation(summary = "Удалить пользователя", description = "Удаляет пользователя. Возвращает boolean-результат операции.")
@@ -62,7 +62,7 @@ public class AdminController {
       throw new NotFoundException("User", userId);
     }
 
-    return adminService.deleteUserById(userId);
+    return adminService.deleteUser(userId);
   }
 
   @Operation(summary = "Удалить комментарий", description = "Удаляет существующий комментарий. Возвращает boolean-результат операции.")
@@ -86,7 +86,7 @@ public class AdminController {
       throw new NotFoundException("User", userId);
     }
 
-    return adService.getCurrentAdsByUserId(userId);
+    return adService.getCurrentAdsOfUser(userId);
   }
 
   @Operation(summary = "Получить закрытые объявления пользователя", description = "Получает список всех неактивных (закрытых) объявлений выбранного пользователя.")
@@ -96,7 +96,7 @@ public class AdminController {
       throw new NotFoundException("User", userId);
     }
 
-    return adService.getClosedAdsByUserId(userId);
+    return adService.getClosedAdsOfUser(userId);
   }
 
   @Operation(summary = "Получить выкупленные объявления пользователя", description = "Получает список всех выкупленных выбранным пользователем объявлений.")
@@ -106,7 +106,7 @@ public class AdminController {
       throw new NotFoundException("User", userId);
     }
 
-    return adService.getPurchasedAdsByUserId(userId);
+    return adService.getPurchasedAdsOfUser(userId);
   }
 
   @Operation(summary = "Получить информацию по конкретному объявлению", description = "Получает полную информацию о конкретном объявлении по его id.")
@@ -116,7 +116,7 @@ public class AdminController {
       throw new NotFoundException("Ad", adId);
     }
 
-    return adminService.getFullAdInfoByAdId(adId);
+    return adminService.getAd(adId);
   }
 
   @Operation(summary = "Удалить объявление", description = "Полностью удаляет объявление по его id. Возвращает boolean-результат операции.")
@@ -148,6 +148,6 @@ public class AdminController {
       throw new ConflictException("You can't remove a premium status if ad doesn't have one.");
     }
 
-    return adminService.removePremiumByAdId(adId);
+    return adminService.unmakeAdPremium(adId);
   }
 }

@@ -68,7 +68,7 @@ public class CommentServiceTest {
     when(commentMapper.mapToCommentResponse(comment1)).thenReturn(expectedCommentResponse1);
     when(commentMapper.mapToCommentResponse(comment2)).thenReturn(expectedCommentResponse2);
 
-    List<CommentResponse> actualCommentResponses = commentService.getAllCommentsByAdId(adId);
+    List<CommentResponse> actualCommentResponses = commentService.getAllCommentsOnAd(adId);
 
     assertEquals(2, actualCommentResponses.size());
     assertThat(actualCommentResponses, contains(
@@ -104,7 +104,7 @@ public class CommentServiceTest {
     when(commentRepository.save(any(Comment.class))).thenReturn(expectedComment);
     when(commentMapper.mapToCommentResponse(expectedComment)).thenReturn(expectedCommentResponse);
 
-    CommentResponse actualCommentResponse = commentService.createComment(userId, adId, commentRequest);
+    CommentResponse actualCommentResponse = commentService.createCommentOnAd(userId, adId, commentRequest);
 
     assertEquals(expectedCommentResponse.getSenderId(), actualCommentResponse.getSenderId());
     assertEquals(expectedCommentResponse.getContent(), actualCommentResponse.getContent());

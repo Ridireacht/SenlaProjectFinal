@@ -5,5 +5,5 @@ import com.senla.project.dto.request.MessageRequest;
 
 public interface MessageService {
 
-  ConversationFullResponse sendMessageWithConversationId(Long userId, Long conversationId, MessageRequest messageRequest);
+  ConversationFullResponse sendMessageToConversation(Long userId, Long conversationId, MessageRequest messageRequest);
 }

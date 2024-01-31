@@ -35,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public List<CommentResponse> getAllCommentsByAdId(Long adId) {
+  public List<CommentResponse> getAllCommentsOnAd(Long adId) {
     List<Comment> comments = commentRepository.findAllByAdId(adId);
 
     return comments.stream()
@@ -45,7 +45,7 @@ public class CommentServiceImpl implements CommentService {
 
   @Transactional
   @Override
-  public CommentResponse createComment(Long userId, Long adId, CommentRequest commentRequest) {
+  public CommentResponse createCommentOnAd(Long userId, Long adId, CommentRequest commentRequest) {
     User sender = userRepository.findById(userId).get();
     Ad ad = adRepository.findById(adId).get();
 

@@ -31,7 +31,7 @@ public class ProposalServiceImpl implements ProposalService {
 
 
   @Override
-  public List<ProposalSentResponse> getAllSentProposalsByUserId(Long userId) {
+  public List<ProposalSentResponse> getSentProposalsOfUser(Long userId) {
     List<Proposal> sentProposals = proposalRepository.findAllBySenderId(userId);
 
     return sentProposals.stream()
@@ -40,7 +40,7 @@ public class ProposalServiceImpl implements ProposalService {
   }
 
   @Override
-  public List<ProposalReceivedResponse> getAllReceivedProposalsByUserId(Long userId) {
+  public List<ProposalReceivedResponse> getReceivedProposalsOfUser(Long userId) {
     List<Ad> userAds = adRepository.findAllBySellerIdAndIsClosedFalse(userId);
     List<Proposal> receivedProposals = proposalRepository.findAllByAds(userAds);
 
