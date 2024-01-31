@@ -27,9 +27,9 @@ public class AuthController {
 
   private final UserDetailsServiceImpl userDetailsService;
   private final JwtService jwtService;
-  private final AuthenticationManager authenticationManager;
-
   private final AuthService authService;
+
+  private final AuthenticationManager authenticationManager;
 
 
   @Operation(summary = "Зарегистрировать нового пользователя", description = "Регистрирует пользователя с данными из формы.")
