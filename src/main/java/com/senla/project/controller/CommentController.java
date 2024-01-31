@@ -60,7 +60,7 @@ public class CommentController {
     return commentService.createCommentOnAd(getCurrentUserId(), adId, commentRequest);
   }
 
-  @Operation(summary = "Обновить комментарий", description = "Обновляет существующий комментарий. Возвращает этот комментарий.")
+  @Operation(summary = "Обновить комментарий", description = "Обновляет существующий комментарий. Возвращает boolean-результат операции.")
   @PutMapping("/{commentId}")
   public Boolean updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!commentService.doesCommentExist(commentId)) {

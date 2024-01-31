@@ -46,7 +46,7 @@ public class UserController {
     return userService.getUserFullProfile(getCurrentUserId());
   }
 
-  @Operation(summary = "Обновить профиль текущего пользователя", description = "Обновляет информацию о текущем пользователе. Обновляются только не-пустые указанные поля, соответствующие валидации.")
+  @Operation(summary = "Обновить профиль текущего пользователя", description = "Обновляет информацию о текущем пользователе. Обновляются только не-пустые указанные поля, соответствующие валидации. Возвращает boolean-результат операции.")
   @PutMapping("/current")
   public Boolean updateCurrentUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest) {
     if (userService.doesUserExistByEmail(userProfileRequest.getEmail())) {

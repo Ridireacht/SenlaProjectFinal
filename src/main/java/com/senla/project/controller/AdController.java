@@ -63,7 +63,7 @@ public class AdController {
     return adService.getPurchasedAdsOfUser(getCurrentUserId());
   }
 
-  @Operation(summary = "Получить конкретное объявление", description = "Получает конкретное объявление по его id.")
+  @Operation(summary = "Получить конкретное объявление", description = "Получает конкретное объявление по его id. Тип возвращаемого объявления зависит от текущего пользователя и статуса объявления.")
   @GetMapping("/{id}")
   public ResponseEntity<?> getAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
