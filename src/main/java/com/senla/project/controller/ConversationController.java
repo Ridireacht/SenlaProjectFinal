@@ -69,7 +69,7 @@ public class ConversationController {
     return conversationService.createConversationByAd(getCurrentUserId(), adId);
   }
 
-  @Operation(summary = "Удалить переписку", description = "Полностью удаляет указанную переписку. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
+  @Operation(summary = "Удалить переписку", description = "Полностью удаляет указанную переписку. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
   @DeleteMapping("/conversations/{id}")
   public Boolean deleteConversation(@PathVariable("id") Long conversationId) {
     if (!conversationService.doesConversationExist(conversationId)) {

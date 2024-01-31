@@ -30,7 +30,7 @@ public class MessageController {
   private final ConversationService conversationService;
 
 
-  @Operation(summary = "Отправить сообщение в переписку", description = "Отправляет новое сообщение в указанной переписке. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
+  @Operation(summary = "Отправить сообщение в переписку", description = "Отправляет новое сообщение в указанной переписке. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
   @PostMapping("/conversations/{id}/messages")
   public ConversationResponse sendMessageToConversation(@PathVariable("id") Long conversationId, @Valid @RequestBody MessageRequest messageRequest) {
     if (!conversationService.doesConversationExist(conversationId)) {

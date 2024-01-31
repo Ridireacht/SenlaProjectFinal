@@ -46,7 +46,7 @@ public class UserController {
     return userService.getUserFullProfile(getCurrentUserId());
   }
 
-  @Operation(summary = "Обновить профиль текущего пользователя", description = "Обновляет информацию о текущем пользователе. Обновляются только не-пустые указанные поля, соответствующие валидации. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
+  @Operation(summary = "Обновить профиль текущего пользователя", description = "Обновляет информацию о текущем пользователе. Обновляются только не-пустые указанные поля, соответствующие валидации. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
   @PutMapping("/current")
   public Boolean updateCurrentUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest) {
     if (userService.doesUserExistByEmail(userProfileRequest.getEmail())) {
