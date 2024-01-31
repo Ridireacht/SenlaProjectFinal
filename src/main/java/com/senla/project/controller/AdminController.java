@@ -49,7 +49,7 @@ public class AdminController {
     return adminService.getUserFullProfile(userId);
   }
 
-  @Operation(summary = "Удалить пользователя", description = "Удаляет пользователя. Возвращает boolean-результат операции.")
+  @Operation(summary = "Удалить пользователя", description = "Удаляет пользователя. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @DeleteMapping("/users/{id}")
   public Boolean deleteUser(@PathVariable("id") Long userId) {
     if (!adminService.doesUserExist(userId)) {
@@ -59,7 +59,7 @@ public class AdminController {
     return adminService.deleteUser(userId);
   }
 
-  @Operation(summary = "Удалить комментарий", description = "Удаляет существующий комментарий. Возвращает boolean-результат операции.")
+  @Operation(summary = "Удалить комментарий", description = "Удаляет существующий комментарий. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @DeleteMapping("/comments/{id}")
   public Boolean deleteComment(@PathVariable("id") Long commentId) {
     if (!adminService.doesCommentExist(commentId)) {
@@ -113,7 +113,7 @@ public class AdminController {
     return adminService.getAd(adId);
   }
 
-  @Operation(summary = "Удалить объявление", description = "Полностью удаляет объявление по его id. Возвращает boolean-результат операции.")
+  @Operation(summary = "Удалить объявление", description = "Полностью удаляет объявление по его id. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @DeleteMapping("/ads/{id}")
   public Boolean deleteAd(@PathVariable("id") Long adId) {
     if (!adminService.doesAdExist(adId)) {
@@ -127,7 +127,7 @@ public class AdminController {
     return adminService.deleteAd(adId);
   }
 
-  @Operation(summary = "Убрать премиальный статус у объявления", description = "Убирает премиальный статус у объявления по его id. Возвращает boolean-результат операции.")
+  @Operation(summary = "Убрать премиальный статус у объявления", description = "Убирает премиальный статус у объявления по его id. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @PutMapping("/ads/{id}/premium")
   public Boolean unmakeAdPremium(@PathVariable("id") Long adId) {
     if (!adminService.doesAdExist(adId)) {

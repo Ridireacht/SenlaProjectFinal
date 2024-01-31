@@ -60,7 +60,7 @@ public class CommentController {
     return commentService.createCommentOnAd(getCurrentUserId(), adId, commentRequest);
   }
 
-  @Operation(summary = "Обновить комментарий", description = "Обновляет существующий комментарий. Возвращает boolean-результат операции.")
+  @Operation(summary = "Обновить комментарий", description = "Обновляет существующий комментарий. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @PutMapping("/{commentId}")
   public Boolean updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!commentService.doesCommentExist(commentId)) {
@@ -78,7 +78,7 @@ public class CommentController {
     return commentService.updateComment(commentId, commentRequest);
   }
 
-  @Operation(summary = "Удалить комментарий", description = "Удаляет существующий комментарий. Возвращает boolean-результат операции.")
+  @Operation(summary = "Удалить комментарий", description = "Удаляет существующий комментарий. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @DeleteMapping("/{commentId}")
   public Boolean deleteComment(@PathVariable("commentId") Long commentId) {
     if (!commentService.doesCommentExist(commentId)) {

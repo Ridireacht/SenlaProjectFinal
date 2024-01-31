@@ -32,7 +32,7 @@ public class UserScoreController {
   private final AdService adService;
 
 
-  @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем. Возвращает boolean-результат выполнения операции.")
+  @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @PostMapping
   public Boolean setUserScoreToAd(@PathVariable("id") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
     if (!adService.doesAdExist(adId)) {

@@ -80,7 +80,7 @@ public class ProposalController {
     return proposalService.acceptProposalById(proposalId);
   }
 
-  @Operation(summary = "Отклонить предложение", description = "Отклоняет предложение по его id. Возвращает boolean-результат операции.")
+  @Operation(summary = "Отклонить предложение", description = "Отклоняет предложение по его id. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @DeleteMapping("/received/{id}")
   public Boolean declineProposalById(@PathVariable("id") Long proposalId) {
     if (!proposalService.doesProposalExist(proposalId)) {

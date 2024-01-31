@@ -83,7 +83,7 @@ public class AdController {
     return adService.createAd(getCurrentUserId(), adRequest);
   }
 
-  @Operation(summary = "Обновить объявление", description = "Обновляет существующее объявление по форме-реквесту. Возвращает boolean-результат операции.")
+  @Operation(summary = "Обновить объявление", description = "Обновляет существующее объявление по форме-реквесту. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @PutMapping("/{id}")
   public Boolean updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -101,7 +101,7 @@ public class AdController {
     return adService.updateAd(adId, adRequest);
   }
 
-  @Operation(summary = "Сделать объявление премиальным", description = "Делает объявление премиальным по его id. Возвращает boolean-результат операции.")
+  @Operation(summary = "Сделать объявление премиальным", description = "Делает объявление премиальным по его id. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @PutMapping("/{id}/premium")
   public Boolean makeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -123,7 +123,7 @@ public class AdController {
     return adService.makeAdPremium(adId);
   }
 
-  @Operation(summary = "Удалить объявление", description = "Полностью удаляет объявление по его id. Возвращает boolean-результат операции.")
+  @Operation(summary = "Удалить объявление", description = "Полностью удаляет объявление по его id. Возвращает true, если операция удалась, или 500 Internal Server Error, если возникло исключение.")
   @DeleteMapping("/{id}")
   public Boolean deleteAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
