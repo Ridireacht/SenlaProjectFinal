@@ -6,6 +6,7 @@ import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdOpenResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 public interface AdService {
 
@@ -17,13 +18,13 @@ public interface AdService {
 
   List<AdPurchasedResponse> getPurchasedAdsOfUser(long userId);
 
-  AdOpenResponse getAd(long adId);
+  ResponseEntity<?> getAd(long adId);
 
   AdCurrentResponse createAd(long userId, AdRequest adRequest);
 
-  AdCurrentResponse updateAd(long adId, AdRequest adRequest);
+  boolean updateAd(long adId, AdRequest adRequest);
 
-  Boolean makeAdPremium(long adId);
+  boolean makeAdPremium(long adId);
 
   boolean deleteAd(long adId);
 

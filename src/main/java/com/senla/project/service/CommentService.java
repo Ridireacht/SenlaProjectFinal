@@ -12,7 +12,7 @@ public interface CommentService {
 
   CommentResponse createCommentOnAd(long userId, long adId, CommentRequest commentRequest);
 
-  CommentResponse updateComment(long commentId, CommentRequest commentRequest);
+  boolean updateComment(long commentId, CommentRequest commentRequest);
 
   boolean deleteComment(long commentId);
 
