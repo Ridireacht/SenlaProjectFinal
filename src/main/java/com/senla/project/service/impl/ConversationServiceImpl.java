@@ -45,7 +45,7 @@ public class ConversationServiceImpl implements ConversationService {
   @Override
   public ConversationFullResponse getConversation(Long conversationId) {
     Conversation conversation = conversationRepository.findById(conversationId).get();
-    return conversationMapper.mapToConversationResponse(conversation);
+    return conversationMapper.mapToConversationFullResponse(conversation);
   }
 
   @Transactional
@@ -60,7 +60,7 @@ public class ConversationServiceImpl implements ConversationService {
     conversation.setSeller(ad.getSeller());
 
     Conversation savedConversation = conversationRepository.save(conversation);
-    return conversationMapper.mapToConversationResponse(savedConversation);
+    return conversationMapper.mapToConversationFullResponse(savedConversation);
   }
 
   @Transactional

@@ -42,7 +42,7 @@ public class MessageServiceImpl implements MessageService {
 
     messageRepository.save(message);
 
-    return conversationMapper.mapToConversationResponse(conversation);
+    return conversationMapper.mapToConversationFullResponse(conversation);
   }
 
 }

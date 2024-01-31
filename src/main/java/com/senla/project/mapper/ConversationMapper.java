@@ -1,5 +1,6 @@
 package com.senla.project.mapper;
 
+import com.senla.project.dto.response.ConversationFullResponse;
 import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.entity.Conversation;
 import org.mapstruct.Mapper;
@@ -10,4 +11,7 @@ public interface ConversationMapper {
 
   @Mapping(source = "ad.id", target = "adId")
   ConversationResponse mapToConversationResponse(Conversation conversation);
+
+  @Mapping(source = "ad.id", target = "adId")
+  ConversationFullResponse mapToConversationFullResponse(Conversation conversation);
 }
