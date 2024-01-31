@@ -59,16 +59,15 @@ public class AdminServiceImpl implements AdminService {
   @Override
   public List<UserFullProfileResponse> getUserFullProfiles() {
     List<User> users = userRepository.findAll();
-
     return users.stream()
-        .map(userMapper::mapToUserProfileResponse)
+        .map(userMapper::mapToUserFullProfileResponse)
         .collect(Collectors.toList());
   }
 
   @Override
   public UserFullProfileResponse getUserFullProfile(long userId) {
     User user = userRepository.findById(userId).get();
-    return userMapper.mapToUserProfileResponse(user);
+    return userMapper.mapToUserFullProfileResponse(user);
   }
 
   @Override
@@ -91,15 +90,14 @@ public class AdminServiceImpl implements AdminService {
   @Transactional
   @Override
   public boolean unmakeAdPremium(long adId) {
-    if (adRepository.existsById(adId)) {
-      Ad ad = adRepository.findById(adId).get();
-      ad.setPremium(false);
-      adRepository.save(ad);
+    Ad ad = adRepository.findById(adId).get();
 
-      return true;
-    }
+    ad.setPremium(false);
+    adRepository.save(ad);
 
-    return false;
+    ad = adRepository.findById(adId).get();
+
+    return !ad.isPremium();
   }
 
   @Transactional
@@ -107,7 +105,8 @@ public class AdminServiceImpl implements AdminService {
   public boolean deleteUser(long userId) {
     if (userRepository.existsById(userId)) {
       userRepository.deleteById(userId);
-      return true;
+
+      return userRepository.existsById(userId);
     }
 
     return false;
@@ -118,7 +117,8 @@ public class AdminServiceImpl implements AdminService {
   public boolean deleteComment(long commentId) {
     if (commentRepository.existsById(commentId)) {
       commentRepository.deleteById(commentId);
-      return true;
+
+      return commentRepository.existsById(commentId);
     }
 
     return false;
@@ -129,7 +129,8 @@ public class AdminServiceImpl implements AdminService {
   public boolean deleteAd(long adId) {
     if (adRepository.existsById(adId)) {
       adRepository.deleteById(adId);
-      return true;
+
+      return adRepository.existsById(adId);
     }
 
     return false;
