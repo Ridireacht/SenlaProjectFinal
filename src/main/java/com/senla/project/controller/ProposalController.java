@@ -73,7 +73,7 @@ public class ProposalController {
       throw new NotFoundException("Proposal", proposalId);
     }
 
-    if (!proposalService.wasProposalSentToUser(proposalId, getCurrentUserId())) {
+    if (!proposalService.isProposalSentToUser(proposalId, getCurrentUserId())) {
       throw new ForbiddenException("You can't accept someone else's proposal.");
     }
 
@@ -87,7 +87,7 @@ public class ProposalController {
       throw new NotFoundException("Proposal", proposalId);
     }
 
-    if (!proposalService.wasProposalSentToUser(proposalId, getCurrentUserId())) {
+    if (!proposalService.isProposalSentToUser(proposalId, getCurrentUserId())) {
       throw new ForbiddenException("You can't decline someone else's proposal.");
     }
 

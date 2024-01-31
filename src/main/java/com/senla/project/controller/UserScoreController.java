@@ -39,11 +39,11 @@ public class UserScoreController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (!adService.didUserBoughtAd(adId, getCurrentUserId())) {
+    if (!adService.isAdSoldToUser(adId, getCurrentUserId())) {
       throw new ForbiddenException("You can't set a score on ad you didn't buy.");
     }
 
-    if (adService.isAdAlreadyScored(adId)) {
+    if (adService.isAdScored(adId)) {
       throw new ForbiddenException("You can't set a new score, ad already has one.");
     }
 

@@ -69,7 +69,7 @@ public class AdController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (!adService.isAdAvailableForUser(adId, getCurrentUserId())) {
+    if (!adService.isAdAvailableToUser(adId, getCurrentUserId())) {
       throw new ForbiddenException("This ad is not available for you.");
     }
 
