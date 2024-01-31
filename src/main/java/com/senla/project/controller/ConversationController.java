@@ -1,5 +1,6 @@
 package com.senla.project.controller;
 
+import com.senla.project.dto.response.ConversationFullResponse;
 import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
@@ -38,7 +39,7 @@ public class ConversationController {
 
   @Operation(summary = "Получить конкретную переписку", description = "Возвращает конкретную переписку.")
   @GetMapping("/conversations/{id}")
-  public ConversationResponse getConversation(@PathVariable("id") Long conversationId) {
+  public ConversationFullResponse getConversation(@PathVariable("id") Long conversationId) {
     if (!conversationService.doesConversationExist(conversationId)) {
       throw new NotFoundException("Conversation", conversationId);
     }
@@ -52,7 +53,7 @@ public class ConversationController {
 
   @Operation(summary = "Начать переписку по объявлению", description = "Создает новую переписку по указанному объявлению. Возвращает эту переписку.")
   @PostMapping("/ads/{adId}/discuss")
-  public ConversationResponse createConversation(@PathVariable("adId") Long adId) {
+  public ConversationFullResponse createConversation(@PathVariable("adId") Long adId) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }

@@ -1,5 +1,6 @@
 package com.senla.project.service.impl;
 
+import com.senla.project.dto.response.ConversationFullResponse;
 import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.dto.request.MessageRequest;
 import com.senla.project.entity.Conversation;
@@ -28,7 +29,7 @@ public class MessageServiceImpl implements MessageService {
 
   @Transactional
   @Override
-  public ConversationResponse sendMessageWithConversationId(Long userId, Long conversationId,
+  public ConversationFullResponse sendMessageWithConversationId(Long userId, Long conversationId,
       MessageRequest messageRequest) {
     User sender = userRepository.findById(userId).get();
     Conversation conversation = conversationRepository.findById(conversationId).get();

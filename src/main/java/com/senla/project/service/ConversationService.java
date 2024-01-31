@@ -1,5 +1,6 @@
 package com.senla.project.service;
 
+import com.senla.project.dto.response.ConversationFullResponse;
 import com.senla.project.dto.response.ConversationResponse;
 import java.util.List;
 
@@ -9,9 +10,9 @@ public interface ConversationService {
 
   List<ConversationResponse> getConversationsByUserId(Long userId);
 
-  ConversationResponse getConversation(Long conversationId);
+  ConversationFullResponse getConversation(Long conversationId);
 
-  ConversationResponse createConversationByAdId(Long userId, Long adId);
+  ConversationFullResponse createConversationByAdId(Long userId, Long adId);
 
   boolean deleteConversation(Long conversationId);
 

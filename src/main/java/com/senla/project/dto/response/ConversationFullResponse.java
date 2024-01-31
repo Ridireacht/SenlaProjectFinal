@@ -7,7 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ConversationResponse {
+public class ConversationFullResponse {
   private Long id;
   private Long adId;
+  private List<MessageResponse> messages = new ArrayList<>();
 }

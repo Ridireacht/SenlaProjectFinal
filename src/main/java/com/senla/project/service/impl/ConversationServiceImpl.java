@@ -1,5 +1,6 @@
 package com.senla.project.service.impl;
 
+import com.senla.project.dto.response.ConversationFullResponse;
 import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Conversation;
@@ -42,14 +43,14 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
-  public ConversationResponse getConversation(Long conversationId) {
+  public ConversationFullResponse getConversation(Long conversationId) {
     Conversation conversation = conversationRepository.findById(conversationId).get();
     return conversationMapper.mapToConversationResponse(conversation);
   }
 
   @Transactional
   @Override
-  public ConversationResponse createConversationByAdId(Long userId, Long adId) {
+  public ConversationFullResponse createConversationByAdId(Long userId, Long adId) {
     Ad ad = adRepository.findById(adId).get();
     User buyer = userRepository.findById(userId).get();
 
