@@ -32,9 +32,9 @@ public class UserScoreController {
   private final AdService adService;
 
 
-  @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем. Возвращает информацию об этом объявлении.")
+  @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем. Возвращает boolean-результат выполнения операции.")
   @PostMapping
-  public AdPurchasedResponse setUserScoreToAd(@PathVariable("id") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
+  public Boolean setUserScoreToAd(@PathVariable("id") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }
