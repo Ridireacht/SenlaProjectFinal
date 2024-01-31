@@ -1,7 +1,6 @@
 package com.senla.project.service.impl;
 
 import com.senla.project.dto.response.UserProfileResponse;
-import com.senla.project.dto.response.UserResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.AdMapper;

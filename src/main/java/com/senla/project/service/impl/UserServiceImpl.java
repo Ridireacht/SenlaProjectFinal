@@ -7,8 +7,6 @@ import com.senla.project.entity.User;
 import com.senla.project.mapper.UserMapper;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.UserService;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

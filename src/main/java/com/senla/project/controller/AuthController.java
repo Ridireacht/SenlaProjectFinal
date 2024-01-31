@@ -3,7 +3,6 @@ package com.senla.project.controller;
 import com.senla.project.dto.request.LoginRequest;
 import com.senla.project.dto.request.RegisterRequest;
 import com.senla.project.exception.ConflictException;
-import com.senla.project.repository.RoleRepository;
 import com.senla.project.security.JwtService;
 import com.senla.project.service.AuthService;
 import com.senla.project.service.impl.UserDetailsServiceImpl;
