@@ -5,6 +5,7 @@ import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.request.AdRequest;
 import com.senla.project.dto.response.AdResponse;
+import com.senla.project.exception.ConflictException;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
@@ -115,7 +116,7 @@ public class AdController {
     }
 
     if (adService.isAdPremium(adId)) {
-      throw new ForbiddenException("You can't make ad a premium one if it already has a premium status.");
+      throw new ConflictException("You can't make ad a premium one if it already has a premium status.");
     }
 
     return adService.makeAdPremium(adId);

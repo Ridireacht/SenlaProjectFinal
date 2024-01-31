@@ -6,6 +6,7 @@ import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.response.AdResponse;
 import com.senla.project.dto.response.UserProfileResponse;
 import com.senla.project.dto.response.UserResponse;
+import com.senla.project.exception.ConflictException;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
@@ -146,7 +147,7 @@ public class AdminController {
     }
 
     if (!adService.isAdPremium(adId)) {
-      throw new ForbiddenException("You can't remove premium status if ad doesn't have one.");
+      throw new ConflictException("You can't remove a premium status if ad doesn't have one.");
     }
 
     return adminService.removePremiumByAdId(adId);

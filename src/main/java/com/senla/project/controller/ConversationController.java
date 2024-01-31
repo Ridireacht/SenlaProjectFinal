@@ -58,8 +58,6 @@ public class ConversationController {
       throw new NotFoundException("Ad", adId);
     }
 
-    // Здесь, в отличие от прочих использований этой конструкции, не используется отрицание -
-    // создатель объявления НЕ должен иметь возможности начать с собой переписку.
     if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
       throw new ForbiddenException("You can't start a conversation on your own ad.");
     }

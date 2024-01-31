@@ -56,7 +56,7 @@ public class ProposalController {
     }
 
     if(adService.doesAdBelongToUser(proposalRequest.getAdId(), getCurrentUserId())) {
-      throw new NotFoundException("Ad", proposalRequest.getAdId());
+      throw new ForbiddenException("You can't send proposal to your own ad.");
     }
 
     if (adService.isAdClosed(proposalRequest.getAdId())) {
