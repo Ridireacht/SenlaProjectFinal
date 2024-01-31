@@ -23,7 +23,7 @@ public interface AdService {
 
   AdCurrentResponse updateAd(Long adId, AdRequest adRequest);
 
-  AdCurrentResponse makeAdPremium(Long adId);
+  Boolean makeAdPremium(Long adId);
 
   boolean deleteAd(Long adId);
 

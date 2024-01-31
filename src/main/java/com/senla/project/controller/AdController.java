@@ -99,9 +99,9 @@ public class AdController {
     return adService.updateAd(adId, adRequest);
   }
 
-  @Operation(summary = "Сделать объявление премиальным", description = "Делает объявление премиальным по его id. Возвращает информацию об этом объявлении.")
+  @Operation(summary = "Сделать объявление премиальным", description = "Делает объявление премиальным по его id. Возвращает boolean-результат операции.")
   @PutMapping("/{id}/premium")
-  public AdCurrentResponse makeAdPremium(@PathVariable("id") Long adId) {
+  public Boolean makeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }

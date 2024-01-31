@@ -96,13 +96,17 @@ public class AdServiceImpl implements AdService {
 
   @Transactional
   @Override
-  public AdCurrentResponse makeAdPremium(Long adId) {
-    Ad ad = adRepository.findById(adId).get();
+  public Boolean makeAdPremium(Long adId) {
+    if (adRepository.existsById(adId)) {
+      Ad ad = adRepository.findById(adId).get();
 
-    ad.setPremium(true);
-    adRepository.save(ad);
+      ad.setPremium(true);
+      adRepository.save(ad);
 
-    return adMapper.mapToAdCurrentResponse(ad);
+      return true;
+    }
+
+    return false;
   }
 
   @Transactional
