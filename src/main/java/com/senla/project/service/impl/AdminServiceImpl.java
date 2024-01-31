@@ -105,8 +105,7 @@ public class AdminServiceImpl implements AdminService {
   public boolean deleteUser(long userId) {
     if (userRepository.existsById(userId)) {
       userRepository.deleteById(userId);
-
-      return userRepository.existsById(userId);
+      return true;
     }
 
     return false;
@@ -117,8 +116,7 @@ public class AdminServiceImpl implements AdminService {
   public boolean deleteComment(long commentId) {
     if (commentRepository.existsById(commentId)) {
       commentRepository.deleteById(commentId);
-
-      return commentRepository.existsById(commentId);
+      return true;
     }
 
     return false;
@@ -129,8 +127,7 @@ public class AdminServiceImpl implements AdminService {
   public boolean deleteAd(long adId) {
     if (adRepository.existsById(adId)) {
       adRepository.deleteById(adId);
-
-      return adRepository.existsById(adId);
+      return true;
     }
 
     return false;
