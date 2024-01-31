@@ -17,7 +17,7 @@ public class RatingServiceImpl implements RatingService {
 
   @Transactional
   @Override
-  public void updateRatingForUser(Long userId) {
+  public void updateRatingForUser(long userId) {
     Rating rating = ratingRepository.findByUserId(userId).get();
     List<UserScore> userRatings = rating.getUserRatings();
 

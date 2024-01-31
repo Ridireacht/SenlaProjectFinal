@@ -28,13 +28,13 @@ public class ConversationServiceImpl implements ConversationService {
 
 
   @Override
-  public Long getAdId(Long conversationId) {
+  public long getAdId(long conversationId) {
     Conversation conversation = conversationRepository.findById(conversationId).get();
     return conversation.getAd().getId();
   }
 
   @Override
-  public List<ConversationInfoResponse> getConversationsOfUser(Long userId) {
+  public List<ConversationInfoResponse> getConversationsOfUser(long userId) {
     List<Conversation> conversations = conversationRepository.findByBuyerIdOrSellerId(userId);
 
     return conversations.stream()
@@ -43,14 +43,14 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
-  public ConversationResponse getConversation(Long conversationId) {
+  public ConversationResponse getConversation(long conversationId) {
     Conversation conversation = conversationRepository.findById(conversationId).get();
     return conversationMapper.mapToConversationFullResponse(conversation);
   }
 
   @Transactional
   @Override
-  public ConversationResponse createConversationByAd(Long userId, Long adId) {
+  public ConversationResponse createConversationByAd(long userId, long adId) {
     Ad ad = adRepository.findById(adId).get();
     User buyer = userRepository.findById(userId).get();
 
@@ -65,7 +65,7 @@ public class ConversationServiceImpl implements ConversationService {
 
   @Transactional
   @Override
-  public boolean deleteConversation(Long conversationId) {
+  public boolean deleteConversation(long conversationId) {
     if (conversationRepository.existsById(conversationId)) {
       conversationRepository.deleteById(conversationId);
       return true;
@@ -75,12 +75,12 @@ public class ConversationServiceImpl implements ConversationService {
   }
 
   @Override
-  public boolean doesConversationExist(Long conversationId) {
+  public boolean doesConversationExist(long conversationId) {
     return conversationRepository.existsById(conversationId);
   }
 
   @Override
-  public boolean doesConversationBelongToUser(Long conversationId, Long currentUserId) {
+  public boolean doesConversationBelongToUser(long conversationId, long currentUserId) {
     Conversation conversation = conversationRepository.findById(conversationId).get();
 
     return conversation.getBuyer().getId().equals(currentUserId)

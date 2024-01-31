@@ -31,7 +31,7 @@ public class ProposalServiceImpl implements ProposalService {
 
 
   @Override
-  public List<ProposalSentResponse> getSentProposalsOfUser(Long userId) {
+  public List<ProposalSentResponse> getSentProposalsOfUser(long userId) {
     List<Proposal> sentProposals = proposalRepository.findAllBySenderId(userId);
 
     return sentProposals.stream()
@@ -40,7 +40,7 @@ public class ProposalServiceImpl implements ProposalService {
   }
 
   @Override
-  public List<ProposalReceivedResponse> getReceivedProposalsOfUser(Long userId) {
+  public List<ProposalReceivedResponse> getReceivedProposalsOfUser(long userId) {
     List<Ad> userAds = adRepository.findAllBySellerIdAndIsClosedFalse(userId);
     List<Proposal> receivedProposals = proposalRepository.findAllByAds(userAds);
 
@@ -51,7 +51,7 @@ public class ProposalServiceImpl implements ProposalService {
 
   @Transactional
   @Override
-  public ProposalSentResponse createProposal(Long userId, ProposalRequest proposalRequest) {
+  public ProposalSentResponse createProposal(long userId, ProposalRequest proposalRequest) {
     User sender = userRepository.findById(userId).get();
     Ad ad = adRepository.findById(proposalRequest.getAdId()).get();
 
@@ -66,7 +66,7 @@ public class ProposalServiceImpl implements ProposalService {
 
   @Transactional
   @Override
-  public boolean acceptProposalById(Long proposalId) {
+  public boolean acceptProposalById(long proposalId) {
     Proposal proposal = proposalRepository.findById(proposalId).get();
 
     Ad ad = proposal.getAd();
@@ -80,18 +80,18 @@ public class ProposalServiceImpl implements ProposalService {
 
   @Transactional
   @Override
-  public boolean declineProposalById(Long proposalId) {
+  public boolean declineProposalById(long proposalId) {
     proposalRepository.deleteById(proposalId);
     return true;
   }
 
   @Override
-  public boolean doesProposalExist(Long proposalId) {
+  public boolean doesProposalExist(long proposalId) {
     return proposalRepository.existsById(proposalId);
   }
 
   @Override
-  public boolean isProposalSentToUser(Long proposalId, Long currentUserId) {
+  public boolean isProposalSentToUser(long proposalId, long currentUserId) {
     Proposal proposal = proposalRepository.findById(proposalId).get();
 
     return proposal.getAd().getSeller().getId().equals(currentUserId);

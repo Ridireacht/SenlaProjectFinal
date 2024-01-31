@@ -33,7 +33,7 @@ public class AdminServiceImpl implements AdminService {
 
 
   @Override
-  public List<AdCurrentResponse> getCurrentAdsOfUser(Long userId) {
+  public List<AdCurrentResponse> getCurrentAdsOfUser(long userId) {
     List<Ad> currentAds = adRepository.findAllBySellerIdAndIsClosedFalse(userId);
     return currentAds.stream()
         .map(adMapper::mapToAdCurrentResponse)
@@ -41,7 +41,7 @@ public class AdminServiceImpl implements AdminService {
   }
 
   @Override
-  public List<AdClosedResponse> getClosedAdsOfUser(Long userId) {
+  public List<AdClosedResponse> getClosedAdsOfUser(long userId) {
     List<Ad> closedAds = adRepository.findAllBySellerIdAndIsClosedTrue(userId);
     return closedAds.stream()
         .map(adMapper::mapToAdClosedResponse)
@@ -49,7 +49,7 @@ public class AdminServiceImpl implements AdminService {
   }
 
   @Override
-  public List<AdPurchasedResponse> getPurchasedAdsOfUser(Long userId) {
+  public List<AdPurchasedResponse> getPurchasedAdsOfUser(long userId) {
     List<Ad> purchasedAds = adRepository.findAllByBuyerId(userId);
     return purchasedAds.stream()
         .map(adMapper::mapToAdPurchasedResponse)
@@ -66,13 +66,13 @@ public class AdminServiceImpl implements AdminService {
   }
 
   @Override
-  public UserFullProfileResponse getUserFullProfile(Long userId) {
+  public UserFullProfileResponse getUserFullProfile(long userId) {
     User user = userRepository.findById(userId).get();
     return userMapper.mapToUserProfileResponse(user);
   }
 
   @Override
-  public ResponseEntity<?> getAd(Long adId) {
+  public ResponseEntity<?> getAd(long adId) {
     Ad ad = adRepository.findById(adId).get();
 
     if (ad.isClosed()) {
@@ -83,14 +83,14 @@ public class AdminServiceImpl implements AdminService {
   }
 
   @Override
-  public Long getAdId(Long commentId) {
+  public long getAdId(long commentId) {
     Comment comment = commentRepository.findById(commentId).get();
     return comment.getAd().getId();
   }
 
   @Transactional
   @Override
-  public boolean unmakeAdPremium(Long adId) {
+  public boolean unmakeAdPremium(long adId) {
     if (adRepository.existsById(adId)) {
       Ad ad = adRepository.findById(adId).get();
       ad.setPremium(false);
@@ -104,7 +104,7 @@ public class AdminServiceImpl implements AdminService {
 
   @Transactional
   @Override
-  public boolean deleteUser(Long userId) {
+  public boolean deleteUser(long userId) {
     if (userRepository.existsById(userId)) {
       userRepository.deleteById(userId);
       return true;
@@ -115,7 +115,7 @@ public class AdminServiceImpl implements AdminService {
 
   @Transactional
   @Override
-  public boolean deleteComment(Long commentId) {
+  public boolean deleteComment(long commentId) {
     if (commentRepository.existsById(commentId)) {
       commentRepository.deleteById(commentId);
       return true;
@@ -126,7 +126,7 @@ public class AdminServiceImpl implements AdminService {
 
   @Transactional
   @Override
-  public boolean deleteAd(Long adId) {
+  public boolean deleteAd(long adId) {
     if (adRepository.existsById(adId)) {
       adRepository.deleteById(adId);
       return true;
@@ -136,28 +136,28 @@ public class AdminServiceImpl implements AdminService {
   }
 
   @Override
-  public boolean doesUserExist(Long userId) {
+  public boolean doesUserExist(long userId) {
     return userRepository.existsById(userId);
   }
 
   @Override
-  public boolean doesCommentExist(Long commentId) {
+  public boolean doesCommentExist(long commentId) {
     return commentRepository.existsById(commentId);
   }
 
   @Override
-  public boolean doesAdExist(Long adId) {
+  public boolean doesAdExist(long adId) {
     return adRepository.existsById(adId);
   }
 
   @Override
-  public boolean isAdClosed(Long adId) {
+  public boolean isAdClosed(long adId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.isClosed();
   }
 
   @Override
-  public boolean isAdPremium(Long adId) {
+  public boolean isAdPremium(long adId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.isPremium();
   }

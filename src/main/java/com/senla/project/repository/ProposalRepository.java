@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface ProposalRepository extends JpaRepository<Proposal, Long> {
 
   @Query("SELECT p FROM Proposal p WHERE p.sender.id = :userId")
-  List<Proposal> findAllBySenderId(@Param("userId") Long userId);
+  List<Proposal> findAllBySenderId(@Param("userId") long userId);
 
   @Query("SELECT p FROM Proposal p WHERE p.ad IN :ads")
   List<Proposal> findAllByAds(@Param("ads") List<Ad> ads);

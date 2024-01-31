@@ -6,15 +6,15 @@ import com.senla.project.dto.response.UserBriefProfileResponse;
 
 public interface UserService {
 
-  UserBriefProfileResponse getUserBriefProfile(Long userId);
+  UserBriefProfileResponse getUserBriefProfile(long userId);
 
-  Long getUserIdByUsername(String username);
+  long getUserIdByUsername(String username);
 
-  UserFullProfileResponse getUserFullProfile(Long userId);
+  UserFullProfileResponse getUserFullProfile(long userId);
 
-  boolean updateUserProfile(UserProfileRequest userProfileRequest, Long userId);
+  boolean updateUserProfile(UserProfileRequest userProfileRequest, long userId);
 
-  boolean doesUserExist(Long userId);
+  boolean doesUserExist(long userId);
 
   boolean doesUserExistByEmail(String email);
 }

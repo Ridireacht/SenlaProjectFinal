@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface ProposalService {
 
-  List<ProposalSentResponse> getSentProposalsOfUser(Long userId);
+  List<ProposalSentResponse> getSentProposalsOfUser(long userId);
 
-  List<ProposalReceivedResponse> getReceivedProposalsOfUser(Long userId);
+  List<ProposalReceivedResponse> getReceivedProposalsOfUser(long userId);
 
-  ProposalSentResponse createProposal(Long userId, ProposalRequest proposalRequest);
+  ProposalSentResponse createProposal(long userId, ProposalRequest proposalRequest);
 
-  boolean acceptProposalById(Long proposalId);
+  boolean acceptProposalById(long proposalId);
 
-  boolean declineProposalById(Long proposalId);
+  boolean declineProposalById(long proposalId);
 
-  boolean doesProposalExist(Long proposalId);
+  boolean doesProposalExist(long proposalId);
 
-  boolean isProposalSentToUser(Long proposalId, Long currentUserId);
+  boolean isProposalSentToUser(long proposalId, long currentUserId);
 }

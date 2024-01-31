@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface ConversationRepository extends JpaRepository<Conversation, Long> {
 
   @Query("SELECT c FROM Conversation c WHERE c.buyer.id = :userId OR c.seller.id = :userId")
-  List<Conversation> findByBuyerIdOrSellerId(@Param("userId") Long userId);
+  List<Conversation> findByBuyerIdOrSellerId(@Param("userId") long userId);
 
   @Modifying
   @Query("DELETE FROM Conversation c WHERE c.ad = :ad")

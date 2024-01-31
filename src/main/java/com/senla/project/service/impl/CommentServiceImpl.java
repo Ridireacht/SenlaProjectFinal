@@ -29,13 +29,13 @@ public class CommentServiceImpl implements CommentService {
 
 
   @Override
-  public Long getAdId(Long commentId) {
+  public long getAdId(long commentId) {
     Comment comment = commentRepository.findById(commentId).get();
     return comment.getAd().getId();
   }
 
   @Override
-  public List<CommentResponse> getCommentsOnAd(Long adId) {
+  public List<CommentResponse> getCommentsOnAd(long adId) {
     List<Comment> comments = commentRepository.findAllByAdId(adId);
 
     return comments.stream()
@@ -45,7 +45,7 @@ public class CommentServiceImpl implements CommentService {
 
   @Transactional
   @Override
-  public CommentResponse createCommentOnAd(Long userId, Long adId, CommentRequest commentRequest) {
+  public CommentResponse createCommentOnAd(long userId, long adId, CommentRequest commentRequest) {
     User sender = userRepository.findById(userId).get();
     Ad ad = adRepository.findById(adId).get();
 
@@ -61,7 +61,7 @@ public class CommentServiceImpl implements CommentService {
 
   @Transactional
   @Override
-  public CommentResponse updateComment(Long commentId, CommentRequest commentRequest) {
+  public CommentResponse updateComment(long commentId, CommentRequest commentRequest) {
     Comment existingComment = commentRepository.findById(commentId).get();
 
     existingComment.setContent(commentRequest.getContent());
@@ -73,7 +73,7 @@ public class CommentServiceImpl implements CommentService {
 
   @Transactional
   @Override
-  public boolean deleteComment(Long commentId) {
+  public boolean deleteComment(long commentId) {
     if (commentRepository.existsById(commentId)) {
       commentRepository.deleteById(commentId);
       return true;
@@ -83,12 +83,12 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public boolean doesCommentExist(Long commentId) {
+  public boolean doesCommentExist(long commentId) {
     return commentRepository.existsById(commentId);
   }
 
   @Override
-  public boolean doesCommentBelongToUser(Long commentId, Long currentUserId) {
+  public boolean doesCommentBelongToUser(long commentId, long currentUserId) {
     Comment comment = commentRepository.findById(commentId).get();
 
     return comment.getSender().getId().equals(currentUserId);

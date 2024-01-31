@@ -22,26 +22,26 @@ public class UserServiceImpl implements UserService {
 
 
   @Override
-  public UserBriefProfileResponse getUserBriefProfile(Long userId) {
+  public UserBriefProfileResponse getUserBriefProfile(long userId) {
     User user = userRepository.findById(userId).get();
     return userMapper.mapToUserResponse(user);
   }
 
   @Override
-  public Long getUserIdByUsername(String username) {
+  public long getUserIdByUsername(String username) {
     User user = userRepository.findByUsername(username).get();
     return user.getId();
   }
 
   @Override
-  public UserFullProfileResponse getUserFullProfile(Long userId) {
+  public UserFullProfileResponse getUserFullProfile(long userId) {
     User user = userRepository.findById(userId).get();
     return userMapper.mapToUserProfileResponse(user);
   }
 
   @Override
   public boolean updateUserProfile(UserProfileRequest userProfileRequest,
-      Long userId) {
+      long userId) {
 
     User user = userRepository.findById(userId).get();
 
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public boolean doesUserExist(Long userId) {
+  public boolean doesUserExist(long userId) {
     return userRepository.existsById(userId);
   }
 

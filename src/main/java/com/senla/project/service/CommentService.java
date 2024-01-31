@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface CommentService {
 
-  Long getAdId(Long commentId);
+  long getAdId(long commentId);
 
-  List<CommentResponse> getCommentsOnAd(Long adId);
+  List<CommentResponse> getCommentsOnAd(long adId);
 
-  CommentResponse createCommentOnAd(Long userId, Long adId, CommentRequest commentRequest);
+  CommentResponse createCommentOnAd(long userId, long adId, CommentRequest commentRequest);
 
-  CommentResponse updateComment(Long commentId, CommentRequest commentRequest);
+  CommentResponse updateComment(long commentId, CommentRequest commentRequest);
 
-  boolean deleteComment(Long commentId);
+  boolean deleteComment(long commentId);
 
-  boolean doesCommentExist(Long commentId);
+  boolean doesCommentExist(long commentId);
 
-  boolean doesCommentBelongToUser(Long commentId, Long currentUserId);
+  boolean doesCommentBelongToUser(long commentId, long currentUserId);
 }

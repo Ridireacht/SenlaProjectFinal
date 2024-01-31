@@ -9,35 +9,35 @@ import java.util.List;
 
 public interface AdService {
 
-  List<AdOpenResponse> getOpenAdsFromOtherUsers(Long userId);
+  List<AdOpenResponse> getOpenAdsFromOtherUsers(long userId);
 
-  List<AdCurrentResponse> getCurrentAdsOfUser(Long userId);
+  List<AdCurrentResponse> getCurrentAdsOfUser(long userId);
 
-  List<AdClosedResponse> getClosedAdsOfUser(Long userId);
+  List<AdClosedResponse> getClosedAdsOfUser(long userId);
 
-  List<AdPurchasedResponse> getPurchasedAdsOfUser(Long userId);
+  List<AdPurchasedResponse> getPurchasedAdsOfUser(long userId);
 
-  AdOpenResponse getAd(Long adId);
+  AdOpenResponse getAd(long adId);
 
-  AdCurrentResponse createAd(Long userId, AdRequest adRequest);
+  AdCurrentResponse createAd(long userId, AdRequest adRequest);
 
-  AdCurrentResponse updateAd(Long adId, AdRequest adRequest);
+  AdCurrentResponse updateAd(long adId, AdRequest adRequest);
 
-  Boolean makeAdPremium(Long adId);
+  Boolean makeAdPremium(long adId);
 
-  boolean deleteAd(Long adId);
+  boolean deleteAd(long adId);
 
-  boolean doesAdExist(Long adId);
+  boolean doesAdExist(long adId);
 
-  boolean isAdAvailableToUser(Long adId, Long currentUserId);
+  boolean isAdAvailableToUser(long adId, long currentUserId);
 
-  boolean doesAdBelongToUser(Long adId, Long currentUserId);
+  boolean doesAdBelongToUser(long adId, long currentUserId);
 
-  boolean isAdSoldToUser(Long adId, Long currentUserId);
+  boolean isAdSoldToUser(long adId, long currentUserId);
 
-  boolean isAdScored(Long adId);
+  boolean isAdScored(long adId);
 
-  boolean isAdClosed(Long adId);
+  boolean isAdClosed(long adId);
 
-  boolean isAdPremium(Long adId);
+  boolean isAdPremium(long adId);
 }

@@ -27,7 +27,7 @@ public class UserScoreServiceImpl implements UserScoreService {
 
   @Transactional
   @Override
-  public AdPurchasedResponse setUserScoreToAd(Long userId, Long adId,
+  public AdPurchasedResponse setUserScoreToAd(long userId, long adId,
       UserScoreRequest userScoreRequest) {
     UserScore userScore = userScoreMapper.mapToUserScore(userScoreRequest);
 

@@ -5,5 +5,5 @@ import com.senla.project.dto.response.AdPurchasedResponse;
 
 public interface UserScoreService {
 
-  AdPurchasedResponse setUserScoreToAd(Long userId, Long adId, UserScoreRequest userScoreRequest);
+  AdPurchasedResponse setUserScoreToAd(long userId, long adId, UserScoreRequest userScoreRequest);
 }

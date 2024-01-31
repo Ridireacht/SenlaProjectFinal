@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface ConversationService {
 
-  Long getAdId(Long conversationId);
+  long getAdId(long conversationId);
 
-  List<ConversationInfoResponse> getConversationsOfUser(Long userId);
+  List<ConversationInfoResponse> getConversationsOfUser(long userId);
 
-  ConversationResponse getConversation(Long conversationId);
+  ConversationResponse getConversation(long conversationId);
 
-  ConversationResponse createConversationByAd(Long userId, Long adId);
+  ConversationResponse createConversationByAd(long userId, long adId);
 
-  boolean deleteConversation(Long conversationId);
+  boolean deleteConversation(long conversationId);
 
-  boolean doesConversationExist(Long conversationId);
+  boolean doesConversationExist(long conversationId);
 
-  boolean doesConversationBelongToUser(Long conversationId, Long currentUserId);
+  boolean doesConversationBelongToUser(long conversationId, long currentUserId);
 }

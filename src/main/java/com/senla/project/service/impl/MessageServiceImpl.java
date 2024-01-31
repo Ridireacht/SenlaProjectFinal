@@ -28,7 +28,7 @@ public class MessageServiceImpl implements MessageService {
 
   @Transactional
   @Override
-  public ConversationResponse sendMessageToConversation(Long userId, Long conversationId,
+  public ConversationResponse sendMessageToConversation(long userId, long conversationId,
       MessageRequest messageRequest) {
     User sender = userRepository.findById(userId).get();
     Conversation conversation = conversationRepository.findById(conversationId).get();

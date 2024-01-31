@@ -9,35 +9,35 @@ import org.springframework.http.ResponseEntity;
 
 public interface AdminService {
 
-  List<AdCurrentResponse> getCurrentAdsOfUser(Long userId);
+  List<AdCurrentResponse> getCurrentAdsOfUser(long userId);
 
-  List<AdClosedResponse> getClosedAdsOfUser(Long userId);
+  List<AdClosedResponse> getClosedAdsOfUser(long userId);
 
-  List<AdPurchasedResponse> getPurchasedAdsOfUser(Long userId);
+  List<AdPurchasedResponse> getPurchasedAdsOfUser(long userId);
 
   List<UserFullProfileResponse> getUserFullProfiles();
 
-  UserFullProfileResponse getUserFullProfile(Long userId);
+  UserFullProfileResponse getUserFullProfile(long userId);
 
-  ResponseEntity<?> getAd(Long adId);
+  ResponseEntity<?> getAd(long adId);
 
-  Long getAdId(Long commentId);
+  long getAdId(long commentId);
 
-  boolean unmakeAdPremium(Long adId);
+  boolean unmakeAdPremium(long adId);
 
-  boolean deleteUser(Long userId);
+  boolean deleteUser(long userId);
 
-  boolean deleteComment(Long commentId);
+  boolean deleteComment(long commentId);
 
-  boolean deleteAd(Long adId);
+  boolean deleteAd(long adId);
 
-  boolean doesUserExist(Long userId);
+  boolean doesUserExist(long userId);
 
-  boolean doesCommentExist(Long commentId);
+  boolean doesCommentExist(long commentId);
 
-  boolean doesAdExist(Long adId);
+  boolean doesAdExist(long adId);
 
-  boolean isAdClosed(Long adId);
+  boolean isAdClosed(long adId);
 
-  boolean isAdPremium(Long adId);
+  boolean isAdPremium(long adId);
 }

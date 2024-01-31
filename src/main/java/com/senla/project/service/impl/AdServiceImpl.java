@@ -29,7 +29,7 @@ public class AdServiceImpl implements AdService {
 
 
   @Override
-  public List<AdOpenResponse> getOpenAdsFromOtherUsers(Long userId) {
+  public List<AdOpenResponse> getOpenAdsFromOtherUsers(long userId) {
     List<Ad> ads = adRepository.findAllByNotSellerIdAndIsClosedFalse(userId);
     return ads.stream()
         .map(adMapper::mapToAdResponse)
@@ -37,7 +37,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public List<AdCurrentResponse> getCurrentAdsOfUser(Long userId) {
+  public List<AdCurrentResponse> getCurrentAdsOfUser(long userId) {
     List<Ad> currentAds = adRepository.findAllBySellerIdAndIsClosedFalse(userId);
     return currentAds.stream()
         .map(adMapper::mapToAdCurrentResponse)
@@ -45,7 +45,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public List<AdClosedResponse> getClosedAdsOfUser(Long userId) {
+  public List<AdClosedResponse> getClosedAdsOfUser(long userId) {
     List<Ad> closedAds = adRepository.findAllBySellerIdAndIsClosedTrue(userId);
     return closedAds.stream()
         .map(adMapper::mapToAdClosedResponse)
@@ -53,7 +53,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public List<AdPurchasedResponse> getPurchasedAdsOfUser(Long userId) {
+  public List<AdPurchasedResponse> getPurchasedAdsOfUser(long userId) {
     List<Ad> purchasedAds = adRepository.findAllByBuyerId(userId);
     return purchasedAds.stream()
         .map(adMapper::mapToAdPurchasedResponse)
@@ -61,14 +61,14 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public AdOpenResponse getAd(Long adId) {
+  public AdOpenResponse getAd(long adId) {
     Ad ad = adRepository.findById(adId).get();
     return adMapper.mapToAdResponse(ad);
   }
 
   @Transactional
   @Override
-  public AdCurrentResponse createAd(Long userId, AdRequest adRequest) {
+  public AdCurrentResponse createAd(long userId, AdRequest adRequest) {
     User seller = userRepository.findById(userId).get();
 
     Ad ad = adMapper.mapToAd(adRequest);
@@ -81,7 +81,7 @@ public class AdServiceImpl implements AdService {
 
   @Transactional
   @Override
-  public AdCurrentResponse updateAd(Long adId, AdRequest adRequest) {
+  public AdCurrentResponse updateAd(long adId, AdRequest adRequest) {
     Ad existingAd = adRepository.findById(adId).orElse(null);
     if (existingAd != null) {
       existingAd.setTitle(adRequest.getTitle());
@@ -96,7 +96,7 @@ public class AdServiceImpl implements AdService {
 
   @Transactional
   @Override
-  public Boolean makeAdPremium(Long adId) {
+  public Boolean makeAdPremium(long adId) {
     if (adRepository.existsById(adId)) {
       Ad ad = adRepository.findById(adId).get();
 
@@ -111,7 +111,7 @@ public class AdServiceImpl implements AdService {
 
   @Transactional
   @Override
-  public boolean deleteAd(Long adId) {
+  public boolean deleteAd(long adId) {
     if (adRepository.existsById(adId)) {
       adRepository.deleteById(adId);
       return true;
@@ -121,42 +121,42 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public boolean doesAdExist(Long adId) {
+  public boolean doesAdExist(long adId) {
     return adRepository.existsById(adId);
   }
 
   @Override
-  public boolean isAdAvailableToUser(Long adId, Long currentUserId) {
+  public boolean isAdAvailableToUser(long adId, long currentUserId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.getSeller().getId().equals(currentUserId) || ad.getBuyer().getId().equals(currentUserId);
   }
 
   @Override
-  public boolean doesAdBelongToUser(Long adId, Long currentUserId) {
+  public boolean doesAdBelongToUser(long adId, long currentUserId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.getSeller().getId().equals(currentUserId);
   }
 
   @Override
-  public boolean isAdSoldToUser(Long adId, Long currentUserId) {
+  public boolean isAdSoldToUser(long adId, long currentUserId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.getBuyer().getId().equals(currentUserId);
   }
 
   @Override
-  public boolean isAdScored(Long adId) {
+  public boolean isAdScored(long adId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.getScore() != null;
   }
 
   @Override
-  public boolean isAdClosed(Long adId) {
+  public boolean isAdClosed(long adId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.isClosed();
   }
 
   @Override
-  public boolean isAdPremium(Long adId) {
+  public boolean isAdPremium(long adId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.isPremium();
   }
