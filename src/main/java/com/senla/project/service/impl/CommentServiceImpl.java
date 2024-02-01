@@ -37,7 +37,6 @@ public class CommentServiceImpl implements CommentService {
   @Override
   public List<CommentResponse> getCommentsOnAd(long adId) {
     List<Comment> comments = commentRepository.findAllByAdId(adId);
-
     return comments.stream()
         .map(commentMapper::mapToCommentResponse)
         .collect(Collectors.toList());
@@ -49,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
     User sender = userRepository.findById(userId).get();
     Ad ad = adRepository.findById(adId).get();
 
-    Comment comment = new Comment();
+    Comment comment = commentMapper.mapToComment(commentRequest);
     comment.setSender(sender);
     comment.setAd(ad);
     comment.setContent(commentRequest.getContent());
@@ -61,14 +60,18 @@ public class CommentServiceImpl implements CommentService {
 
   @Transactional
   @Override
-  public CommentResponse updateComment(long commentId, CommentRequest commentRequest) {
-    Comment existingComment = commentRepository.findById(commentId).get();
+  public boolean updateComment(long commentId, CommentRequest commentRequest) {
+    if (commentRepository.existsById(commentId)) {
+      Comment existingComment = commentRepository.findById(commentId).get();
 
-    existingComment.setContent(commentRequest.getContent());
-    existingComment.setPostedAt(LocalDateTime.now());
+      existingComment.setContent(commentRequest.getContent());
+      existingComment.setPostedAt(LocalDateTime.now());
 
-    Comment updatedComment = commentRepository.save(existingComment);
-    return commentMapper.mapToCommentResponse(updatedComment);
+      commentRepository.save(existingComment);
+      return true;
+    }
+
+    return false;
   }
 
   @Transactional
@@ -90,8 +93,7 @@ public class CommentServiceImpl implements CommentService {
   @Override
   public boolean doesCommentBelongToUser(long commentId, long userId) {
     Comment comment = commentRepository.findById(commentId).get();
-
-    return comment.getSender().getId().equals(userId);
+    return comment.getSender().getId() == userId;
   }
 
 }
