@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 1
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: roles
@@ -18,7 +18,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 2
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: users
@@ -50,7 +50,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 3
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: ads
@@ -94,7 +94,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 4
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: comments
@@ -126,7 +126,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 5
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: conversations
@@ -161,7 +161,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 6
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: messages
@@ -193,7 +193,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 7
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: proposals
@@ -222,7 +222,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 8
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: ratings
@@ -245,7 +245,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 9
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: user_scores
@@ -279,7 +279,7 @@ databaseChangeLog:
                       references: ratings(id)
   - changeSet:
       id: 10
-      author: your_name
+      author: Ridireacht
       changes:
         - insert:
             tableName: roles
