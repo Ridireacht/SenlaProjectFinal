@@ -75,7 +75,7 @@ public class AdminController {
     return adminService.deleteComment(commentId);
   }
 
-  @Operation(summary = "Получить активные объявления пользователя", description = "Получает список всех активных объявлений выбранного пользователя")
+  @Operation(summary = "Получить отфильтрованные объявления", description = "Получает список объявлений, соответствующих заданному администратором запросу. Тип возвращаемых объявлений зависит от параметров запроса.")
   @GetMapping("/users/{id}/ads")
   public List<AdCurrentResponse> getFilteredAdsOfUser(@PathVariable("id") Long userId,
       @RequestParam(required = false) String searchString,
@@ -99,7 +99,7 @@ public class AdminController {
       throw new CustomValidationException("query parameter 'searchString' should either be not specified or have bigger length than 1.");
     }
 
-    return adminService.getFilteredAdsForUser(userId);
+    return adminService.getFilteredAdsForUser(userId, searchString, category, minPrice, maxPrice);
   }
 
   @Operation(summary = "Получить информацию по конкретному объявлению", description = "Получает полную информацию о конкретном объявлении по его id.")
