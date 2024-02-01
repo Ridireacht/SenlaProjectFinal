@@ -9,9 +9,12 @@ import com.senla.project.entity.Ad;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.AdMapper;
 import com.senla.project.repository.AdRepository;
+import com.senla.project.repository.RatingRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.AdService;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -26,6 +29,7 @@ public class AdServiceImpl implements AdService {
 
   private final AdRepository adRepository;
   private final UserRepository userRepository;
+  private final RatingRepository ratingRepository;
 
   private final AdMapper adMapper;
 
@@ -72,6 +76,8 @@ public class AdServiceImpl implements AdService {
             .collect(Collectors.toList());
       }
     }
+
+    ads = sortAds(ads);
 
 
     List<?> adsResponses = null;
@@ -207,6 +213,17 @@ public class AdServiceImpl implements AdService {
   public boolean isAdPremium(long adId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.isPremium();
+  }
+
+  public List<Ad> sortAds(List<Ad> ads) {
+    Collections.sort(ads, Comparator
+        .comparing((Ad ad) -> getRatingForSeller(ad.getSeller().getId()), Comparator.reverseOrder())
+        .thenComparing(Ad::isPremium, Comparator.reverseOrder()));
+    return ads;
+  }
+
+  private double getRatingForSeller(Long sellerId) {
+    return ratingRepository.findByUserId(sellerId).get().getAverageScore();
   }
 
 }
