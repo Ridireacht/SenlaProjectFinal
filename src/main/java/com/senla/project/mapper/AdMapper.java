@@ -25,7 +25,7 @@ public abstract class AdMapper {
 
   @Mapping(source = "seller.id", target = "sellerId")
   @Mapping(source = "seller.address", target = "sellerCity")
-  @Mapping(target = "sellerRating", expression = "java(ratingRepository.findByUserId(seller.getId()).get().getAverageScore())")
+  @Mapping(target = "sellerRating", expression = "java(ratingRepository.findByUserId(ad.getSeller().getId()).get().getAverageScore())")
   public abstract AdFullOpenResponse mapToAdFullOpenResponse(Ad ad);
 
   public abstract AdCurrentResponse mapToAdCurrentResponse(Ad ad);
