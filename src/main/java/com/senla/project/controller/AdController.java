@@ -6,6 +6,7 @@ import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.response.AdOpenResponse;
 import com.senla.project.exception.ConflictException;
+import com.senla.project.exception.CustomValidationException;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Ad", description = "Предоставляет API для управления объявлениями")
@@ -39,28 +41,31 @@ public class AdController {
   private final UserService userService;
 
 
-  @Operation(summary = "Получить объявления от других пользователей", description = "Получает список всех активных объявлений, которые не принадлежат текущему пользователю")
+  @Operation(summary = "Получить отфильтрованные объявления", description = "Получает список объявлений, соответствующих заданному пользователем запросу. Тип возвращаемых объявлений зависит от параметров запроса.")
   @GetMapping
-  public List<AdOpenResponse> getOpenAdsFromOtherUsers() {
-    return adService.getOpenAdsFromOtherUsers(getCurrentUserId());
-  }
+  public ResponseEntity<?> getFilteredAds(@RequestParam(required = false) String searchString,
+      @RequestParam(required = true) String category,
+      @RequestParam(required = false) Integer minPrice,
+      @RequestParam(required = false) Integer maxPrice,
+      @RequestParam(required = false) Boolean isInMyCity) {
 
-  @Operation(summary = "Получить свои активные объявления", description = "Получает список всех активных объявлений текущего пользователя")
-  @GetMapping("/current")
-  public List<AdCurrentResponse> getCurrentAdsOfCurrentUser() {
-    return adService.getCurrentAdsOfUser(getCurrentUserId());
-  }
+    if (category != "open" && category != "current" && category != "closed" && category != "purchased") {
+      throw new CustomValidationException("query parameter 'category' should be either open, current, closed or purchased.");
+    }
 
-  @Operation(summary = "Получить свои закрытые объявления", description = "Получает список всех неактивных (закрытых) объявлений текущего пользователя.")
-  @GetMapping("/closed")
-  public List<AdClosedResponse> getClosedAdsOfCurrentUser() {
-    return adService.getClosedAdsOfUser(getCurrentUserId());
-  }
+    if (isInMyCity != null && category != "open") {
+      throw new CustomValidationException("if query parameter 'isInMyCity' is used, query parameter 'category' should mandatory be open.");
+    }
 
-  @Operation(summary = "Получить свои выкупленные объявления", description = "Получает список всех выкупленных текущим пользователем объявлений.")
-  @GetMapping("/purchased")
-  public List<AdPurchasedResponse> getPurchasedAdsOfCurrentUser() {
-    return adService.getPurchasedAdsOfUser(getCurrentUserId());
+    if (minPrice != null && maxPrice != null && maxPrice < minPrice) {
+      throw new CustomValidationException("query parameter 'minPrice' can't be higher than query parameter 'maxPrice'.");
+    }
+
+    if (searchString != null && searchString.length() <= 1) {
+      throw new CustomValidationException("query parameter 'searchString' should either be not specified or have bigger length than 1.");
+    }
+
+    return adService.getFilteredAdsOfUser(getCurrentUserId(), searchString, category, minPrice, maxPrice, isInMyCity);
   }
 
   @Operation(summary = "Получить конкретное объявление", description = "Получает конкретное объявление по его id. Тип возвращаемого объявления зависит от текущего пользователя и статуса объявления.")
