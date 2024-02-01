@@ -13,6 +13,7 @@ import org.mapstruct.Mapping;
 public interface AdMapper {
 
   @Mapping(source = "seller.id", target = "sellerId")
+  @Mapping(source = "seller.address", target = "sellerCity")
   AdOpenResponse mapToAdOpenResponse(Ad ad);
 
   AdCurrentResponse mapToAdCurrentResponse(Ad ad);
