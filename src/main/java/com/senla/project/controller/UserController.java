@@ -4,6 +4,7 @@ import com.senla.project.dto.request.UserProfileRequest;
 import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.dto.response.UserBriefProfileResponse;
 import com.senla.project.exception.ConflictException;
+import com.senla.project.exception.CustomValidationException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,7 +55,7 @@ public class UserController {
     }
 
     if (userProfileRequest.getEmail() == null && userProfileRequest.getAddress() == null && userProfileRequest.getPassword() == null) {
-      throw ; // bad request
+      throw new CustomValidationException("the request is empty.");
     }
 
     return userService.updateUserProfile(userProfileRequest, getCurrentUserId());

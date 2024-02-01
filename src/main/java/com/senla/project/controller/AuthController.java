@@ -3,6 +3,7 @@ package com.senla.project.controller;
 import com.senla.project.dto.request.LoginRequest;
 import com.senla.project.dto.request.RegisterRequest;
 import com.senla.project.exception.ConflictException;
+import com.senla.project.exception.CustomValidationException;
 import com.senla.project.security.JwtService;
 import com.senla.project.service.AuthService;
 import com.senla.project.service.impl.UserDetailsServiceImpl;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +46,7 @@ public class AuthController {
     }
 
     if (!authService.doesRoleExistByName(registerRequest.getRole())) {
-      throw ; // bad request
+      throw new CustomValidationException("this role doesn't exist.");
     }
 
     return userDetailsService.registerUser(registerRequest);

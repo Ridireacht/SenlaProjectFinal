@@ -45,4 +45,11 @@ public class GlobalExceptionHandler {
 
     return ResponseEntity.badRequest().body(errorMessage);
   }
+
+  @ExceptionHandler(CustomValidationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ApiResponse(responseCode = "400", description = "Custom validation check failed.")
+  public ResponseEntity<String> handleCustomValidationException(CustomValidationException ex) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+  }
 }
