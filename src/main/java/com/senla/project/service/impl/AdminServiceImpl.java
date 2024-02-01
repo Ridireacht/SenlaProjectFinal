@@ -33,26 +33,10 @@ public class AdminServiceImpl implements AdminService {
 
 
   @Override
-  public List<AdCurrentResponse> getCurrentAdsOfUser(long userId) {
-    List<Ad> currentAds = adRepository.findAllBySellerIdAndIsClosedFalse(userId);
-    return currentAds.stream()
-        .map(adMapper::mapToAdCurrentResponse)
-        .collect(Collectors.toList());
-  }
-
-  @Override
-  public List<AdClosedResponse> getClosedAdsOfUser(long userId) {
-    List<Ad> closedAds = adRepository.findAllBySellerIdAndIsClosedTrue(userId);
-    return closedAds.stream()
-        .map(adMapper::mapToAdClosedResponse)
-        .collect(Collectors.toList());
-  }
-
-  @Override
-  public List<AdPurchasedResponse> getPurchasedAdsOfUser(long userId) {
-    List<Ad> purchasedAds = adRepository.findAllByBuyerId(userId);
-    return purchasedAds.stream()
-        .map(adMapper::mapToAdPurchasedResponse)
+  public ResponseEntity<?> getFilteredAdsForUser(long userId, String searchString, String category, Integer minPrice, Integer maxPrice) {
+    List<Ad> ads = adRepository.findAllByNotSellerIdAndIsClosedFalse(userId);
+    return ads.stream()
+        .map(adMapper::mapToAdOpenResponse)
         .collect(Collectors.toList());
   }
 

@@ -10,13 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface AdService {
 
-  List<AdOpenResponse> getOpenAdsFromOtherUsers(long userId);
-
-  List<AdCurrentResponse> getCurrentAdsOfUser(long userId);
-
-  List<AdClosedResponse> getClosedAdsOfUser(long userId);
-
-  List<AdPurchasedResponse> getPurchasedAdsOfUser(long userId);
+  ResponseEntity<?> getFilteredAdsForUser(long userId, String searchString, String category, Integer minPrice, Integer maxPrice, Boolean isInMyCity);
 
   ResponseEntity<?> getAd(long adId, long userId);
 
