@@ -41,7 +41,8 @@ public class MessageServiceImpl implements MessageService {
 
     messageRepository.save(message);
 
-    return conversationMapper.mapToConversationFullResponse(conversation);
+    conversation = conversationRepository.findById(conversationId).get();
+    return conversationMapper.mapToConversationResponse(conversation);
   }
 
 }
