@@ -5,6 +5,7 @@ import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.exception.ConflictException;
+import com.senla.project.exception.CustomValidationException;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdminService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -74,33 +76,30 @@ public class AdminController {
   }
 
   @Operation(summary = "Получить активные объявления пользователя", description = "Получает список всех активных объявлений выбранного пользователя")
-  @GetMapping("/users/{id}/ads/current")
-  public List<AdCurrentResponse> getCurrentAdsOfUser(@PathVariable("id") Long userId) {
+  @GetMapping("/users/{id}/ads")
+  public List<AdCurrentResponse> getFilteredAdsOfUser(@PathVariable("id") Long userId,
+      @RequestParam(required = false) String searchString,
+      @RequestParam(required = true) String category,
+      @RequestParam(required = false) Integer minPrice,
+      @RequestParam(required = false) Integer maxPrice) {
+
     if (!adminService.doesUserExist(userId)) {
       throw new NotFoundException("User", userId);
     }
 
-    return adminService.getCurrentAdsOfUser(userId);
-  }
-
-  @Operation(summary = "Получить закрытые объявления пользователя", description = "Получает список всех неактивных (закрытых) объявлений выбранного пользователя.")
-  @GetMapping("/users/{id}/ads/closed")
-  public List<AdClosedResponse> getClosedAdsOfUser(@PathVariable("id") Long userId) {
-    if (!adminService.doesUserExist(userId)) {
-      throw new NotFoundException("User", userId);
+    if (category != "current" && category != "closed" && category != "purchased") {
+      throw new CustomValidationException("query parameter 'category' should be either current, closed or purchased.");
     }
 
-    return adminService.getClosedAdsOfUser(userId);
-  }
-
-  @Operation(summary = "Получить выкупленные объявления пользователя", description = "Получает список всех выкупленных выбранным пользователем объявлений.")
-  @GetMapping("/users/{id}/ads/purchased")
-  public List<AdPurchasedResponse> getPurchasedAdsOfUser(@PathVariable("id") Long userId) {
-    if (!adminService.doesUserExist(userId)) {
-      throw new NotFoundException("User", userId);
+    if (minPrice != null && maxPrice != null && maxPrice < minPrice) {
+      throw new CustomValidationException("query parameter 'minPrice' can't be higher than query parameter 'maxPrice'.");
     }
 
-    return adminService.getPurchasedAdsOfUser(userId);
+    if (searchString != null && searchString.length() <= 1) {
+      throw new CustomValidationException("query parameter 'searchString' should either be not specified or have bigger length than 1.");
+    }
+
+    return adminService.getFilteredAdsForUser(userId);
   }
 
   @Operation(summary = "Получить информацию по конкретному объявлению", description = "Получает полную информацию о конкретном объявлении по его id.")

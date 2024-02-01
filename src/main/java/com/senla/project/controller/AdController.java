@@ -65,7 +65,7 @@ public class AdController {
       throw new CustomValidationException("query parameter 'searchString' should either be not specified or have bigger length than 1.");
     }
 
-    return adService.getFilteredAdsOfUser(getCurrentUserId(), searchString, category, minPrice, maxPrice, isInMyCity);
+    return adService.getFilteredAdsForUser(getCurrentUserId(), searchString, category, minPrice, maxPrice, isInMyCity);
   }
 
   @Operation(summary = "Получить конкретное объявление", description = "Получает конкретное объявление по его id. Тип возвращаемого объявления зависит от текущего пользователя и статуса объявления.")
