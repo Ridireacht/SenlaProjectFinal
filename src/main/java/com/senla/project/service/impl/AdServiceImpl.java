@@ -77,9 +77,11 @@ public class AdServiceImpl implements AdService {
       }
     }
 
-    ads = sortAds(ads);
+    if (category == "open") {
+      ads = sortAds(ads);
+    }
 
-
+    
     List<?> adsResponses = null;
 
     switch (category) {
