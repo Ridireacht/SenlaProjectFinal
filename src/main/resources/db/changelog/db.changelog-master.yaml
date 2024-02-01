@@ -155,6 +155,9 @@ databaseChangeLog:
                   constraints:
                     foreignKey:
                       references: users(id)
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
 
   - changeSet:
       id: 6
