@@ -79,7 +79,7 @@ public class AdServiceImpl implements AdService {
       return ResponseEntity.ok(adMapper.mapToAdPurchasedResponse(ad));
     }
 
-    return ResponseEntity.ok(adMapper.mapToAdBriefResponse(ad));
+    return ResponseEntity.ok(adMapper.mapToAdOpenResponse(ad));
   }
 
   @Transactional
