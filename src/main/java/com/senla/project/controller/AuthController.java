@@ -44,7 +44,7 @@ public class AuthController {
     }
 
     if (!authService.doesRoleExistByName(registerRequest.getRole())) {
-      throw new ConflictException("This role doesn't exist.");
+      throw ; // bad request
     }
 
     return userDetailsService.registerUser(registerRequest);

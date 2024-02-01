@@ -53,6 +53,10 @@ public class UserController {
       throw new ConflictException("This email is already taken.");
     }
 
+    if (userProfileRequest.getEmail() == null && userProfileRequest.getAddress() == null && userProfileRequest.getPassword() == null) {
+      throw ; // bad request
+    }
+
     return userService.updateUserProfile(userProfileRequest, getCurrentUserId());
   }
 
