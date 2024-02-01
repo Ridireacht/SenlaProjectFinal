@@ -27,17 +27,20 @@ public class UserScoreServiceImpl implements UserScoreService {
 
   @Transactional
   @Override
-  public AdPurchasedResponse setUserScoreToAd(long userId, long adId,
+  public boolean setUserScoreToAd(long userId, long adId,
       UserScoreRequest userScoreRequest) {
-    UserScore userScore = userScoreMapper.mapToUserScore(userScoreRequest);
+    if (adRepository.existsById(adId)) {
+      UserScore userScore = userScoreMapper.mapToUserScore(userScoreRequest);
 
-    Ad ad = adRepository.findById(adId).get();
-    ad.setScore(userScore);
+      Ad ad = adRepository.findById(adId).get();
+      ad.setScore(userScore);
 
-    ratingService.updateRatingForUser(userScore.getUser().getId());
+      ratingService.updateRatingForUser(userScore.getUser().getId());
 
-    Ad savedAd = adRepository.save(ad);
-    return adMapper.mapToAdPurchasedResponse(savedAd);
+      adRepository.save(ad);
+    }
+
+    return false;
   }
 
 }
