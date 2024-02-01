@@ -43,7 +43,9 @@ public class MessageServiceImpl implements MessageService {
 
     messageRepository.save(message);
 
-    conversation = conversationRepository.findById(conversationId).get();
+    conversation.setUpdatedAt(message.getPostedAt());
+    conversation = conversationRepository.save(conversation);
+
     return conversationMapper.mapToConversationResponse(conversation);
   }
 

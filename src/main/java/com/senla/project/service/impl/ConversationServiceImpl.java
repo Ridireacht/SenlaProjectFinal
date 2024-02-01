@@ -10,6 +10,7 @@ import com.senla.project.repository.AdRepository;
 import com.senla.project.repository.ConversationRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.ConversationService;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -57,6 +58,7 @@ public class ConversationServiceImpl implements ConversationService {
     conversation.setAd(ad);
     conversation.setBuyer(buyer);
     conversation.setSeller(ad.getSeller());
+    conversation.setUpdatedAt(LocalDateTime.now());
 
     Conversation savedConversation = conversationRepository.save(conversation);
     return conversationMapper.mapToConversationResponse(savedConversation);
