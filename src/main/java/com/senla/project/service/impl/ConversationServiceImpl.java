@@ -44,7 +44,7 @@ public class ConversationServiceImpl implements ConversationService {
   @Override
   public ConversationResponse getConversation(long conversationId) {
     Conversation conversation = conversationRepository.findById(conversationId).get();
-    return conversationMapper.mapToConversationFullResponse(conversation);
+    return conversationMapper.mapToConversationResponse(conversation);
   }
 
   @Transactional
@@ -59,7 +59,7 @@ public class ConversationServiceImpl implements ConversationService {
     conversation.setSeller(ad.getSeller());
 
     Conversation savedConversation = conversationRepository.save(conversation);
-    return conversationMapper.mapToConversationFullResponse(savedConversation);
+    return conversationMapper.mapToConversationResponse(savedConversation);
   }
 
   @Transactional
@@ -82,8 +82,8 @@ public class ConversationServiceImpl implements ConversationService {
   public boolean doesConversationBelongToUser(long conversationId, long userId) {
     Conversation conversation = conversationRepository.findById(conversationId).get();
 
-    return conversation.getBuyer().getId().equals(userId)
-        || conversation.getSeller().getId().equals(userId);
+    return conversation.getBuyer().getId() == userId
+        || conversation.getSeller().getId() == userId;
   }
 
 }
