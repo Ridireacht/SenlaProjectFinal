@@ -16,8 +16,8 @@ public abstract class UserMapper {
 
 
   @Mapping(target = "rating", expression = "java(ratingRepository.findByUserId(user.getId()).get().getAverageScore())")
-  public abstract UserBriefProfileResponse mapToUserResponse(User user);
+  public abstract UserBriefProfileResponse mapToUserBriefProfileResponse(User user);
 
   @Mapping(target = "rating", expression = "java(ratingRepository.findByUserId(user.getId()).get().getAverageScore())")
-  public abstract UserFullProfileResponse mapToUserProfileResponse(User user);
+  public abstract UserFullProfileResponse mapToUserFullProfileResponse(User user);
 }

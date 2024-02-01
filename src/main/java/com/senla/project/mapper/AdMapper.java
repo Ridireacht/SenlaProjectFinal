@@ -12,17 +12,17 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AdMapper {
 
+  @Mapping(source = "seller.id", target = "sellerId")
+  AdOpenResponse mapToAdOpenResponse(Ad ad);
+
+  AdCurrentResponse mapToAdCurrentResponse(Ad ad);
+
   @Mapping(source = "buyer.id", target = "buyerId")
   @Mapping(source = "score.score", target = "score")
   AdClosedResponse mapToAdClosedResponse(Ad ad);
 
-  AdCurrentResponse mapToAdCurrentResponse(Ad ad);
-
   @Mapping(source = "score.score", target = "score")
   AdPurchasedResponse mapToAdPurchasedResponse(Ad ad);
-
-  @Mapping(source = "seller.id", target = "sellerId")
-  AdOpenResponse mapToAdResponse(Ad ad);
 
   Ad mapToAd(AdRequest adRequest);
 }

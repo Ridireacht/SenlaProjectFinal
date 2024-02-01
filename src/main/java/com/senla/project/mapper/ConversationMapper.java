@@ -10,8 +10,8 @@ import org.mapstruct.Mapping;
 public interface ConversationMapper {
 
   @Mapping(source = "ad.id", target = "adId")
-  ConversationInfoResponse mapToConversationResponse(Conversation conversation);
+  ConversationInfoResponse mapToConversationInfoResponse(Conversation conversation);
 
   @Mapping(source = "ad.id", target = "adId")
-  ConversationResponse mapToConversationFullResponse(Conversation conversation);
+  ConversationResponse mapToConversationResponse(Conversation conversation);
 }
