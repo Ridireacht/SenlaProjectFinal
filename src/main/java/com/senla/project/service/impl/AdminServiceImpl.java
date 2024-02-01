@@ -34,10 +34,50 @@ public class AdminServiceImpl implements AdminService {
 
   @Override
   public ResponseEntity<?> getFilteredAdsForUser(long userId, String searchString, String category, Integer minPrice, Integer maxPrice) {
-    List<Ad> ads = adRepository.findAllByNotSellerIdAndIsClosedFalse(userId);
-    return ads.stream()
-        .map(adMapper::mapToAdOpenResponse)
-        .collect(Collectors.toList());
+    List<Ad> ads = null;
+
+    switch (category) {
+      case ("current") -> ads = adRepository.findAllBySellerIdAndIsClosedFalse(userId);
+      case ("closed") -> ads = adRepository.findAllBySellerIdAndIsClosedTrue(userId);
+      case ("purchased") -> ads = adRepository.findAllByBuyerId(userId);
+    }
+
+    if (searchString != null) {
+      ads = ads.stream()
+          .filter(ad -> ad.getTitle().contains(searchString) || ad.getContent().contains(searchString))
+          .collect(Collectors.toList());
+    }
+
+    if (minPrice != null) {
+      ads = ads.stream()
+          .filter(ad -> ad.getPrice() >= minPrice)
+          .collect(Collectors.toList());
+    }
+
+    if (maxPrice != null) {
+      ads = ads.stream()
+          .filter(ad -> ad.getPrice() <= maxPrice)
+          .collect(Collectors.toList());
+    }
+
+
+    List<?> adsResponses = null;
+
+    switch (category) {
+      case ("current") -> adsResponses = ads.stream()
+          .map(adMapper::mapToAdCurrentResponse)
+          .collect(Collectors.toList());
+
+      case ("closed") -> adsResponses = ads.stream()
+          .map(adMapper::mapToAdClosedResponse)
+          .collect(Collectors.toList());
+
+      case ("purchased") -> adsResponses = ads.stream()
+          .map(adMapper::mapToAdPurchasedResponse)
+          .collect(Collectors.toList());
+    }
+
+    return ResponseEntity.ok(adsResponses);
   }
 
   @Override
