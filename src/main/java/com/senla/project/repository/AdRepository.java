@@ -21,4 +21,7 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
 
   @Query("SELECT a FROM Ad a WHERE a.buyer.id = :userId")
   List<Ad> findAllByBuyerId(@Param("userId") long userId);
+
+  @Query("SELECT a FROM Ad a WHERE a.isClosed = false")
+  List<Ad> findAllByIsClosedFalse();
 }

@@ -2,6 +2,7 @@ package com.senla.project.service.impl;
 
 import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
+import com.senla.project.dto.response.AdFullOpenResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.entity.Ad;
@@ -11,8 +12,11 @@ import com.senla.project.mapper.AdMapper;
 import com.senla.project.mapper.UserMapper;
 import com.senla.project.repository.AdRepository;
 import com.senla.project.repository.CommentRepository;
+import com.senla.project.repository.RatingRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.AdminService;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -27,6 +31,7 @@ public class AdminServiceImpl implements AdminService {
   private final UserRepository userRepository;
   private final AdRepository adRepository;
   private final CommentRepository commentRepository;
+  private final RatingRepository ratingRepository;
 
   private final UserMapper userMapper;
   private final AdMapper adMapper;
@@ -78,6 +83,39 @@ public class AdminServiceImpl implements AdminService {
     }
 
     return ResponseEntity.ok(adsResponses);
+  }
+
+  @Override
+  public List<AdFullOpenResponse> getAllOpenAdsFull(String searchString, Integer minPrice,
+      Integer maxPrice) {
+
+    List<Ad> ads = adRepository.findAllByIsClosedFalse();
+
+    if (searchString != null) {
+      ads = ads.stream()
+          .filter(ad -> ad.getTitle().contains(searchString) || ad.getContent().contains(searchString))
+          .collect(Collectors.toList());
+    }
+
+    if (minPrice != null) {
+      ads = ads.stream()
+          .filter(ad -> ad.getPrice() >= minPrice)
+          .collect(Collectors.toList());
+    }
+
+    if (maxPrice != null) {
+      ads = ads.stream()
+          .filter(ad -> ad.getPrice() <= maxPrice)
+          .collect(Collectors.toList());
+    }
+
+    ads = sortAds(ads);
+
+    List<AdFullOpenResponse> adsResponses = ads.stream()
+        .map(adMapper::mapToAdFullOpenResponse)
+        .collect(Collectors.toList());
+
+    return adsResponses;
   }
 
   @Override
@@ -182,5 +220,16 @@ public class AdminServiceImpl implements AdminService {
   public boolean isAdPremium(long adId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.isPremium();
+  }
+
+  private List<Ad> sortAds(List<Ad> ads) {
+    Collections.sort(ads, Comparator
+        .comparing((Ad ad) -> getRatingForSeller(ad.getSeller().getId()), Comparator.reverseOrder())
+        .thenComparing(Ad::isPremium, Comparator.reverseOrder()));
+    return ads;
+  }
+
+  private double getRatingForSeller(Long sellerId) {
+    return ratingRepository.findByUserId(sellerId).get().getAverageScore();
   }
 }

@@ -2,6 +2,7 @@ package com.senla.project.service;
 
 import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
+import com.senla.project.dto.response.AdFullOpenResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
 import java.util.List;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 public interface AdminService {
 
   ResponseEntity<?> getFilteredAdsForUser(long userId, String searchString, String category, Integer minPrice, Integer maxPrice);
+
+  List<AdFullOpenResponse> getAllOpenAdsFull(String searchString, Integer minPrice, Integer maxPrice);
 
   List<UserFullProfileResponse> getUserFullProfiles();
 

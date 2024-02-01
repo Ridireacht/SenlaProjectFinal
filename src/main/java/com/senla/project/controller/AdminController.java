@@ -2,6 +2,7 @@ package com.senla.project.controller;
 
 import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
+import com.senla.project.dto.response.AdFullOpenResponse;
 import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.exception.ConflictException;
@@ -73,6 +74,23 @@ public class AdminController {
     }
 
     return adminService.deleteComment(commentId);
+  }
+
+  @Operation(summary = "Получить полную информацию по всем объявлениям", description = "Возвращает список полной информации по всем активным объявлениям всех пользователей.")
+  @GetMapping("/ads")
+  public List<AdFullOpenResponse> getAllOpenAdsFull(@RequestParam(required = false) String searchString,
+      @RequestParam(required = false) Integer minPrice,
+      @RequestParam(required = false) Integer maxPrice) {
+
+    if (minPrice != null && maxPrice != null && maxPrice < minPrice) {
+      throw new CustomValidationException("query parameter 'minPrice' can't be higher than query parameter 'maxPrice'.");
+    }
+
+    if (searchString != null && searchString.length() <= 1) {
+      throw new CustomValidationException("query parameter 'searchString' should either be not specified or have bigger length than 1.");
+    }
+
+    return adminService.getAllOpenAdsFull(searchString, minPrice, maxPrice);
   }
 
   @Operation(summary = "Получить отфильтрованные объявления", description = "Получает список объявлений, соответствующих заданному администратором запросу. Тип возвращаемых объявлений зависит от параметров запроса.")
