@@ -33,7 +33,6 @@ public class ProposalServiceImpl implements ProposalService {
   @Override
   public List<ProposalSentResponse> getSentProposalsOfUser(long userId) {
     List<Proposal> sentProposals = proposalRepository.findAllBySenderId(userId);
-
     return sentProposals.stream()
         .map(proposalMapper::mapToProposalSentResponse)
         .collect(Collectors.toList());
@@ -67,22 +66,31 @@ public class ProposalServiceImpl implements ProposalService {
   @Transactional
   @Override
   public boolean acceptProposalById(long proposalId) {
-    Proposal proposal = proposalRepository.findById(proposalId).get();
+    if (proposalRepository.existsById(proposalId)) {
+      Proposal proposal = proposalRepository.findById(proposalId).get();
 
-    Ad ad = proposal.getAd();
-    ad.setClosed(true);
-    adRepository.save(ad);
+      Ad ad = proposal.getAd();
+      ad.setClosed(true);
+      adRepository.save(ad);
 
-    proposalRepository.deleteAllByAd(ad);
-    conversationRepository.deleteAllByAd(ad);
-    return true;
+      proposalRepository.deleteAllByAd(ad);
+      conversationRepository.deleteAllByAd(ad);
+
+      return true;
+    }
+
+    return false;
   }
 
   @Transactional
   @Override
   public boolean declineProposalById(long proposalId) {
-    proposalRepository.deleteById(proposalId);
-    return true;
+    if (proposalRepository.existsById(proposalId)) {
+      proposalRepository.deleteById(proposalId);
+      return true;
+    }
+
+    return false;
   }
 
   @Override
@@ -94,7 +102,7 @@ public class ProposalServiceImpl implements ProposalService {
   public boolean isProposalSentToUser(long proposalId, long userId) {
     Proposal proposal = proposalRepository.findById(proposalId).get();
 
-    return proposal.getAd().getSeller().getId().equals(userId);
+    return proposal.getAd().getSeller().getId() == userId;
   }
 
 }
