@@ -77,7 +77,7 @@ public class AdminController {
 
   @Operation(summary = "Получить отфильтрованные объявления", description = "Получает список объявлений, соответствующих заданному администратором запросу. Тип возвращаемых объявлений зависит от параметров запроса.")
   @GetMapping("/users/{id}/ads")
-  public List<AdCurrentResponse> getFilteredAdsOfUser(@PathVariable("id") Long userId,
+  public ResponseEntity<?> getFilteredAdsOfUser(@PathVariable("id") Long userId,
       @RequestParam(required = false) String searchString,
       @RequestParam(required = true) String category,
       @RequestParam(required = false) Integer minPrice,
