@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class AdClosedResponse {
   private Long id;
-  private LocalDateTime postedAt;
+  private String postedAt;
   private String title;
   private String content;
   private int price;

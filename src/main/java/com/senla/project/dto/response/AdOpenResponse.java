@@ -10,7 +10,7 @@ public class AdOpenResponse {
   private Long id;
   private Long sellerId;
   private String sellerCity;
-  private LocalDateTime postedAt;
+  private String postedAt;
   private String title;
   private String content;
   private int price;

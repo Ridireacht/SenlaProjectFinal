@@ -9,5 +9,5 @@ import lombok.Setter;
 public class MessageResponse {
   private Long senderId;
   private String content;
-  private LocalDateTime postedAt;
+  private String postedAt;
 }

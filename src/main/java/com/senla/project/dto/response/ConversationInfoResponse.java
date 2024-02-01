@@ -9,5 +9,5 @@ import lombok.Setter;
 public class ConversationInfoResponse {
   private Long id;
   private Long adId;
-  private LocalDateTime updatedAt;
+  private String updatedAt;
 }
