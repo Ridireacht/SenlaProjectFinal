@@ -36,9 +36,8 @@ public class ConversationServiceImpl implements ConversationService {
   @Override
   public List<ConversationInfoResponse> getConversationsOfUser(long userId) {
     List<Conversation> conversations = conversationRepository.findByBuyerIdOrSellerId(userId);
-
     return conversations.stream()
-        .map(conversationMapper::mapToConversationResponse)
+        .map(conversationMapper::mapToConversationInfoResponse)
         .collect(Collectors.toList());
   }
 
