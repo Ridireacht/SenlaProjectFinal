@@ -32,10 +32,69 @@ public class AdServiceImpl implements AdService {
 
   @Override
   public ResponseEntity<?> getFilteredAdsForUser(long userId, String searchString, String category, Integer minPrice, Integer maxPrice, Boolean isInMyCity) {
-    List<Ad> ads = adRepository.findAllByNotSellerIdAndIsClosedFalse(userId);
-    return ads.stream()
-        .map(adMapper::mapToAdOpenResponse)
-        .collect(Collectors.toList());
+    List<Ad> ads = null;
+
+    switch (category) {
+      case ("open") -> ads = adRepository.findAllByNotSellerIdAndIsClosedFalse(userId);
+      case ("current") -> ads = adRepository.findAllBySellerIdAndIsClosedFalse(userId);
+      case ("closed") -> ads = adRepository.findAllBySellerIdAndIsClosedTrue(userId);
+      case ("purchased") -> ads = adRepository.findAllByBuyerId(userId);
+    }
+
+    if (searchString != null) {
+      ads = ads.stream()
+          .filter(ad -> ad.getTitle().contains(searchString) || ad.getContent().contains(searchString))
+          .collect(Collectors.toList());
+    }
+
+    if (minPrice != null) {
+      ads = ads.stream()
+          .filter(ad -> ad.getPrice() >= minPrice)
+          .collect(Collectors.toList());
+    }
+
+    if (maxPrice != null) {
+      ads = ads.stream()
+          .filter(ad -> ad.getPrice() <= maxPrice)
+          .collect(Collectors.toList());
+    }
+
+    if (category == "open" && isInMyCity != null) {
+      User user = userRepository.findById(userId).get();
+
+      if (isInMyCity) {
+        ads = ads.stream()
+            .filter(ad -> ad.getSeller().getAddress() == user.getAddress())
+            .collect(Collectors.toList());
+      } else {
+        ads = ads.stream()
+            .filter(ad -> ad.getSeller().getAddress() != user.getAddress())
+            .collect(Collectors.toList());
+      }
+    }
+
+
+    List<?> adsResponses = null;
+
+    switch (category) {
+      case ("open") -> adsResponses = ads.stream()
+          .map(adMapper::mapToAdOpenResponse)
+          .collect(Collectors.toList());
+
+      case ("current") -> adsResponses = ads.stream()
+          .map(adMapper::mapToAdCurrentResponse)
+          .collect(Collectors.toList());
+
+      case ("closed") -> adsResponses = ads.stream()
+          .map(adMapper::mapToAdClosedResponse)
+          .collect(Collectors.toList());
+
+      case ("purchased") -> adsResponses = ads.stream()
+          .map(adMapper::mapToAdPurchasedResponse)
+          .collect(Collectors.toList());
+    }
+
+    return ResponseEntity.ok(adsResponses);
   }
 
   @Override
