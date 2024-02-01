@@ -215,7 +215,7 @@ public class AdServiceImpl implements AdService {
     return ad.isPremium();
   }
 
-  public List<Ad> sortAds(List<Ad> ads) {
+  private List<Ad> sortAds(List<Ad> ads) {
     Collections.sort(ads, Comparator
         .comparing((Ad ad) -> getRatingForSeller(ad.getSeller().getId()), Comparator.reverseOrder())
         .thenComparing(Ad::isPremium, Comparator.reverseOrder()));
