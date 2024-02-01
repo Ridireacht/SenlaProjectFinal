@@ -6,6 +6,7 @@ import com.senla.project.entity.Conversation;
 import com.senla.project.entity.Message;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.ConversationMapper;
+import com.senla.project.mapper.MessageMapper;
 import com.senla.project.repository.ConversationRepository;
 import com.senla.project.repository.MessageRepository;
 import com.senla.project.repository.UserRepository;
@@ -24,6 +25,7 @@ public class MessageServiceImpl implements MessageService {
   private final UserRepository userRepository;
 
   private final ConversationMapper conversationMapper;
+  private final MessageMapper messageMapper;
 
 
   @Transactional
@@ -33,7 +35,7 @@ public class MessageServiceImpl implements MessageService {
     User sender = userRepository.findById(senderId).get();
     Conversation conversation = conversationRepository.findById(conversationId).get();
 
-    Message message = new Message();
+    Message message = messageMapper.mapToMessage(messageRequest);
     message.setSender(sender);
     message.setConversation(conversation);
     message.setContent(messageRequest.getContent());
