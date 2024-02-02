@@ -47,3 +47,4 @@
 
 <br><br>
 ## Диаграмма БД
+![DB diagram](img/diagram.png)
