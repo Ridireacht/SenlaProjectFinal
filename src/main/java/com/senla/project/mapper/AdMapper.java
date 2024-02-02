@@ -37,11 +37,11 @@ public abstract class AdMapper {
   public abstract AdCurrentResponse mapToAdCurrentResponse(Ad ad);
 
   @Mapping(source = "buyer.id", target = "buyerId")
-  @Mapping(source = "score.score", target = "score")
+  @Mapping(source = "score.value", target = "score")
   @Mapping(target = "postedAt", expression = "java(ad.getPostedAt().format(DateTimeFormatter.ofPattern(\"dd-MM-yyyy HH:mm\")))")
   public abstract AdClosedResponse mapToAdClosedResponse(Ad ad);
 
-  @Mapping(source = "score.score", target = "score")
+  @Mapping(source = "score.value", target = "score")
   @Mapping(target = "postedAt", expression = "java(ad.getPostedAt().format(DateTimeFormatter.ofPattern(\"dd-MM-yyyy HH:mm\")))")
   public abstract AdPurchasedResponse mapToAdPurchasedResponse(Ad ad);
 
