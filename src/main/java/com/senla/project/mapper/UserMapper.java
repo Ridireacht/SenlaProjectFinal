@@ -11,15 +11,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Mapper(componentModel = "spring")
-public abstract class UserMapper {
+public interface UserMapper {
 
-  @Autowired
-  protected RatingRepository ratingRepository;
+  @Mapping(source = "rating.averageScore", target = "rating")
+  UserBriefProfileResponse mapToUserBriefProfileResponse(User user);
 
-
-  @Mapping(target = "rating", expression = "java(ratingRepository.findByUserId(user.getId()).get().getAverageScore())")
-  public abstract UserBriefProfileResponse mapToUserBriefProfileResponse(User user);
-
-  @Mapping(target = "rating", expression = "java(ratingRepository.findByUserId(user.getId()).get().getAverageScore())")
-  public abstract UserFullProfileResponse mapToUserFullProfileResponse(User user);
+  @Mapping(source = "rating.averageScore", target = "rating")
+  UserFullProfileResponse mapToUserFullProfileResponse(User user);
 }

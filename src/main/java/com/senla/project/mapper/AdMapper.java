@@ -16,34 +16,30 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Mapper(componentModel = "spring", imports = DateTimeFormatter.class)
-public abstract class AdMapper {
-
-  @Autowired
-  protected RatingRepository ratingRepository;
-
+public interface AdMapper {
 
   @Mapping(source = "seller.id", target = "sellerId")
   @Mapping(source = "seller.address", target = "sellerCity")
   @Mapping(target = "postedAt", expression = "java(ad.getPostedAt().format(DateTimeFormatter.ofPattern(\"dd-MM-yyyy HH:mm\")))")
-  public abstract AdOpenResponse mapToAdOpenResponse(Ad ad);
+  AdOpenResponse mapToAdOpenResponse(Ad ad);
 
   @Mapping(source = "seller.id", target = "sellerId")
   @Mapping(source = "seller.address", target = "sellerCity")
-  @Mapping(target = "sellerRating", expression = "java(ratingRepository.findByUserId(ad.getSeller().getId()).get().getAverageScore())")
+  @Mapping(source = "seller.rating.averageScore", target = "sellerRating")
   @Mapping(target = "postedAt", expression = "java(ad.getPostedAt().format(DateTimeFormatter.ofPattern(\"dd-MM-yyyy HH:mm\")))")
-  public abstract AdFullOpenResponse mapToAdFullOpenResponse(Ad ad);
+  AdFullOpenResponse mapToAdFullOpenResponse(Ad ad);
 
   @Mapping(target = "postedAt", expression = "java(ad.getPostedAt().format(DateTimeFormatter.ofPattern(\"dd-MM-yyyy HH:mm\")))")
-  public abstract AdCurrentResponse mapToAdCurrentResponse(Ad ad);
+  AdCurrentResponse mapToAdCurrentResponse(Ad ad);
 
   @Mapping(source = "buyer.id", target = "buyerId")
   @Mapping(source = "score.value", target = "score")
   @Mapping(target = "postedAt", expression = "java(ad.getPostedAt().format(DateTimeFormatter.ofPattern(\"dd-MM-yyyy HH:mm\")))")
-  public abstract AdClosedResponse mapToAdClosedResponse(Ad ad);
+  AdClosedResponse mapToAdClosedResponse(Ad ad);
 
   @Mapping(source = "score.value", target = "score")
   @Mapping(target = "postedAt", expression = "java(ad.getPostedAt().format(DateTimeFormatter.ofPattern(\"dd-MM-yyyy HH:mm\")))")
-  public abstract AdPurchasedResponse mapToAdPurchasedResponse(Ad ad);
+  AdPurchasedResponse mapToAdPurchasedResponse(Ad ad);
 
-  public abstract Ad mapToAd(AdRequest adRequest);
+  Ad mapToAd(AdRequest adRequest);
 }
