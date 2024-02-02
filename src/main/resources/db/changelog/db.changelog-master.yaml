@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 1
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: roles
@@ -18,7 +18,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 2
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: users
@@ -50,7 +50,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 3
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: scores
@@ -85,7 +85,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 4
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: ratings
@@ -108,7 +108,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 5
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: proposals
@@ -137,7 +137,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 6
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: conversations
@@ -172,7 +172,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 7
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: messages
@@ -204,7 +204,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 8
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: comments
@@ -236,7 +236,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 9
-      author: your_name
+      author: Ridireacht
       changes:
         - createTable:
             tableName: ads
@@ -280,7 +280,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 10
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: scores
@@ -291,7 +291,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 11
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: scores
@@ -302,7 +302,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 12
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: scores
@@ -313,7 +313,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 13
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: proposals
@@ -324,7 +324,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 14
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: proposals
@@ -335,7 +335,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 15
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: conversations
@@ -346,7 +346,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 16
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: conversations
@@ -357,7 +357,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 17
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: conversations
@@ -368,7 +368,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 18
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: messages
@@ -379,7 +379,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 19
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: messages
@@ -390,7 +390,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 20
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: comments
@@ -401,7 +401,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 21
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: comments
@@ -412,7 +412,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 22
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: ads
@@ -423,7 +423,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 23
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: ads
@@ -434,7 +434,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 24
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: ratings
@@ -445,7 +445,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 25
-      author: your_name
+      author: Ridireacht
       changes:
         - addForeignKeyConstraint:
             baseTableName: users
@@ -453,3 +453,26 @@ databaseChangeLog:
             constraintName: fk_users_roles
             referencedTableName: roles
             referencedColumnNames: [id]
+
+  - changeSet:
+      id: 26
+      author: Ridireacht
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: name
+                  value: 'ADMIN'
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: name
+                  value: 'USER'
