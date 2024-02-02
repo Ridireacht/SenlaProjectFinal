@@ -1,6 +1,5 @@
 package com.senla.project.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,14 +24,15 @@ public class Rating {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "average_score")
+  private double averageScore = 2.5;
+
+
   @OneToOne
   @JoinColumn(name = "user_id")
   private User user;
 
-  @Column(name = "average_score")
-  private double averageScore = 2.5;
-
-  @OneToMany(mappedBy = "rating", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<UserScore> userRatings = new ArrayList<>();
+  @OneToMany(mappedBy = "rating")
+  private List<UserScore> userScores;
 
 }

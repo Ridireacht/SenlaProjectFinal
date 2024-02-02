@@ -19,7 +19,7 @@ public class RatingServiceImpl implements RatingService {
   @Override
   public void updateRatingForUser(long userId) {
     Rating rating = ratingRepository.findByUserId(userId).get();
-    List<UserScore> userRatings = rating.getUserRatings();
+    List<UserScore> userRatings = rating.getUserScores();
 
     double sumOfScores = userRatings.stream()
         .mapToDouble(UserScore::getScore)

@@ -20,6 +20,9 @@ public class Proposal {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  private int price;
+
+
   @ManyToOne
   @JoinColumn(name = "ad_id")
   private Ad ad;
@@ -27,6 +30,4 @@ public class Proposal {
   @ManyToOne
   @JoinColumn(name = "sender_id")
   private User sender;
-
-  private int price;
 }

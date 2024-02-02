@@ -56,8 +56,8 @@ public class ConversationServiceImpl implements ConversationService {
 
     Conversation conversation = new Conversation();
     conversation.setAd(ad);
-    conversation.setBuyer(buyer);
-    conversation.setSeller(ad.getSeller());
+    conversation.setInitiator(buyer);
+    conversation.setReceiver(ad.getSeller());
     conversation.setUpdatedAt(LocalDateTime.now());
 
     Conversation savedConversation = conversationRepository.save(conversation);
@@ -84,8 +84,8 @@ public class ConversationServiceImpl implements ConversationService {
   public boolean doesConversationBelongToUser(long conversationId, long userId) {
     Conversation conversation = conversationRepository.findById(conversationId).get();
 
-    return conversation.getBuyer().getId() == userId
-        || conversation.getSeller().getId() == userId;
+    return conversation.getInitiator().getId() == userId
+        || conversation.getReceiver().getId() == userId;
   }
 
 }

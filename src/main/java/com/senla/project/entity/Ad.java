@@ -27,30 +27,38 @@ public class Ad {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User seller;
-
-  private String title;
-  private String content;
-  private int price;
-
   @Column(name = "is_premium")
   private boolean isPremium = false;
 
   @Column(name = "posted_at")
   private LocalDateTime postedAt;
 
-  @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Conversation> conversations = new ArrayList<>();
-
   @Column(name = "is_closed")
   boolean isClosed = false;
+
+  private String title;
+  private String content;
+  private int price;
+
+
+  @OneToOne(mappedBy = "ad")
+  private UserScore score;
+
+  @OneToMany(mappedBy = "ad")
+  private List<Conversation> conversations;
+
+  @OneToMany(mappedBy = "ad")
+  private List<Proposal> proposals;
+
+  @OneToMany(mappedBy = "ad")
+  private List<Comment> comments;
+
+  @ManyToOne
+  @JoinColumn(name = "seller_id")
+  private User seller;
 
   @ManyToOne
   @JoinColumn(name = "buyer_id")
   private User buyer;
 
-  @OneToOne(mappedBy = "ad", cascade = CascadeType.ALL)
-  private UserScore score;
 }

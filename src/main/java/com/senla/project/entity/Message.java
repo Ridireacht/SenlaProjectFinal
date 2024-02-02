@@ -27,6 +27,7 @@ public class Message {
 
   private String content;
 
+
   @ManyToOne
   @JoinColumn(name = "sender_id")
   private User sender;

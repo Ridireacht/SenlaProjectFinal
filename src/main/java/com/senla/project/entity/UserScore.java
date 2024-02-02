@@ -21,18 +21,18 @@ public class UserScore {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+  private int score;
+
 
   @OneToOne
   @JoinColumn(name = "ad_id")
   private Ad ad;
 
-  private int score;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
   @ManyToOne
   @JoinColumn(name = "rating_id")
   private Rating rating;
-
 }

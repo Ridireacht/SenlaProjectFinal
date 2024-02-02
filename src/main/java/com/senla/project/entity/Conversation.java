@@ -26,22 +26,23 @@ public class Conversation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "updated_at")
+  private LocalDateTime updatedAt;
+
+
+  @OneToMany(mappedBy = "conversation")
+  private List<Message> messages;
+
   @ManyToOne
   @JoinColumn(name = "ad_id")
   private Ad ad;
 
   @ManyToOne
-  @JoinColumn(name = "buyer_id")
-  private User buyer;
+  @JoinColumn(name = "initiator_id")
+  private User initiator;
 
   @ManyToOne
-  @JoinColumn(name = "seller_id")
-  private User seller;
-
-  @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Message> messages = new ArrayList<>();
-
-  @Column(name = "updated_at")
-  private LocalDateTime updatedAt;
+  @JoinColumn(name = "receiver_id")
+  private User receiver;
 
 }

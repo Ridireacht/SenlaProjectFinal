@@ -22,6 +22,12 @@ public class Comment {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "posted_at")
+  private LocalDateTime postedAt;
+
+  private String content;
+
+
   @ManyToOne
   @JoinColumn(name = "sender_id")
   private User sender;
@@ -29,10 +35,5 @@ public class Comment {
   @ManyToOne
   @JoinColumn(name = "ad_id")
   private Ad ad;
-
-  private String content;
-
-  @Column(name = "posted_at")
-  private LocalDateTime postedAt;
 
 }
