@@ -51,7 +51,7 @@ public class User {
   @OneToMany(mappedBy = "sender")
   private List<Comment> sentComments = new ArrayList<>();
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "setter")
   private List<Score> scoresSet = new ArrayList<>();
 
   @OneToMany(mappedBy = "initiator", cascade = CascadeType.REMOVE)

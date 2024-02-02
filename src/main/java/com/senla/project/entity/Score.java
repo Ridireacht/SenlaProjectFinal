@@ -30,7 +30,7 @@ public class Score {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  private User user;
+  private User setter;
 
   @ManyToOne
   @JoinColumn(name = "rating_id")

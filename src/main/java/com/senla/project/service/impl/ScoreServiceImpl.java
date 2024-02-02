@@ -3,9 +3,11 @@ package com.senla.project.service.impl;
 import com.senla.project.dto.request.ScoreRequest;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Score;
+import com.senla.project.entity.User;
 import com.senla.project.mapper.AdMapper;
 import com.senla.project.mapper.ScoreMapper;
 import com.senla.project.repository.AdRepository;
+import com.senla.project.repository.UserRepository;
 import com.senla.project.service.RatingService;
 import com.senla.project.service.ScoreService;
 import lombok.AllArgsConstructor;
@@ -19,6 +21,7 @@ public class ScoreServiceImpl implements ScoreService {
   private final RatingService ratingService;
 
   private final AdRepository adRepository;
+  private final UserRepository userRepository;
 
   private final ScoreMapper scoreMapper;
   private final AdMapper adMapper;
@@ -30,10 +33,13 @@ public class ScoreServiceImpl implements ScoreService {
     if (adRepository.existsById(adId)) {
       Score score = scoreMapper.mapToScore(scoreRequest);
 
+      User setter = userRepository.findById(userId).get();
+      score.setSetter(setter);
+
       Ad ad = adRepository.findById(adId).get();
       ad.setScore(score);
 
-      ratingService.updateRatingForUser(score.getUser().getId());
+      ratingService.updateRatingForUser(score.getSetter().getId());
 
       adRepository.save(ad);
     }
