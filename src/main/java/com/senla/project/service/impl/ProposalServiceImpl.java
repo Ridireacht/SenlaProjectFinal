@@ -68,9 +68,12 @@ public class ProposalServiceImpl implements ProposalService {
   public boolean acceptProposalById(long proposalId) {
     if (proposalRepository.existsById(proposalId)) {
       Proposal proposal = proposalRepository.findById(proposalId).get();
+      User buyer = userRepository.findById(proposal.getSender().getId()).get();
 
       Ad ad = proposal.getAd();
       ad.setClosed(true);
+      ad.setPrice(proposal.getPrice());
+      ad.setBuyer(buyer);
       adRepository.save(ad);
 
       proposalRepository.deleteAllByAd(ad);
