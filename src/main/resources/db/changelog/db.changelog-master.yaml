@@ -99,6 +99,12 @@ databaseChangeLog:
               - column:
                   name: average_score
                   type: DOUBLE
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
 
   - changeSet:
       id: 5
@@ -424,4 +430,26 @@ databaseChangeLog:
             baseColumnNames: [buyer_id]
             constraintName: fk_ads_buyers
             referencedTableName: users
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 24
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: ratings
+            baseColumnNames: [user_id]
+            constraintName: fk_ratings_users
+            referencedTableName: users
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 25
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: users
+            baseColumnNames: [role_id]
+            constraintName: fk_users_roles
+            referencedTableName: roles
             referencedColumnNames: [id]
