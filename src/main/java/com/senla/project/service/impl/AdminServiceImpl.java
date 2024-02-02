@@ -164,6 +164,7 @@ public class AdminServiceImpl implements AdminService {
   public boolean deleteUser(long userId) {
     if (userRepository.existsById(userId)) {
       userRepository.deleteById(userId);
+      adRepository.deleteAllBySellerIdAndIsClosedFalse(userId);
       return true;
     }
 
