@@ -30,7 +30,7 @@ public class Conversation {
   private LocalDateTime updatedAt;
 
 
-  @OneToMany(mappedBy = "conversation", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
   private List<Message> messages = new ArrayList<>();
 
   @ManyToOne

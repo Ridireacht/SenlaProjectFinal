@@ -31,13 +31,13 @@ public class User {
   private String password;
 
 
-  @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
   private Rating rating;
 
-  @OneToMany(mappedBy = "sender", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
   private List<Message> sentMessages = new ArrayList<>();
 
-  @OneToMany(mappedBy = "sender", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
   private List<Proposal> sentProposals = new ArrayList<>();
 
   // Каскадное удаление обработано в AdminService - если происходит удаление пользователя, то
@@ -54,10 +54,10 @@ public class User {
   @OneToMany(mappedBy = "setter")
   private List<Score> scoresSet = new ArrayList<>();
 
-  @OneToMany(mappedBy = "initiator", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "initiator", cascade = CascadeType.ALL)
   private List<Conversation> conversationsAsInitiator = new ArrayList<>();
 
-  @OneToMany(mappedBy = "receiver", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
   private List<Conversation> conversationsAsReceiver = new ArrayList<>();
 
   @ManyToOne

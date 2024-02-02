@@ -33,7 +33,7 @@ public class Rating {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(mappedBy = "rating", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "rating", cascade = CascadeType.ALL)
   private List<Score> scores = new ArrayList<>();
 
 }

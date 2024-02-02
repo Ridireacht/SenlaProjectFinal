@@ -44,13 +44,13 @@ public class Ad {
   @OneToOne(mappedBy = "ad")
   private Score score;
 
-  @OneToMany(mappedBy = "ad", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL)
   private List<Conversation> conversations = new ArrayList<>();
 
-  @OneToMany(mappedBy = "ad", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL)
   private List<Proposal> proposals = new ArrayList<>();
 
-  @OneToMany(mappedBy = "ad", cascade = CascadeType.REMOVE)
+  @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL)
   private List<Comment> comments = new ArrayList<>();
 
   @ManyToOne
