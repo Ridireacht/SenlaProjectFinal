@@ -1,5 +1,6 @@
 package com.senla.project.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ public class Rating {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(mappedBy = "rating")
+  @OneToMany(mappedBy = "rating", cascade = CascadeType.REMOVE)
   private List<Score> scores = new ArrayList<>();
 
 }

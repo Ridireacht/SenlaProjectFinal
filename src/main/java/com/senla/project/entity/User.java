@@ -1,5 +1,6 @@
 package com.senla.project.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,15 +31,17 @@ public class User {
   private String password;
 
 
-  @OneToOne(mappedBy = "user")
+  @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
   private Rating rating;
 
-  @OneToMany(mappedBy = "sender")
+  @OneToMany(mappedBy = "sender", cascade = CascadeType.REMOVE)
   private List<Message> sentMessages = new ArrayList<>();
 
-  @OneToMany(mappedBy = "sender")
+  @OneToMany(mappedBy = "sender", cascade = CascadeType.REMOVE)
   private List<Proposal> sentProposals = new ArrayList<>();
 
+  // Каскадное удаление обработано в AdminService - если происходит удаление пользователя, то
+  // удаляются лишь те объявления, которые были активными
   @OneToMany(mappedBy = "seller")
   private List<Ad> sellingAds = new ArrayList<>();
 
@@ -51,10 +54,10 @@ public class User {
   @OneToMany(mappedBy = "user")
   private List<Score> scoresSet = new ArrayList<>();
 
-  @OneToMany(mappedBy = "initiator")
+  @OneToMany(mappedBy = "initiator", cascade = CascadeType.REMOVE)
   private List<Conversation> conversationsAsInitiator = new ArrayList<>();
 
-  @OneToMany(mappedBy = "receiver")
+  @OneToMany(mappedBy = "receiver", cascade = CascadeType.REMOVE)
   private List<Conversation> conversationsAsReceiver = new ArrayList<>();
 
   @ManyToOne

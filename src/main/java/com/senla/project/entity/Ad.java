@@ -1,5 +1,6 @@
 package com.senla.project.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,13 +44,13 @@ public class Ad {
   @OneToOne(mappedBy = "ad")
   private Score score;
 
-  @OneToMany(mappedBy = "ad")
+  @OneToMany(mappedBy = "ad", cascade = CascadeType.REMOVE)
   private List<Conversation> conversations = new ArrayList<>();
 
-  @OneToMany(mappedBy = "ad")
+  @OneToMany(mappedBy = "ad", cascade = CascadeType.REMOVE)
   private List<Proposal> proposals = new ArrayList<>();
 
-  @OneToMany(mappedBy = "ad")
+  @OneToMany(mappedBy = "ad", cascade = CascadeType.REMOVE)
   private List<Comment> comments = new ArrayList<>();
 
   @ManyToOne
