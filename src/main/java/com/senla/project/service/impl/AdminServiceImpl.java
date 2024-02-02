@@ -1,9 +1,6 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.response.AdClosedResponse;
-import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdFullOpenResponse;
-import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Comment;
@@ -109,7 +106,7 @@ public class AdminServiceImpl implements AdminService {
           .collect(Collectors.toList());
     }
 
-    ads = sortAds(ads);
+    sortAds(ads);
 
     List<AdFullOpenResponse> adsResponses = ads.stream()
         .map(adMapper::mapToAdFullOpenResponse)
@@ -222,11 +219,10 @@ public class AdminServiceImpl implements AdminService {
     return ad.isPremium();
   }
 
-  private List<Ad> sortAds(List<Ad> ads) {
+  private void sortAds(List<Ad> ads) {
     Collections.sort(ads, Comparator
         .comparing((Ad ad) -> getRatingForSeller(ad.getSeller().getId()), Comparator.reverseOrder())
         .thenComparing(Ad::isPremium, Comparator.reverseOrder()));
-    return ads;
   }
 
   private double getRatingForSeller(Long sellerId) {

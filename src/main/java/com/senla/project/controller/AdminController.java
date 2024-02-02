@@ -105,7 +105,7 @@ public class AdminController {
       throw new NotFoundException("User", userId);
     }
 
-    if (category != "current" && category != "closed" && category != "purchased") {
+    if (!category.equals("current") && !category.equals("closed") && !category.equals("purchased")) {
       throw new CustomValidationException("query parameter 'category' should be either current, closed or purchased.");
     }
 

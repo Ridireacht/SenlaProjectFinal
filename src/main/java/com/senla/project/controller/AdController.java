@@ -49,11 +49,11 @@ public class AdController {
       @RequestParam(required = false) Integer maxPrice,
       @RequestParam(required = false) Boolean isInMyCity) {
 
-    if (category != "open" && category != "current" && category != "closed" && category != "purchased") {
+    if (!category.equals("open") && !category.equals("current") && !category.equals("closed") && !category.equals("purchased")) {
       throw new CustomValidationException("query parameter 'category' should be either open, current, closed or purchased.");
     }
 
-    if (isInMyCity != null && category != "open") {
+    if (isInMyCity != null && !category.equals("open")) {
       throw new CustomValidationException("if query parameter 'isInMyCity' is used, query parameter 'category' should mandatory be open.");
     }
 

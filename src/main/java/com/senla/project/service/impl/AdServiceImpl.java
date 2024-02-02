@@ -63,22 +63,22 @@ public class AdServiceImpl implements AdService {
           .collect(Collectors.toList());
     }
 
-    if (category == "open" && isInMyCity != null) {
+    if (category.equals("open") && isInMyCity != null) {
       User user = userRepository.findById(userId).get();
 
       if (isInMyCity) {
         ads = ads.stream()
-            .filter(ad -> ad.getSeller().getAddress() == user.getAddress())
+            .filter(ad -> ad.getSeller().getAddress().equals(user.getAddress()))
             .collect(Collectors.toList());
       } else {
         ads = ads.stream()
-            .filter(ad -> ad.getSeller().getAddress() != user.getAddress())
+            .filter(ad -> !ad.getSeller().getAddress().equals(user.getAddress()))
             .collect(Collectors.toList());
       }
     }
 
-    if (category == "open") {
-      ads = sortAds(ads);
+    if (category.equals("open")) {
+      sortAds(ads);
     }
 
     
@@ -217,11 +217,10 @@ public class AdServiceImpl implements AdService {
     return ad.isPremium();
   }
 
-  private List<Ad> sortAds(List<Ad> ads) {
+  private void sortAds(List<Ad> ads) {
     Collections.sort(ads, Comparator
         .comparing((Ad ad) -> getRatingForSeller(ad.getSeller().getId()), Comparator.reverseOrder())
         .thenComparing(Ad::isPremium, Comparator.reverseOrder()));
-    return ads;
   }
 
   private double getRatingForSeller(Long sellerId) {
