@@ -6,7 +6,9 @@ import com.senla.project.entity.Comment;
 import java.time.format.DateTimeFormatter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
+@Component
 @Mapper(componentModel = "spring", imports = DateTimeFormatter.class)
 public interface CommentMapper {
 
