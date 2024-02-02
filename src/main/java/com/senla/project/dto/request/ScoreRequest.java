@@ -8,9 +8,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserScoreRequest {
+public class ScoreRequest {
   @NotNull(message = "Score must not be null")
   @Min(value = 1, message = "Score must be at least 1")
   @Max(value = 5, message = "Score must be at most 5")
-  private int score;
+  private int value;
 }

@@ -1,6 +1,5 @@
 package com.senla.project.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,7 +41,7 @@ public class Ad {
 
 
   @OneToOne(mappedBy = "ad")
-  private UserScore score;
+  private Score score;
 
   @OneToMany(mappedBy = "ad")
   private List<Conversation> conversations = new ArrayList<>();

@@ -1,11 +1,10 @@
 package com.senla.project.controller;
 
-import com.senla.project.dto.request.UserScoreRequest;
-import com.senla.project.dto.response.AdPurchasedResponse;
+import com.senla.project.dto.request.ScoreRequest;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
-import com.senla.project.service.UserScoreService;
+import com.senla.project.service.ScoreService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -20,21 +19,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "UserScore", description = "Предоставляет API для управления оценками объявлений")
+@Tag(name = "Score", description = "Предоставляет API для управления оценками объявлений")
 @SecurityRequirement(name = "Bearer Authentication")
 @RestController
 @RequestMapping("/ads/purchased/{id}")
 @AllArgsConstructor
-public class UserScoreController {
+public class ScoreController {
 
-  private final UserScoreService userScoreService;
+  private final ScoreService scoreService;
   private final UserService userService;
   private final AdService adService;
 
 
   @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
   @PostMapping
-  public Boolean setUserScoreToAd(@PathVariable("id") Long adId, @Valid @RequestBody UserScoreRequest userScoreRequest) {
+  public Boolean setScoreToAd(@PathVariable("id") Long adId, @Valid @RequestBody ScoreRequest scoreRequest) {
     if (!adService.doesAdExist(adId)) {
       throw new NotFoundException("Ad", adId);
     }
@@ -47,7 +46,7 @@ public class UserScoreController {
       throw new ForbiddenException("You can't set a new score, ad already has one.");
     }
 
-    return userScoreService.setUserScoreToAd(getCurrentUserId(), adId, userScoreRequest);
+    return scoreService.setScoreToAd(getCurrentUserId(), adId, scoreRequest);
   }
 
   private Long getCurrentUserId() {

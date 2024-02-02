@@ -14,14 +14,14 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "user_scores")
-public class UserScore {
+@Table(name = "scores")
+public class Score {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private int score;
+  private int value;
 
 
   @OneToOne

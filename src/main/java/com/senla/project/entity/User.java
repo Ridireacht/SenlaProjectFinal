@@ -49,7 +49,7 @@ public class User {
   private List<Comment> sentComments = new ArrayList<>();
 
   @OneToMany(mappedBy = "user")
-  private List<UserScore> setScores = new ArrayList<>();
+  private List<Score> scoresSet = new ArrayList<>();
 
   @OneToMany(mappedBy = "initiator")
   private List<Conversation> conversationsAsInitiator = new ArrayList<>();

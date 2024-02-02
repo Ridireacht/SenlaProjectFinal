@@ -33,6 +33,6 @@ public class Rating {
   private User user;
 
   @OneToMany(mappedBy = "rating")
-  private List<UserScore> userScores = new ArrayList<>();
+  private List<Score> scores = new ArrayList<>();
 
 }
