@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConversationRepository extends JpaRepository<Conversation, Long> {
 
-  @Query("SELECT c FROM Conversation c WHERE c.buyer.id = :userId OR c.seller.id = :userId")
+  @Query("SELECT c FROM Conversation c WHERE c.initiator.id = :userId OR c.receiver.id = :userId")
   List<Conversation> findByBuyerIdOrSellerId(@Param("userId") long userId);
 
   @Modifying
