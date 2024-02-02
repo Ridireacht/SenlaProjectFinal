@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 1
-      author: Ridireacht
+      author: your_name
       changes:
         - createTable:
             tableName: roles
@@ -18,7 +18,7 @@ databaseChangeLog:
 
   - changeSet:
       id: 2
-      author: Ridireacht
+      author: your_name
       changes:
         - createTable:
             tableName: users
@@ -50,10 +50,10 @@ databaseChangeLog:
 
   - changeSet:
       id: 3
-      author: Ridireacht
+      author: your_name
       changes:
         - createTable:
-            tableName: ads
+            tableName: scores
             columns:
               - column:
                   name: id
@@ -62,55 +62,8 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                  name: user_id
-                  type: BIGINT
-                  constraints:
-                    foreignKey:
-                      references: users(id)
-              - column:
-                  name: title
-                  type: VARCHAR(255)
-              - column:
-                  name: content
-                  type: VARCHAR(255)
-              - column:
-                  name: price
-                  type: INT
-              - column:
-                  name: is_premium
-                  type: BOOLEAN
-              - column:
-                  name: posted_at
-                  type: TIMESTAMP
-              - column:
-                  name: is_closed
-                  type: BOOLEAN
-              - column:
-                  name: buyer_id
-                  type: BIGINT
-                  constraints:
-                    foreignKey:
-                      references: users(id)
-
-  - changeSet:
-      id: 4
-      author: Ridireacht
-      changes:
-        - createTable:
-            tableName: comments
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: sender_id
-                  type: BIGINT
-                  constraints:
-                    foreignKey:
-                      references: users(id)
+                  name: value
+                  type: INTEGER
               - column:
                   name: ad_id
                   type: BIGINT
@@ -118,15 +71,67 @@ databaseChangeLog:
                     foreignKey:
                       references: ads(id)
               - column:
-                  name: content
-                  type: VARCHAR(255)
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
               - column:
-                  name: posted_at
-                  type: TIMESTAMP
+                  name: rating_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: ratings(id)
+
+  - changeSet:
+      id: 4
+      author: your_name
+      changes:
+        - createTable:
+            tableName: ratings
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: average_score
+                  type: DOUBLE
 
   - changeSet:
       id: 5
-      author: Ridireacht
+      author: your_name
+      changes:
+        - createTable:
+            tableName: proposals
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: price
+                  type: INTEGER
+              - column:
+                  name: ad_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: ads(id)
+              - column:
+                  name: sender_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+
+  - changeSet:
+      id: 6
+      author: your_name
       changes:
         - createTable:
             tableName: conversations
@@ -138,30 +143,30 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
+                  name: updated_at
+                  type: TIMESTAMP
+              - column:
                   name: ad_id
                   type: BIGINT
                   constraints:
                     foreignKey:
                       references: ads(id)
               - column:
-                  name: buyer_id
+                  name: initiator_id
                   type: BIGINT
                   constraints:
                     foreignKey:
                       references: users(id)
               - column:
-                  name: seller_id
+                  name: receiver_id
                   type: BIGINT
                   constraints:
                     foreignKey:
                       references: users(id)
-              - column:
-                  name: updated_at
-                  type: TIMESTAMP
 
   - changeSet:
-      id: 6
-      author: Ridireacht
+      id: 7
+      author: your_name
       changes:
         - createTable:
             tableName: messages
@@ -192,11 +197,11 @@ databaseChangeLog:
                       references: conversations(id)
 
   - changeSet:
-      id: 7
-      author: Ridireacht
+      id: 8
+      author: your_name
       changes:
         - createTable:
-            tableName: proposals
+            tableName: comments
             columns:
               - column:
                   name: id
@@ -205,11 +210,11 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                  name: ad_id
-                  type: BIGINT
-                  constraints:
-                    foreignKey:
-                      references: ads(id)
+                  name: posted_at
+                  type: TIMESTAMP
+              - column:
+                  name: content
+                  type: VARCHAR(255)
               - column:
                   name: sender_id
                   type: BIGINT
@@ -217,85 +222,206 @@ databaseChangeLog:
                     foreignKey:
                       references: users(id)
               - column:
-                  name: price
-                  type: INT
-
-  - changeSet:
-      id: 8
-      author: Ridireacht
-      changes:
-        - createTable:
-            tableName: ratings
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: user_id
-                  type: BIGINT
-                  constraints:
-                    foreignKey:
-                      references: users(id)
-              - column:
-                  name: average_score
-                  type: DOUBLE
-
-  - changeSet:
-      id: 9
-      author: Ridireacht
-      changes:
-        - createTable:
-            tableName: user_scores
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: user_id
-                  type: BIGINT
-                  constraints:
-                    foreignKey:
-                      references: users(id)
-              - column:
                   name: ad_id
                   type: BIGINT
                   constraints:
                     foreignKey:
                       references: ads(id)
+
+  - changeSet:
+      id: 9
+      author: your_name
+      changes:
+        - createTable:
+            tableName: ads
+            columns:
               - column:
-                  name: score
-                  type: INT
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
               - column:
-                  name: rating_id
+                  name: is_premium
+                  type: BOOLEAN
+              - column:
+                  name: posted_at
+                  type: TIMESTAMP
+              - column:
+                  name: is_closed
+                  type: BOOLEAN
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  name: content
+                  type: VARCHAR(255)
+              - column:
+                  name: price
+                  type: INTEGER
+              - column:
+                  name: seller_id
                   type: BIGINT
                   constraints:
                     foreignKey:
-                      references: ratings(id)
+                      references: users(id)
+              - column:
+                  name: buyer_id
+                  type: BIGINT
+                  constraints:
+                    foreignKey:
+                      references: users(id)
+
   - changeSet:
       id: 10
-      author: Ridireacht
+      author: your_name
       changes:
-        - insert:
-            tableName: roles
-            columns:
-              - column:
-                  name: id
-                  value: 1
-              - column:
-                  name: name
-                  value: 'ADMIN'
-        - insert:
-            tableName: roles
-            columns:
-              - column:
-                  name: id
-                  value: 2
-              - column:
-                  name: name
-                  value: 'USER'
+        - addForeignKeyConstraint:
+            baseTableName: scores
+            baseColumnNames: [ad_id]
+            constraintName: fk_scores_ads
+            referencedTableName: ads
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 11
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: scores
+            baseColumnNames: [user_id]
+            constraintName: fk_scores_users
+            referencedTableName: users
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 12
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: scores
+            baseColumnNames: [rating_id]
+            constraintName: fk_scores_ratings
+            referencedTableName: ratings
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 13
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: proposals
+            baseColumnNames: [ad_id]
+            constraintName: fk_proposals_ads
+            referencedTableName: ads
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 14
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: proposals
+            baseColumnNames: [sender_id]
+            constraintName: fk_proposals_users
+            referencedTableName: users
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 15
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: conversations
+            baseColumnNames: [ad_id]
+            constraintName: fk_conversations_ads
+            referencedTableName: ads
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 16
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: conversations
+            baseColumnNames: [initiator_id]
+            constraintName: fk_conversations_initiators
+            referencedTableName: users
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 17
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: conversations
+            baseColumnNames: [receiver_id]
+            constraintName: fk_conversations_receivers
+            referencedTableName: users
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 18
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: messages
+            baseColumnNames: [sender_id]
+            constraintName: fk_messages_senders
+            referencedTableName: users
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 19
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: messages
+            baseColumnNames: [conversation_id]
+            constraintName: fk_messages_conversations
+            referencedTableName: conversations
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 20
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: comments
+            baseColumnNames: [sender_id]
+            constraintName: fk_comments_senders
+            referencedTableName: users
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 21
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: comments
+            baseColumnNames: [ad_id]
+            constraintName: fk_comments_ads
+            referencedTableName: ads
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 22
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: ads
+            baseColumnNames: [seller_id]
+            constraintName: fk_ads_sellers
+            referencedTableName: users
+            referencedColumnNames: [id]
+
+  - changeSet:
+      id: 23
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: ads
+            baseColumnNames: [buyer_id]
+            constraintName: fk_ads_buyers
+            referencedTableName: users
+            referencedColumnNames: [id]
