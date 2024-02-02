@@ -45,13 +45,13 @@ public class Ad {
   private UserScore score;
 
   @OneToMany(mappedBy = "ad")
-  private List<Conversation> conversations;
+  private List<Conversation> conversations = new ArrayList<>();
 
   @OneToMany(mappedBy = "ad")
-  private List<Proposal> proposals;
+  private List<Proposal> proposals = new ArrayList<>();
 
   @OneToMany(mappedBy = "ad")
-  private List<Comment> comments;
+  private List<Comment> comments = new ArrayList<>();
 
   @ManyToOne
   @JoinColumn(name = "seller_id")

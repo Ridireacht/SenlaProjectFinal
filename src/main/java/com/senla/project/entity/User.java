@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,28 +34,28 @@ public class User {
   private Rating rating;
 
   @OneToMany(mappedBy = "sender")
-  private List<Message> sentMessages;
+  private List<Message> sentMessages = new ArrayList<>();
 
   @OneToMany(mappedBy = "sender")
-  private List<Proposal> sentProposals;
+  private List<Proposal> sentProposals = new ArrayList<>();
 
   @OneToMany(mappedBy = "seller")
-  private List<Ad> sellingAds;
+  private List<Ad> sellingAds = new ArrayList<>();
 
   @OneToMany(mappedBy = "buyer")
-  private List<Ad> boughtAds;
+  private List<Ad> boughtAds = new ArrayList<>();
 
   @OneToMany(mappedBy = "sender")
-  private List<Comment> sentComments;
+  private List<Comment> sentComments = new ArrayList<>();
 
   @OneToMany(mappedBy = "user")
-  private List<UserScore> setScores;
+  private List<UserScore> setScores = new ArrayList<>();
 
   @OneToMany(mappedBy = "initiator")
-  private List<Conversation> conversationsAsInitiator;
+  private List<Conversation> conversationsAsInitiator = new ArrayList<>();
 
   @OneToMany(mappedBy = "receiver")
-  private List<Conversation> conversationsAsReceiver;
+  private List<Conversation> conversationsAsReceiver = new ArrayList<>();
 
   @ManyToOne
   @JoinColumn(name = "role_id")

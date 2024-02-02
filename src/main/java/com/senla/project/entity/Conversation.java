@@ -31,7 +31,7 @@ public class Conversation {
 
 
   @OneToMany(mappedBy = "conversation")
-  private List<Message> messages;
+  private List<Message> messages = new ArrayList<>();
 
   @ManyToOne
   @JoinColumn(name = "ad_id")

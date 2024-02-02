@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,6 @@ public class Role {
 
 
   @OneToMany(mappedBy = "role")
-  private List<User> users;
+  private List<User> users = new ArrayList<>();
 
 }
