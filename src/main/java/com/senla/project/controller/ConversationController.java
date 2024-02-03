@@ -66,6 +66,10 @@ public class ConversationController {
       throw new ForbiddenException("You can't start a conversation on a closed ad.");
     }
 
+    if (adService.doesUserHaveConversationAlready(adId, getCurrentUserId())) {
+      throw new ForbiddenException("You can't start a new conversation as you have an active one for this ad.");
+    }
+
     return conversationService.createConversationByAd(getCurrentUserId(), adId);
   }
 

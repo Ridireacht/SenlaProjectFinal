@@ -190,6 +190,13 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
+  public boolean doesUserHaveConversationAlready(long adId, long userId) {
+    User user = userRepository.findById(userId).get();
+    return user.getConversationsAsInitiator().stream()
+        .anyMatch(conversation -> conversation.getAd().getId().equals(adId));
+  }
+
+  @Override
   public boolean isAdSoldToUser(long adId, long userId) {
     Ad ad = adRepository.findById(adId).get();
     return ad.getBuyer().getId() == userId;

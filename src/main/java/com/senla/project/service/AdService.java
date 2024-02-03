@@ -22,6 +22,8 @@ public interface AdService {
 
   boolean doesAdBelongToUser(long adId, long userId);
 
+  boolean doesUserHaveConversationAlready(long adId, long userId);
+
   boolean isAdSoldToUser(long adId, long userId);
 
   boolean isAdScored(long adId);
