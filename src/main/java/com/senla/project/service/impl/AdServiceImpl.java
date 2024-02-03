@@ -108,9 +108,8 @@ public class AdServiceImpl implements AdService {
   @Override
   public ResponseEntity<?> getAd(long adId, long userId) {
     Ad ad = adRepository.findById(adId).get();
-    User user = userRepository.findById(userId).get();
 
-    if (Objects.equals(ad.getSeller().getId(), user.getId())) {
+    if (Objects.equals(ad.getSeller().getId(), userId)) {
       if (ad.isClosed()) {
         return ResponseEntity.ok(adMapper.mapToAdClosedResponse(ad));
       } else {
@@ -118,7 +117,7 @@ public class AdServiceImpl implements AdService {
       }
     }
 
-    if (Objects.equals(ad.getBuyer().getId(), user.getId())) {
+    if (Objects.equals(ad.getBuyer().getId(), userId)) {
       return ResponseEntity.ok(adMapper.mapToAdPurchasedResponse(ad));
     }
 

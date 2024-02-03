@@ -7,6 +7,7 @@ import com.senla.project.entity.User;
 import com.senla.project.mapper.AdMapper;
 import com.senla.project.mapper.ScoreMapper;
 import com.senla.project.repository.AdRepository;
+import com.senla.project.repository.ScoreRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.RatingService;
 import com.senla.project.service.ScoreService;
@@ -22,6 +23,7 @@ public class ScoreServiceImpl implements ScoreService {
 
   private final AdRepository adRepository;
   private final UserRepository userRepository;
+  private final ScoreRepository scoreRepository;
 
   private final ScoreMapper scoreMapper;
   private final AdMapper adMapper;
@@ -37,10 +39,13 @@ public class ScoreServiceImpl implements ScoreService {
       score.setSetter(setter);
 
       Ad ad = adRepository.findById(adId).get();
-      ad.setScore(score);
+      score.setAd(ad);
+      score.setRating(ad.getSeller().getRating());
 
+      scoreRepository.save(score);
       ratingService.updateRatingForUser(score.getSetter().getId());
 
+      ad.setScore(score);
       adRepository.save(ad);
     }
 
