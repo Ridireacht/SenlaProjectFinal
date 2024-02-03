@@ -53,6 +53,8 @@ services:
       maven-builder:
         condition: service_completed_successfully
     image: tomcat:10-jre17
+    environment:
+      - TZ=Europe/Moscow
     volumes:
       - maven-target:/usr/local/tomcat/webapps
     ports:
