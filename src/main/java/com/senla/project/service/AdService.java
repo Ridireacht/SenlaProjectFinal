@@ -1,11 +1,7 @@
 package com.senla.project.service;
 
 import com.senla.project.dto.request.AdRequest;
-import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
-import com.senla.project.dto.response.AdOpenResponse;
-import com.senla.project.dto.response.AdPurchasedResponse;
-import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 public interface AdService {

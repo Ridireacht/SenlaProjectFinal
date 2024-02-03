@@ -4,14 +4,12 @@ import com.senla.project.dto.request.AdRequest;
 import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdFullOpenResponse;
-import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.response.AdOpenResponse;
+import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.entity.Ad;
-import com.senla.project.repository.RatingRepository;
 import java.time.format.DateTimeFormatter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

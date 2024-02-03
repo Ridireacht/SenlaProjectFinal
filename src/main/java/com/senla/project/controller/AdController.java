@@ -1,10 +1,7 @@
 package com.senla.project.controller;
 
 import com.senla.project.dto.request.AdRequest;
-import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
-import com.senla.project.dto.response.AdPurchasedResponse;
-import com.senla.project.dto.response.AdOpenResponse;
 import com.senla.project.exception.ConflictException;
 import com.senla.project.exception.CustomValidationException;
 import com.senla.project.exception.ForbiddenException;
@@ -15,7 +12,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

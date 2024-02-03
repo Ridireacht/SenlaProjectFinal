@@ -1,7 +1,7 @@
 package com.senla.project.service;
 
-import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.dto.response.ConversationInfoResponse;
+import com.senla.project.dto.response.ConversationResponse;
 import java.util.List;
 
 public interface ConversationService {

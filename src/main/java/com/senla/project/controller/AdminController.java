@@ -1,9 +1,6 @@
 package com.senla.project.controller;
 
-import com.senla.project.dto.response.AdClosedResponse;
-import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdFullOpenResponse;
-import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.exception.ConflictException;
 import com.senla.project.exception.CustomValidationException;

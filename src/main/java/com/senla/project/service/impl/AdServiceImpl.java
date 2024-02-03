@@ -1,10 +1,7 @@
 package com.senla.project.service.impl;
 
 import com.senla.project.dto.request.AdRequest;
-import com.senla.project.dto.response.AdClosedResponse;
 import com.senla.project.dto.response.AdCurrentResponse;
-import com.senla.project.dto.response.AdOpenResponse;
-import com.senla.project.dto.response.AdPurchasedResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.AdMapper;

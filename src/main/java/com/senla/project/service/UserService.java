@@ -1,8 +1,8 @@
 package com.senla.project.service;
 
 import com.senla.project.dto.request.UserProfileRequest;
-import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.dto.response.UserBriefProfileResponse;
+import com.senla.project.dto.response.UserFullProfileResponse;
 
 public interface UserService {
 

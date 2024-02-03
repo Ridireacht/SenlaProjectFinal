@@ -1,7 +1,7 @@
 package com.senla.project.mapper;
 
-import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.dto.response.ConversationInfoResponse;
+import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.entity.Conversation;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;

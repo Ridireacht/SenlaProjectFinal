@@ -1,7 +1,7 @@
 package com.senla.project.service.impl;
 
-import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.dto.response.ConversationInfoResponse;
+import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Conversation;
 import com.senla.project.entity.User;
