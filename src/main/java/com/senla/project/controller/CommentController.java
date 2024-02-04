@@ -39,6 +39,14 @@ public class CommentController {
   @Operation(summary = "Получить все комментарии", description = "Получает список всех комментариев для указанного объявления.")
   @GetMapping
   public List<CommentResponse> getCommentsOnAd(@PathVariable("adId") Long adId) {
+    if (!adService.doesAdExist(adId)) {
+      throw new NotFoundException("Ad", adId);
+    }
+
+    if (adService.isAdClosed(adId) && !userService.isUserBuyerOrSellerOfAd(getCurrentUserId(), adId)) {
+      throw new ForbiddenException("You can't see comments to an ad not available for you.");
+    }
+
     return commentService.getCommentsOnAd(adId);
   }
 
