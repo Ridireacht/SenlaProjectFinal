@@ -15,6 +15,6 @@ public class UserProfileRequest {
 
   private String address;
 
-  @Pattern(regexp = "^(.{6,}|null)$", message = "Password must be either null or at least 6 characters long")
+  @Pattern(regexp = "^$|^.{6,}$", message = "Password must be either null or at least 6 characters long")
   private String password;
 }
