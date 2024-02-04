@@ -8,8 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserProfileRequest {
-  // Используется иной regex, нежели в RegisterRequest - чтобы пройти валидацию, поле должно быть
-  // либо null, либо соответствовать формату email
   @Email(regexp = "^(|.*[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+.*)$", message = "Email must be either null or follow format")
   private String email;
 
