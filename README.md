@@ -4,7 +4,7 @@
 - **Java 17**
 
 ### Фреймворки
-- **Spring Boot**  (версия **3.0.8**)
+- **Spring Boot**  (версия **3.0.9**)
   - **Spring Boot Starter Data JPA**
   - **Spring Boot Starter Security**
   - **Spring Boot Starter Web**
