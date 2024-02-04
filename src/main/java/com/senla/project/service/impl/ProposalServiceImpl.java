@@ -52,12 +52,9 @@ public class ProposalServiceImpl implements ProposalService {
   @Override
   public ProposalSentResponse createProposal(long userId, ProposalRequest proposalRequest) {
     User sender = userRepository.findById(userId).get();
-    Ad ad = adRepository.findById(proposalRequest.getAdId()).get();
 
-    Proposal proposal = new Proposal();
+    Proposal proposal = proposalMapper.mapToProposal(proposalRequest);
     proposal.setSender(sender);
-    proposal.setAd(ad);
-    proposal.setPrice(proposalRequest.getPrice());
 
     Proposal savedProposal = proposalRepository.save(proposal);
     return proposalMapper.mapToProposalSentResponse(savedProposal);
