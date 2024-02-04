@@ -8,6 +8,10 @@ import com.senla.project.service.AdService;
 import com.senla.project.service.CommentService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -37,6 +41,13 @@ public class CommentController {
 
 
   @Operation(summary = "Получить все комментарии", description = "Получает список всех комментариев для указанного объявления.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @GetMapping
   public List<CommentResponse> getCommentsOnAd(@PathVariable("adId") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -51,6 +62,13 @@ public class CommentController {
   }
 
   @Operation(summary = "Создать комментарий", description = "Создаёт новый комментарий для указанного объявления. Возвращает этот комментарий.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @PostMapping
   public CommentResponse createCommentOnAd(@PathVariable("adId") Long adId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -69,6 +87,13 @@ public class CommentController {
   }
 
   @Operation(summary = "Обновить комментарий", description = "Обновляет существующий комментарий. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @PutMapping("/{commentId}")
   public Boolean updateComment(@PathVariable("commentId") Long commentId, @Valid @RequestBody CommentRequest commentRequest) {
     if (!commentService.doesCommentExist(commentId)) {
@@ -87,6 +112,13 @@ public class CommentController {
   }
 
   @Operation(summary = "Удалить комментарий", description = "Удаляет существующий комментарий. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @DeleteMapping("/{commentId}")
   public Boolean deleteComment(@PathVariable("commentId") Long commentId) {
     if (!commentService.doesCommentExist(commentId)) {

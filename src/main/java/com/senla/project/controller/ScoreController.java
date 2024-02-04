@@ -7,6 +7,10 @@ import com.senla.project.service.AdService;
 import com.senla.project.service.ScoreService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -32,6 +36,13 @@ public class ScoreController {
 
 
   @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @PostMapping
   public Boolean setScoreToAd(@PathVariable("id") Long adId, @Valid @RequestBody ScoreRequest scoreRequest) {
     if (!adService.doesAdExist(adId)) {

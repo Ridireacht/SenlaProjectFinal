@@ -8,6 +8,10 @@ import com.senla.project.security.JwtService;
 import com.senla.project.service.AuthService;
 import com.senla.project.service.impl.UserDetailsServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -34,6 +38,12 @@ public class AuthController {
 
 
   @Operation(summary = "Зарегистрировать нового пользователя", description = "Регистрирует пользователя с данными из формы.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "409", description = "Конфликт данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @PostMapping("/register")
   public String register(@Valid @RequestBody RegisterRequest registerRequest) {
     if (authService.doesUserExistByUsername(registerRequest.getUsername())) {
@@ -52,6 +62,12 @@ public class AuthController {
   }
 
   @Operation(summary = "Аутентифицировать и авторизовать существующего пользователя", description = "Аутентифицирует и авторизует пользователя и возвращает JWT-токен.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @PostMapping("/login")
   public String login(@Valid @RequestBody LoginRequest loginRequest) {
     Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));

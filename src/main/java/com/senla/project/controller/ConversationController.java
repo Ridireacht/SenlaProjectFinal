@@ -8,6 +8,10 @@ import com.senla.project.service.AdService;
 import com.senla.project.service.ConversationService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
@@ -32,12 +36,24 @@ public class ConversationController {
 
 
   @Operation(summary = "Получить все переписки пользователя", description = "Возвращает список всех переписок пользователя.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @GetMapping("/conversations")
   public List<ConversationInfoResponse> getCurrentUserConversations() {
     return conversationService.getConversationsOfUser(getCurrentUserId());
   }
 
   @Operation(summary = "Получить конкретную переписку", description = "Возвращает конкретную переписку.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @GetMapping("/conversations/{id}")
   public ConversationResponse getConversation(@PathVariable("id") Long conversationId) {
     if (!conversationService.doesConversationExist(conversationId)) {
@@ -52,6 +68,13 @@ public class ConversationController {
   }
 
   @Operation(summary = "Начать переписку по объявлению", description = "Создает новую переписку по указанному объявлению. Возвращает эту переписку.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @PostMapping("/ads/{adId}/discuss")
   public ConversationResponse createConversationByAd(@PathVariable("adId") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -74,6 +97,13 @@ public class ConversationController {
   }
 
   @Operation(summary = "Удалить переписку", description = "Полностью удаляет указанную переписку. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @DeleteMapping("/conversations/{id}")
   public Boolean deleteConversation(@PathVariable("id") Long conversationId) {
     if (!conversationService.doesConversationExist(conversationId)) {
