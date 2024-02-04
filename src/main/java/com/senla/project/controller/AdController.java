@@ -9,6 +9,11 @@ import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -38,6 +43,11 @@ public class AdController {
 
 
   @Operation(summary = "Получить отфильтрованные объявления", description = "Получает список объявлений, соответствующих заданному пользователем запросу. Тип возвращаемых объявлений зависит от параметров запроса.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @GetMapping
   public ResponseEntity<?> getFilteredAds(@RequestParam(required = false) String searchString,
       @RequestParam(required = true) String category,
@@ -65,6 +75,13 @@ public class AdController {
   }
 
   @Operation(summary = "Получить конкретное объявление", description = "Получает конкретное объявление по его id. Тип возвращаемого объявления зависит от текущего пользователя и статуса объявления.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @GetMapping("/{id}")
   public ResponseEntity<?> getAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -79,12 +96,24 @@ public class AdController {
   }
 
   @Operation(summary = "Создать объявление", description = "Создаёт новое объявление по форме-реквесту. Возвращает информацию об этом объявлении.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @PostMapping
   public AdCurrentResponse createAd(@Valid @RequestBody AdRequest adRequest) {
     return adService.createAd(getCurrentUserId(), adRequest);
   }
 
   @Operation(summary = "Обновить объявление", description = "Обновляет существующее объявление по форме-реквесту. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @PutMapping("/{id}")
   public Boolean updateAd(@PathVariable("id") Long adId, @Valid @RequestBody AdRequest adRequest) {
     if (!adService.doesAdExist(adId)) {
@@ -103,6 +132,14 @@ public class AdController {
   }
 
   @Operation(summary = "Сделать объявление премиальным", description = "Делает объявление премиальным по его id. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "409", description = "Конфликт данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @PutMapping("/{id}/premium")
   public Boolean makeAdPremium(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
@@ -125,6 +162,13 @@ public class AdController {
   }
 
   @Operation(summary = "Удалить объявление", description = "Полностью удаляет объявление по его id. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Успешное выполнение операции"),
+      @ApiResponse(responseCode = "400", description = "Некорректный запрос или ошибка валидации данных", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "403", description = "Доступ запрещён", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "404", description = "Сущность не найдена", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
+      @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
+  })
   @DeleteMapping("/{id}")
   public Boolean deleteAd(@PathVariable("id") Long adId) {
     if (!adService.doesAdExist(adId)) {
