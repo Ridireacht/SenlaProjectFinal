@@ -11,7 +11,6 @@ import com.senla.project.dto.response.CommentResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Comment;
 import com.senla.project.entity.User;
-import com.senla.project.mapper.CommentMapper;
 import com.senla.project.mapper.CommentMapperImpl;
 import com.senla.project.repository.AdRepository;
 import com.senla.project.repository.CommentRepository;
@@ -28,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@SpringBootTest(classes = { CommentRepository.class, AdRepository.class, UserRepository.class, CommentServiceImpl.class, CommentMapperImpl.class })
+@SpringBootTest(classes = { CommentServiceImpl.class, CommentMapperImpl.class })
 @ExtendWith(MockitoExtension.class)
 public class CommentServiceTest {
 

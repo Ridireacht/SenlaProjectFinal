@@ -13,7 +13,6 @@ import com.senla.project.mapper.ScoreMapperImpl;
 import com.senla.project.repository.AdRepository;
 import com.senla.project.repository.ScoreRepository;
 import com.senla.project.repository.UserRepository;
-import com.senla.project.service.impl.RatingServiceImpl;
 import com.senla.project.service.impl.ScoreServiceImpl;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@SpringBootTest(classes = { RatingServiceImpl.class, AdRepository.class, UserRepository.class, ScoreRepository.class, ScoreServiceImpl.class, ScoreMapperImpl.class })
+@SpringBootTest(classes = { ScoreServiceImpl.class, ScoreMapperImpl.class })
 @ExtendWith(MockitoExtension.class)
 public class ScoreServiceTest {
 

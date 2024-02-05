@@ -28,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@SpringBootTest(classes = { ProposalRepository.class, AdRepository.class, UserRepository.class, ConversationRepository.class, ProposalMapperImpl.class, ProposalServiceImpl.class})
+@SpringBootTest(classes = { ProposalMapperImpl.class, ProposalServiceImpl.class})
 @ExtendWith(MockitoExtension.class)
 public class ProposalServiceTest {
 

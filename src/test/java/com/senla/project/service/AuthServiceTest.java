@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@SpringBootTest(classes = { UserRepository.class, RoleRepository.class, AuthServiceImpl.class })
+@SpringBootTest(classes = { AuthServiceImpl.class })
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTest {
 

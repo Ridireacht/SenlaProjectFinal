@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@SpringBootTest(classes = { UserDetailsServiceImpl.class, UserRepository.class, AdRepository.class, UserServiceImpl.class, UserMapperImpl.class })
+@SpringBootTest(classes = { UserDetailsServiceImpl.class, UserServiceImpl.class, UserMapperImpl.class })
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
