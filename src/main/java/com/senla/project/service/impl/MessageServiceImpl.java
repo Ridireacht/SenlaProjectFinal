@@ -33,16 +33,16 @@ public class MessageServiceImpl implements MessageService {
   public ConversationResponse sendMessageToConversation(long senderId, long conversationId,
       MessageRequest messageRequest) {
     User sender = userRepository.findById(senderId).get();
-    Conversation conversation = conversationRepository.findById(conversationId).get();
 
     Message message = messageMapper.mapToMessage(messageRequest);
     message.setSender(sender);
-    message.setConversation(conversation);
+    message.setConversation(conversationRepository.findById(conversationId).get());
     message.setContent(messageRequest.getContent());
     message.setPostedAt(LocalDateTime.now());
 
     messageRepository.save(message);
 
+    Conversation conversation = conversationRepository.findById(conversationId).get();
     conversation.setUpdatedAt(message.getPostedAt());
     conversation = conversationRepository.save(conversation);
 
