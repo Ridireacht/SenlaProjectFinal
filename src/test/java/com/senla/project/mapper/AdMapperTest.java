@@ -21,8 +21,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-@AutoConfigureTestDatabase(replace = Replace.AUTO_CONFIGURED)
+@SpringBootTest(classes = { AdMapper.class, AdMapperImpl.class })
 public class AdMapperTest {
 
   @Autowired

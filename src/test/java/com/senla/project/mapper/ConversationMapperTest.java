@@ -17,12 +17,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-@AutoConfigureTestDatabase(replace = Replace.AUTO_CONFIGURED)
+@SpringBootTest(classes = { ConversationMapperImpl.class, MessageMapper.class, MessageMapperImpl.class })
 public class ConversationMapperTest {
 
   @Autowired
-  private ConversationMapper conversationMapper;
+  private ConversationMapperImpl conversationMapper;
 
 
   @Test

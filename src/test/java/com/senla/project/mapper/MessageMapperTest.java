@@ -15,8 +15,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-@AutoConfigureTestDatabase(replace = Replace.AUTO_CONFIGURED)
+@SpringBootTest(classes = { MessageMapper.class, MessageMapperImpl.class })
 public class MessageMapperTest {
 
   @Autowired

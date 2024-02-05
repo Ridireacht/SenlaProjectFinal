@@ -18,15 +18,14 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@SpringBootTest
-@AutoConfigureTestDatabase(replace = Replace.AUTO_CONFIGURED)
+@SpringBootTest(classes = { ProposalMapperImpl.class, AdRepository.class })
 public class ProposalMapperTest {
-
-  @Autowired
-  private ProposalMapper proposalMapper;
 
   @MockBean
   private AdRepository adRepository;
+
+  @Autowired
+  private ProposalMapperImpl proposalMapper;
 
 
   @Test
