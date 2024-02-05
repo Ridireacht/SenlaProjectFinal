@@ -45,6 +45,8 @@ public class ScoreServiceImpl implements ScoreService {
 
       ad.setScore(score);
       adRepository.save(ad);
+
+      return true;
     }
 
     return false;
