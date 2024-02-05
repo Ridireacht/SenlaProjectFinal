@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.senla.project.dto.response.AdFullOpenResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
@@ -232,7 +232,7 @@ public class AdminServiceTest {
     long adId = 1L;
     Ad ad = createAd(1L);
     ad.setPremium(true);
-    
+
     when(adRepository.findById(adId)).thenReturn(Optional.of(ad));
 
     assertTrue(adminService.isAdPremium(adId));
