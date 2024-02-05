@@ -15,11 +15,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = { ConversationMapperImpl.class, MessageMapper.class, MessageMapperImpl.class })
+@SpringBootTest(classes = { ConversationMapperImpl.class, MessageMapperImpl.class })
 public class ConversationMapperTest {
 
   @Autowired
-  private ConversationMapperImpl conversationMapper;
+  private ConversationMapper conversationMapper;
 
 
   @Test

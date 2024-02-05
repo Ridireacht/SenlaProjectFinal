@@ -16,14 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@SpringBootTest(classes = { ProposalMapperImpl.class, AdRepository.class })
+@SpringBootTest(classes = { AdRepository.class, ProposalMapperImpl.class })
 public class ProposalMapperTest {
 
   @MockBean
   private AdRepository adRepository;
 
   @Autowired
-  private ProposalMapperImpl proposalMapper;
+  private ProposalMapper proposalMapper;
 
 
   @Test
