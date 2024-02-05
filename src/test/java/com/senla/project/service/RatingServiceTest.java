@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import com.senla.project.entity.Rating;
 import com.senla.project.entity.Score;
 import com.senla.project.repository.RatingRepository;
+import com.senla.project.service.impl.RatingServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@SpringBootTest
+@SpringBootTest(classes = { RatingRepository.class, RatingServiceImpl.class })
 @ExtendWith(MockitoExtension.class)
 public class RatingServiceTest {
 

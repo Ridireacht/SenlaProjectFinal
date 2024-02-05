@@ -12,6 +12,7 @@ import com.senla.project.dto.response.UserBriefProfileResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.User;
+import com.senla.project.mapper.UserMapperImpl;
 import com.senla.project.repository.AdRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.impl.UserDetailsServiceImpl;
@@ -24,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@SpringBootTest
+@SpringBootTest(classes = { UserDetailsServiceImpl.class, UserRepository.class, AdRepository.class, UserServiceImpl.class, UserMapperImpl.class })
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
@@ -38,7 +39,7 @@ public class UserServiceTest {
   private AdRepository adRepository;
 
   @Autowired
-  private UserServiceImpl userService;
+  private UserService userService;
 
   @Test
   public void testGetUserBriefProfile() {
