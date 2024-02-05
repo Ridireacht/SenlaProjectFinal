@@ -4,7 +4,6 @@ import com.senla.project.dto.request.ScoreRequest;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Score;
 import com.senla.project.entity.User;
-import com.senla.project.mapper.AdMapper;
 import com.senla.project.mapper.ScoreMapper;
 import com.senla.project.repository.AdRepository;
 import com.senla.project.repository.ScoreRepository;
@@ -26,7 +25,6 @@ public class ScoreServiceImpl implements ScoreService {
   private final ScoreRepository scoreRepository;
 
   private final ScoreMapper scoreMapper;
-  private final AdMapper adMapper;
 
 
   @Transactional
