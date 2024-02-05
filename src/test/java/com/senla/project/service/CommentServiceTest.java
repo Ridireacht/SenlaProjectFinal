@@ -49,7 +49,7 @@ public class CommentServiceTest {
   public void testGetAdId() {
     long commentId = 1L;
 
-    Comment comment = createComment();
+    Comment comment = createComment(commentId, 2L, 3L);
 
     when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
 
@@ -62,7 +62,7 @@ public class CommentServiceTest {
   public void testGetCommentsOnAd() {
     long adId = 1L;
 
-    List<Comment> comments = Arrays.asList(createComment(), createComment());
+    List<Comment> comments = Arrays.asList(createComment(1L, 2L, adId), createComment(2L, 2L, adId));
 
     when(commentRepository.findAllByAdId(adId)).thenReturn(comments);
 
@@ -73,18 +73,18 @@ public class CommentServiceTest {
 
   @Test
   public void testCreateCommentOnAd() {
-    long userId = 1L;
+    long senderId = 1L;
     long adId = 2L;
 
     CommentRequest commentRequest = createCommentRequest();
-    User sender = createUser();
-    Ad ad = createAd();
+    User sender = createUser(senderId);
+    Ad ad = createAd(adId);
 
-    when(userRepository.findById(userId)).thenReturn(Optional.of(sender));
+    when(userRepository.findById(senderId)).thenReturn(Optional.of(sender));
     when(adRepository.findById(adId)).thenReturn(Optional.of(ad));
     when(commentRepository.save(any(Comment.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-    CommentResponse result = commentService.createCommentOnAd(userId, adId, commentRequest);
+    CommentResponse result = commentService.createCommentOnAd(senderId, adId, commentRequest);
 
     assertNotNull(result);
     assertEquals(commentRequest.getContent(), result.getContent());
@@ -96,7 +96,7 @@ public class CommentServiceTest {
     long commentId = 1L;
 
     CommentRequest commentRequest = createCommentRequest();
-    Comment existingComment = createComment();
+    Comment existingComment = createComment(commentId, 2L, 3L);
 
     when(commentRepository.existsById(commentId)).thenReturn(true);
     when(commentRepository.findById(commentId)).thenReturn(Optional.of(existingComment));
@@ -132,26 +132,26 @@ public class CommentServiceTest {
   @Test
   public void testDoesCommentBelongToUser() {
     long commentId = 1L;
-    long userId = 2L;
+    long senderId = 2L;
 
-    Comment comment = createComment();
+    Comment comment = createComment(commentId, senderId, 3L);
     when(commentRepository.findById(commentId)).thenReturn(Optional.of(comment));
 
-    boolean result = commentService.doesCommentBelongToUser(commentId, userId);
+    boolean result = commentService.doesCommentBelongToUser(commentId, senderId);
 
     assertTrue(result);
   }
 
-  private Comment createComment() {
+  private Comment createComment(long commentId, long userId, long adId) {
     Comment comment = new Comment();
-    comment.setId(1L);
+    comment.setId(commentId);
     comment.setPostedAt(LocalDateTime.now());
     comment.setContent("Test Comment");
 
-    User sender = createUser();
+    User sender = createUser(userId);
     comment.setSender(sender);
 
-    Ad ad = createAd();
+    Ad ad = createAd(adId);
     comment.setAd(ad);
 
     return comment;
@@ -163,15 +163,15 @@ public class CommentServiceTest {
     return commentRequest;
   }
 
-  private User createUser() {
+  private User createUser(long userId) {
     User user = new User();
-    user.setId(2L);
+    user.setId(userId);
     return user;
   }
 
-  private Ad createAd() {
+  private Ad createAd(long adId) {
     Ad ad = new Ad();
-    ad.setId(3L);
+    ad.setId(adId);
     return ad;
   }
 }

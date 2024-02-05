@@ -60,6 +60,7 @@ public class RatingServiceTest {
       score.setValue(value);
       scores.add(score);
     }
+
     return scores;
   }
 }

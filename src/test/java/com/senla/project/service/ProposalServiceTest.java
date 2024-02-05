@@ -53,44 +53,49 @@ public class ProposalServiceTest {
 
   @Test
   public void testGetSentProposalsOfUser() {
-    long userId = 1L;
-    List<Proposal> sentProposals = Arrays.asList(createProposal(), createProposal());
-    when(proposalRepository.findAllBySenderId(userId)).thenReturn(sentProposals);
+    long senderId = 1L;
+
+    List<Proposal> sentProposals = Arrays.asList(createProposal(1L, 2, 3L, senderId, 5L), createProposal(2L, 3, 4L, senderId, 6L));
+
+    when(proposalRepository.findAllBySenderId(senderId)).thenReturn(sentProposals);
     when(proposalMapper.mapToProposalSentResponse(any())).thenReturn(createProposalSentResponse());
 
-    List<ProposalSentResponse> result = proposalService.getSentProposalsOfUser(userId);
+    List<ProposalSentResponse> result = proposalService.getSentProposalsOfUser(senderId);
 
     assertEquals(sentProposals.size(), result.size());
   }
 
   @Test
   public void testGetReceivedProposalsOfUser() {
-    long userId = 1L;
-    List<Ad> userAds = Arrays.asList(createAd(), createAd());
-    List<Proposal> receivedProposals = Arrays.asList(createProposal(), createProposal());
-    when(adRepository.findAllBySellerIdAndIsClosedFalse(userId)).thenReturn(userAds);
+    long sellerId = 1L;
+
+    List<Ad> userAds = Arrays.asList(createAd(1L), createAd(2L));
+    List<Proposal> receivedProposals = Arrays.asList(createProposal(1L, 2, 1L, 2L, sellerId), createProposal(2L, 3, 1L, 3L, sellerId));
+
+    when(adRepository.findAllBySellerIdAndIsClosedFalse(sellerId)).thenReturn(userAds);
     when(proposalRepository.findAllByAds(userAds)).thenReturn(receivedProposals);
     when(proposalMapper.mapToProposalReceivedResponse(any())).thenReturn(createProposalReceivedResponse());
 
-    List<ProposalReceivedResponse> result = proposalService.getReceivedProposalsOfUser(userId);
+    List<ProposalReceivedResponse> result = proposalService.getReceivedProposalsOfUser(sellerId);
 
     assertEquals(receivedProposals.size(), result.size());
   }
 
   @Test
   public void testCreateProposal() {
-    long userId = 1L;
+    long senderId = 1L;
+
     ProposalRequest proposalRequest = createProposalRequest();
-    User sender = createUser();
-    Proposal proposal = createProposal();
+    User sender = createUser(senderId);
+    Proposal proposal = createProposal(1L, 2, 3L, senderId, 4L);
     ProposalSentResponse expectedResponse = createProposalSentResponse();
 
-    when(userRepository.findById(userId)).thenReturn(Optional.of(sender));
+    when(userRepository.findById(senderId)).thenReturn(Optional.of(sender));
     when(proposalMapper.mapToProposal(proposalRequest)).thenReturn(proposal);
     when(proposalRepository.save(proposal)).thenReturn(proposal);
     when(proposalMapper.mapToProposalSentResponse(proposal)).thenReturn(expectedResponse);
 
-    ProposalSentResponse result = proposalService.createProposal(userId, proposalRequest);
+    ProposalSentResponse result = proposalService.createProposal(senderId, proposalRequest);
 
     assertEquals(expectedResponse, result);
   }
@@ -98,10 +103,13 @@ public class ProposalServiceTest {
   @Test
   public void testAcceptProposalById() {
     long proposalId = 1L;
-    Proposal proposal = createProposal();
-    User buyer = createUser();
+
+    Proposal proposal = createProposal(proposalId, 2, 2L, 2L, 3L);
+
+    User buyer = createUser(2L);
     proposal.setSender(buyer);
-    Ad ad = createAd();
+
+    Ad ad = createAd(2L);
     proposal.setAd(ad);
 
     when(proposalRepository.existsById(proposalId)).thenReturn(true);
@@ -138,40 +146,38 @@ public class ProposalServiceTest {
   @Test
   public void testIsProposalSentToUser() {
     long proposalId = 1L;
-    long userId = 2L;
-    Proposal proposal = createProposal();
-    Ad ad = createAd();
-    User seller = createUser();
-    seller.setId(userId);
-    ad.setSeller(seller);
-    proposal.setAd(ad);
+    long sellerId = 2L;
+
+    Proposal proposal = createProposal(proposalId, 2, 3L, 4L, sellerId);
 
     when(proposalRepository.findById(proposalId)).thenReturn(Optional.of(proposal));
 
-    boolean result = proposalService.isProposalSentToUser(proposalId, userId);
+    boolean result = proposalService.isProposalSentToUser(proposalId, sellerId);
 
     assertTrue(result);
   }
 
-  private Proposal createProposal() {
+  private Proposal createProposal(long proposalId, int price, long adId, long senderId, long sellerId) {
     Proposal proposal = new Proposal();
-    proposal.setId(1L);
-    proposal.setPrice(100);
-    proposal.setAd(createAd());
-    proposal.setSender(createUser());
+    proposal.setId(proposalId);
+    proposal.setPrice(price);
+    proposal.setAd(createAd(adId));
+    proposal.setSender(createUser(senderId));
+
+    proposal.getAd().setSeller(createUser(sellerId));
+
     return proposal;
   }
 
-  private Ad createAd() {
+  private Ad createAd(long adId) {
     Ad ad = new Ad();
-    ad.setId(2L);
-    ad.setSeller(createUser());
+    ad.setId(adId);
     return ad;
   }
 
-  private User createUser() {
+  private User createUser(long userId) {
     User user = new User();
-    user.setId(3L);
+    user.setId(userId);
     return user;
   }
 

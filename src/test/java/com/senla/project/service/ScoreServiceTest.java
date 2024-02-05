@@ -49,8 +49,8 @@ public class ScoreServiceTest {
     long adId = 2L;
 
     ScoreRequest scoreRequest = createScoreRequest();
-    User setter = createUser();
-    Ad ad = createAd();
+    User setter = createUser(userId);
+    Ad ad = createAd(adId, userId);
 
     when(adRepository.existsById(adId)).thenReturn(true);
     when(userRepository.findById(userId)).thenReturn(Optional.of(setter));
@@ -68,18 +68,17 @@ public class ScoreServiceTest {
     return scoreRequest;
   }
 
-  private User createUser() {
+  private User createUser(long userId) {
     User user = new User();
-    user.setId(1L);
+    user.setId(userId);
     return user;
   }
 
-  private Ad createAd() {
+  private Ad createAd(long adId, long userId) {
     Ad ad = new Ad();
-    ad.setId(2L);
-    ad.setSeller(createUser());
+    ad.setId(adId);
+    ad.setSeller(createUser(userId));
     ad.getSeller().setRating(createRating());
-
     return ad;
   }
 

@@ -41,10 +41,13 @@ public class UserServiceTest {
   @Autowired
   private UserService userService;
 
+
   @Test
   public void testGetUserBriefProfile() {
     long userId = 1L;
-    User user = createUser();
+
+    User user = createUser(userId);
+
     when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
     UserBriefProfileResponse result = userService.getUserBriefProfile(userId);
@@ -57,8 +60,11 @@ public class UserServiceTest {
 
   @Test
   public void testGetUserIdByUsername() {
+    long userId = 1L;
     String username = "testUser";
-    User user = createUser();
+
+    User user = createUser(userId);
+
     when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
 
     long result = userService.getUserIdByUsername(username);
@@ -69,7 +75,9 @@ public class UserServiceTest {
   @Test
   public void testGetUserFullProfile() {
     long userId = 1L;
-    User user = createUser();
+
+    User user = createUser(userId);
+
     when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
     UserFullProfileResponse result = userService.getUserFullProfile(userId);
@@ -84,8 +92,9 @@ public class UserServiceTest {
   @Test
   public void testUpdateUserProfile() {
     long userId = 1L;
+
     UserProfileRequest userProfileRequest = createUserProfileRequest();
-    User user = createUser();
+    User user = createUser(userId);
 
     when(userRepository.existsById(userId)).thenReturn(true);
     when(userRepository.findById(userId)).thenReturn(Optional.of(user));
@@ -103,6 +112,7 @@ public class UserServiceTest {
   @Test
   public void testUpdateUserProfile_UserNotFound() {
     long userId = 1L;
+
     UserProfileRequest userProfileRequest = createUserProfileRequest();
 
     when(userRepository.existsById(userId)).thenReturn(false);
@@ -180,16 +190,6 @@ public class UserServiceTest {
     boolean result = userService.isUserBuyerOrSellerOfAd(userId, adId);
 
     assertFalse(result);
-  }
-
-  private User createUser() {
-    User user = new User();
-    user.setId(1L);
-    user.setUsername("testUser");
-    user.setEmail("test@test.com");
-    user.setAddress("Test Address");
-    user.setPassword("testPassword");
-    return user;
   }
 
   private User createUser(long userId) {
