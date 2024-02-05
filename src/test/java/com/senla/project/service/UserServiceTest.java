@@ -137,9 +137,10 @@ public class UserServiceTest {
   public void testIsUserBuyerOrSellerOfAd_Seller() {
     long userId = 1L;
     long adId = 2L;
-    User seller = createUser();
+
     Ad ad = createAd();
-    ad.setSeller(seller);
+    ad.setSeller(createUser(1L));
+    ad.setBuyer(createUser(2L));
 
     when(adRepository.findById(adId)).thenReturn(Optional.of(ad));
 
@@ -150,11 +151,12 @@ public class UserServiceTest {
 
   @Test
   public void testIsUserBuyerOrSellerOfAd_Buyer() {
-    long userId = 1L;
+    long userId = 2L;
     long adId = 2L;
-    User buyer = createUser();
+
     Ad ad = createAd();
-    ad.setBuyer(buyer);
+    ad.setSeller(createUser(1L));
+    ad.setBuyer(createUser(2L));
 
     when(adRepository.findById(adId)).thenReturn(Optional.of(ad));
 
@@ -165,9 +167,12 @@ public class UserServiceTest {
 
   @Test
   public void testIsUserBuyerOrSellerOfAd_NotRelated() {
-    long userId = 1L;
+    long userId = 3L;
     long adId = 2L;
+
     Ad ad = createAd();
+    ad.setSeller(createUser(1L));
+    ad.setBuyer(createUser(2L));
 
     when(adRepository.findById(adId)).thenReturn(Optional.of(ad));
 
@@ -179,6 +184,16 @@ public class UserServiceTest {
   private User createUser() {
     User user = new User();
     user.setId(1L);
+    user.setUsername("testUser");
+    user.setEmail("test@test.com");
+    user.setAddress("Test Address");
+    user.setPassword("testPassword");
+    return user;
+  }
+
+  private User createUser(long userId) {
+    User user = new User();
+    user.setId(userId);
     user.setUsername("testUser");
     user.setEmail("test@test.com");
     user.setAddress("Test Address");
