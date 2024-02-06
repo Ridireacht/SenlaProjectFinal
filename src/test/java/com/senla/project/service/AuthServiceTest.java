@@ -1,6 +1,8 @@
 package com.senla.project.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.senla.project.repository.RoleRepository;
@@ -12,10 +14,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @SpringBootTest(classes = { AuthServiceImpl.class })
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTest {
+
+  @MockBean
+  private UserService userService;
 
   @MockBean
   private UserRepository userRepository;
@@ -26,6 +34,24 @@ public class AuthServiceTest {
   @Autowired
   private AuthService authService;
 
+
+  @Test
+  public void testGetCurrentUserId() {
+    String expectedUsername = "testUser";
+
+    Authentication authentication = mock(Authentication.class);
+    SecurityContext securityContext = mock(SecurityContext.class);
+
+    SecurityContextHolder.setContext(securityContext);
+
+    when(securityContext.getAuthentication()).thenReturn(authentication);
+    when(authentication.getName()).thenReturn(expectedUsername);
+    when(userService.getUserIdByUsername(expectedUsername)).thenReturn(1L);
+
+    long result = authService.getCurrentUserId();
+
+    assertEquals(1L, result);
+  }
 
   @Test
   public void testDoesUserExistByUsername() {
