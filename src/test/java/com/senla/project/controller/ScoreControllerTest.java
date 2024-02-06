@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.senla.project.config.SecurityConfig;
+import com.senla.project.exception.GlobalExceptionHandler;
 import com.senla.project.service.AdService;
 import com.senla.project.service.AuthService;
 import com.senla.project.service.ScoreService;
@@ -25,7 +26,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
         SecurityConfig.class,
         SecurityAutoConfiguration.class
     })
-@ContextConfiguration(classes = ScoreController.class)
+@ContextConfiguration(classes = { ScoreController.class, GlobalExceptionHandler.class })
 public class ScoreControllerTest {
 
   @Autowired
