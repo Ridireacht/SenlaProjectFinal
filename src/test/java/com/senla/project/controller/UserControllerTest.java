@@ -10,6 +10,7 @@ import com.senla.project.config.SecurityConfig;
 import com.senla.project.dto.request.UserProfileRequest;
 import com.senla.project.dto.response.UserBriefProfileResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
+import com.senla.project.exception.GlobalExceptionHandler;
 import com.senla.project.service.AuthService;
 import com.senla.project.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
         SecurityAutoConfiguration.class
     }
 )
-@ContextConfiguration(classes = UserController.class)
+@ContextConfiguration(classes = { UserController.class, GlobalExceptionHandler.class })
 public class UserControllerTest {
 
   @Autowired
