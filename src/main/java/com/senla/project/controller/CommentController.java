@@ -5,6 +5,7 @@ import com.senla.project.dto.response.CommentResponse;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
+import com.senla.project.service.AuthService;
 import com.senla.project.service.CommentService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,8 +18,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +37,7 @@ public class CommentController {
   private final CommentService commentService;
   private final UserService userService;
   private final AdService adService;
+  private final AuthService authService;
 
 
   @Operation(summary = "Получить все комментарии", description = "Получает список всех комментариев для указанного объявления.")
@@ -54,7 +54,7 @@ public class CommentController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (adService.isAdClosed(adId) && !userService.isUserBuyerOrSellerOfAd(getCurrentUserId(), adId)) {
+    if (adService.isAdClosed(adId) && !userService.isUserBuyerOrSellerOfAd(authService.getCurrentUserId(), adId)) {
       throw new ForbiddenException("You can't see comments to an ad not available for you.");
     }
 
@@ -75,7 +75,7 @@ public class CommentController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+    if (adService.doesAdBelongToUser(adId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't leave a comment on your own ad.");
     }
 
@@ -83,7 +83,7 @@ public class CommentController {
       throw new ForbiddenException("You can't leave a comment on a closed ad.");
     }
 
-    return commentService.createCommentOnAd(getCurrentUserId(), adId, commentRequest);
+    return commentService.createCommentOnAd(authService.getCurrentUserId(), adId, commentRequest);
   }
 
   @Operation(summary = "Обновить комментарий", description = "Обновляет существующий комментарий. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
@@ -100,7 +100,7 @@ public class CommentController {
       throw new NotFoundException("Comment", commentId);
     }
 
-    if (!commentService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
+    if (!commentService.doesCommentBelongToUser(commentId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't update someone else's comment.");
     }
 
@@ -125,7 +125,7 @@ public class CommentController {
       throw new NotFoundException("Comment", commentId);
     }
 
-    if (!commentService.doesCommentBelongToUser(commentId, getCurrentUserId())) {
+    if (!commentService.doesCommentBelongToUser(commentId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't delete someone else's comment.");
     }
 
@@ -134,11 +134,5 @@ public class CommentController {
     }
 
     return commentService.deleteComment(commentId);
-  }
-
-
-  private Long getCurrentUserId() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return userService.getUserIdByUsername(authentication.getName());
   }
 }

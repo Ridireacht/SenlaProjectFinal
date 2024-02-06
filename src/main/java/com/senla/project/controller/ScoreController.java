@@ -4,8 +4,8 @@ import com.senla.project.dto.request.ScoreRequest;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
+import com.senla.project.service.AuthService;
 import com.senla.project.service.ScoreService;
-import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,8 +15,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ScoreController {
 
   private final ScoreService scoreService;
-  private final UserService userService;
   private final AdService adService;
+  private final AuthService authService;
 
 
   @Operation(summary = "Установить оценку объявлению", description = "Устанавливает оценку объявлению, которое было куплено текущим пользователем. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
@@ -49,7 +47,7 @@ public class ScoreController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (!adService.isAdSoldToUser(adId, getCurrentUserId())) {
+    if (!adService.isAdSoldToUser(adId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't set a score on ad you didn't buy.");
     }
 
@@ -57,11 +55,6 @@ public class ScoreController {
       throw new ForbiddenException("You can't set a new score, ad already has one.");
     }
 
-    return scoreService.setScoreToAd(getCurrentUserId(), adId, scoreRequest);
-  }
-
-  private Long getCurrentUserId() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return userService.getUserIdByUsername(authentication.getName());
+    return scoreService.setScoreToAd(authService.getCurrentUserId(), adId, scoreRequest);
   }
 }

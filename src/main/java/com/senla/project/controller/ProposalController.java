@@ -6,8 +6,8 @@ import com.senla.project.dto.response.ProposalSentResponse;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
+import com.senla.project.service.AuthService;
 import com.senla.project.service.ProposalService;
-import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,8 +18,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,8 +34,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProposalController {
 
   private final ProposalService proposalService;
-  private final UserService userService;
   private final AdService adService;
+  private final AuthService authService;
 
 
   @Operation(summary = "Получить все отправленные предложения", description = "Возвращает список всех отправленных пользователем предложений.")
@@ -48,7 +46,7 @@ public class ProposalController {
   })
   @GetMapping("/sent")
   public List<ProposalSentResponse> getSentProposalsOfCurrentUser() {
-    return proposalService.getSentProposalsOfUser(getCurrentUserId());
+    return proposalService.getSentProposalsOfUser(authService.getCurrentUserId());
   }
 
   @Operation(summary = "Получить все полученные предложения", description = "Возвращает список всех полученных пользователем предложений.")
@@ -59,7 +57,7 @@ public class ProposalController {
   })
   @GetMapping("/received")
   public List<ProposalReceivedResponse> getReceivedProposalsOfCurrentUser() {
-    return proposalService.getReceivedProposalsOfUser(getCurrentUserId());
+    return proposalService.getReceivedProposalsOfUser(authService.getCurrentUserId());
   }
 
   @Operation(summary = "Отправить предложение", description = "Отправляет новое предложение по указанному объявлению. Возвращает информацию о посланном предложении.")
@@ -76,7 +74,7 @@ public class ProposalController {
       throw new NotFoundException("Ad", proposalRequest.getAdId());
     }
 
-    if(adService.doesAdBelongToUser(proposalRequest.getAdId(), getCurrentUserId())) {
+    if(adService.doesAdBelongToUser(proposalRequest.getAdId(), authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't send proposal to your own ad.");
     }
 
@@ -84,7 +82,7 @@ public class ProposalController {
       throw new ForbiddenException("You can't make proposals for a closed ad.");
     }
     
-    return proposalService.createProposal(getCurrentUserId(), proposalRequest);
+    return proposalService.createProposal(authService.getCurrentUserId(), proposalRequest);
   }
 
   @Operation(summary = "Принять предложение", description = "Принимает предложение по его id. Возвращает boolean-результат операции.")
@@ -101,7 +99,7 @@ public class ProposalController {
       throw new NotFoundException("Proposal", proposalId);
     }
 
-    if (!proposalService.isProposalSentToUser(proposalId, getCurrentUserId())) {
+    if (!proposalService.isProposalSentToUser(proposalId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't accept someone else's proposal.");
     }
 
@@ -122,15 +120,10 @@ public class ProposalController {
       throw new NotFoundException("Proposal", proposalId);
     }
 
-    if (!proposalService.isProposalSentToUser(proposalId, getCurrentUserId())) {
+    if (!proposalService.isProposalSentToUser(proposalId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't decline someone else's proposal.");
     }
 
     return proposalService.declineProposalById(proposalId);
-  }
-
-  private Long getCurrentUserId() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return userService.getUserIdByUsername(authentication.getName());
   }
 }

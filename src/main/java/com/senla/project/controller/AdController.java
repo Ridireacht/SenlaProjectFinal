@@ -7,6 +7,7 @@ import com.senla.project.exception.CustomValidationException;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
+import com.senla.project.service.AuthService;
 import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,8 +19,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +38,7 @@ public class AdController {
 
   private final AdService adService;
   private final UserService userService;
+  private final AuthService authService;
 
 
   @Operation(summary = "Получить отфильтрованные объявления", description = "Получает список объявлений, соответствующих заданному пользователем запросу. Тип возвращаемых объявлений зависит от параметров запроса.")
@@ -70,7 +70,7 @@ public class AdController {
       throw new CustomValidationException("query parameter 'searchString' should either be not specified or have bigger length than 1.");
     }
 
-    return adService.getFilteredAdsForUser(getCurrentUserId(), searchString, category, minPrice, maxPrice, isInMyCity);
+    return adService.getFilteredAdsForUser(authService.getCurrentUserId(), searchString, category, minPrice, maxPrice, isInMyCity);
   }
 
   @Operation(summary = "Получить конкретное объявление", description = "Получает конкретное объявление по его id. Тип возвращаемого объявления зависит от текущего пользователя и статуса объявления.")
@@ -87,11 +87,11 @@ public class AdController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (adService.isAdClosed(adId) && !userService.isUserBuyerOrSellerOfAd(getCurrentUserId(), adId)) {
+    if (adService.isAdClosed(adId) && !userService.isUserBuyerOrSellerOfAd(authService.getCurrentUserId(), adId)) {
       throw new ForbiddenException("This ad is closed and not available for you.");
     }
 
-    return adService.getAd(adId, getCurrentUserId());
+    return adService.getAd(adId, authService.getCurrentUserId());
   }
 
   @Operation(summary = "Создать объявление", description = "Создаёт новое объявление по форме-реквесту. Возвращает информацию об этом объявлении.")
@@ -102,7 +102,7 @@ public class AdController {
   })
   @PostMapping
   public AdCurrentResponse createAd(@Valid @RequestBody AdRequest adRequest) {
-    return adService.createAd(getCurrentUserId(), adRequest);
+    return adService.createAd(authService.getCurrentUserId(), adRequest);
   }
 
   @Operation(summary = "Обновить объявление", description = "Обновляет существующее объявление по форме-реквесту. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
@@ -119,7 +119,7 @@ public class AdController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+    if (!adService.doesAdBelongToUser(adId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't update someone else's ad.");
     }
 
@@ -145,7 +145,7 @@ public class AdController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+    if (!adService.doesAdBelongToUser(adId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't make someone else's ad a premium one.");
     }
 
@@ -174,7 +174,7 @@ public class AdController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (!adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+    if (!adService.doesAdBelongToUser(adId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't delete someone else's ad.");
     }
 
@@ -183,11 +183,5 @@ public class AdController {
     }
 
     return adService.deleteAd(adId);
-  }
-
-
-  private Long getCurrentUserId() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return userService.getUserIdByUsername(authentication.getName());
   }
 }

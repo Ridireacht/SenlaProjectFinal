@@ -5,8 +5,8 @@ import com.senla.project.dto.response.ConversationResponse;
 import com.senla.project.exception.ForbiddenException;
 import com.senla.project.exception.NotFoundException;
 import com.senla.project.service.AdService;
+import com.senla.project.service.AuthService;
 import com.senla.project.service.ConversationService;
-import com.senla.project.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,8 +16,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,8 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ConversationController {
 
   private final ConversationService conversationService;
-  private final UserService userService;
   private final AdService adService;
+  private final AuthService authService;
 
 
   @Operation(summary = "Получить все переписки пользователя", description = "Возвращает список всех переписок пользователя.")
@@ -43,7 +41,7 @@ public class ConversationController {
   })
   @GetMapping("/conversations")
   public List<ConversationInfoResponse> getCurrentUserConversations() {
-    return conversationService.getConversationsOfUser(getCurrentUserId());
+    return conversationService.getConversationsOfUser(authService.getCurrentUserId());
   }
 
   @Operation(summary = "Получить конкретную переписку", description = "Возвращает конкретную переписку.")
@@ -60,7 +58,7 @@ public class ConversationController {
       throw new NotFoundException("Conversation", conversationId);
     }
 
-    if (!conversationService.doesConversationBelongToUser(conversationId, getCurrentUserId())) {
+    if (!conversationService.doesConversationBelongToUser(conversationId, authService.getCurrentUserId())) {
       throw new ForbiddenException("This conversation is not available to you.");
     }
 
@@ -81,7 +79,7 @@ public class ConversationController {
       throw new NotFoundException("Ad", adId);
     }
 
-    if (adService.doesAdBelongToUser(adId, getCurrentUserId())) {
+    if (adService.doesAdBelongToUser(adId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't start a conversation on your own ad.");
     }
 
@@ -89,11 +87,11 @@ public class ConversationController {
       throw new ForbiddenException("You can't start a conversation on a closed ad.");
     }
 
-    if (adService.doesUserHaveConversationAlready(adId, getCurrentUserId())) {
+    if (adService.doesUserHaveConversationAlready(adId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't start a new conversation as you have an active one for this ad.");
     }
 
-    return conversationService.createConversationByAd(getCurrentUserId(), adId);
+    return conversationService.createConversationByAd(authService.getCurrentUserId(), adId);
   }
 
   @Operation(summary = "Удалить переписку", description = "Полностью удаляет указанную переписку. Возвращает true, если операция удалась; false, если к моменту исполнения кода сущность перестала существовать; и 500 Internal Server Error, если возникло исключение.")
@@ -110,16 +108,10 @@ public class ConversationController {
       throw new NotFoundException("Conversation", conversationId);
     }
 
-    if (!conversationService.doesConversationBelongToUser(conversationId, getCurrentUserId())) {
+    if (!conversationService.doesConversationBelongToUser(conversationId, authService.getCurrentUserId())) {
       throw new ForbiddenException("You can't delete someone else's conversation.");
     }
 
     return conversationService.deleteConversation(conversationId);
   }
-
-  private Long getCurrentUserId() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return userService.getUserIdByUsername(authentication.getName());
-  }
-
 }
