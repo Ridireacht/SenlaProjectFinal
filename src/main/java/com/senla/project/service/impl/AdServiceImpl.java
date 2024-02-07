@@ -114,6 +114,10 @@ public class AdServiceImpl implements AdService {
       }
     }
 
+    if (Objects.equals(ad.getBuyer(), null)) {
+      return ResponseEntity.ok(adMapper.mapToAdOpenResponse(ad));
+    }
+
     if (Objects.equals(ad.getBuyer().getId(), userId)) {
       return ResponseEntity.ok(adMapper.mapToAdPurchasedResponse(ad));
     }
@@ -199,6 +203,11 @@ public class AdServiceImpl implements AdService {
   @Override
   public boolean isAdSoldToUser(long adId, long userId) {
     Ad ad = adRepository.findById(adId).get();
+
+    if (ad.getBuyer().equals(null)) {
+      return false;
+    }
+
     return ad.getBuyer().getId() == userId;
   }
 
