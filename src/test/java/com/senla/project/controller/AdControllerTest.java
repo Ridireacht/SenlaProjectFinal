@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import com.senla.project.config.SecurityConfig;
+import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdOpenResponse;
 import com.senla.project.exception.GlobalExceptionHandler;
 import com.senla.project.service.AdService;
@@ -138,5 +139,41 @@ public class AdControllerTest {
         .andExpect(status().isBadRequest());
   }
 
-  
+  @Test
+  public void testGetAd_Success() throws Exception {
+    AdCurrentResponse adResponse = new AdCurrentResponse();
+    adResponse.setId(1L);
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(anyLong())).thenReturn(true);
+    when(adService.isAdClosed(anyLong())).thenReturn(false);
+    when(userService.isUserBuyerOrSellerOfAd(anyLong(), anyLong())).thenReturn(true);
+    doReturn(ResponseEntity.ok(adResponse)).when(adService).getAd(anyLong(), anyLong());
+
+    mockMvc.perform(get("/ads/1")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(1L));
+  }
+
+  @Test
+  public void testGetAd_NotFound() throws Exception {
+    when(adService.doesAdExist(anyLong())).thenReturn(false);
+
+    mockMvc.perform(get("/ads/999")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void testGetAd_AdClosedAndForbiddenUser() throws Exception {
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(anyLong())).thenReturn(true);
+    when(adService.isAdClosed(anyLong())).thenReturn(true);
+    when(userService.isUserBuyerOrSellerOfAd(anyLong(), anyLong())).thenReturn(false);
+
+    mockMvc.perform(get("/ads/1")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
 }
