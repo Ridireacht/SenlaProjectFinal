@@ -70,7 +70,7 @@ public class AdControllerTest {
     response1.setSellerId(1L);
     response1.setSellerCity("Test City");
     response1.setPostedAt("2024-02-07T10:20:30");
-    response1.setTitle("Test title");
+    response1.setTitle("test title");
     response1.setContent("Test content");
     response1.setPrice(100);
 
@@ -80,7 +80,7 @@ public class AdControllerTest {
     response2.setSellerCity("Test City");
     response2.setPostedAt("2024-02-07T10:20:30");
     response2.setTitle("Test title");
-    response2.setContent("Test content");
+    response2.setContent("test content");
     response2.setPrice(100);
 
     List<AdOpenResponse> mockAds = Arrays.asList(response1, response2);
