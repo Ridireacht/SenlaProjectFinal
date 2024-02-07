@@ -1,6 +1,7 @@
 package com.senla.project.controller;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -8,6 +9,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -188,6 +190,56 @@ public class AdminControllerTest {
   }
 
   @Test
+  public void testGetAllOpenAdsFull_Success() throws Exception {
+    AdFullOpenResponse ad1 = new AdFullOpenResponse();
+    ad1.setId(1L);
+    ad1.setTitle("Ad Title 1");
+    ad1.setContent("Ad Content 1");
+    ad1.setPrice(100);
+
+    AdFullOpenResponse ad2 = new AdFullOpenResponse();
+    ad2.setId(2L);
+    ad2.setTitle("Ad Title 2");
+    ad2.setContent("Ad Content 2");
+    ad2.setPrice(200);
+
+    List<AdFullOpenResponse> ads = Arrays.asList(ad1, ad2);
+
+    when(adminService.getAllOpenAdsFull(null, null, null)).thenReturn(ads);
+
+    mockMvc.perform(get("/admin/ads")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$").isArray())
+        .andExpect(jsonPath("$", hasSize(2)))
+        .andExpect(jsonPath("$[0].id", is(1)))
+        .andExpect(jsonPath("$[0].title", is("Ad Title 1")))
+        .andExpect(jsonPath("$[0].content", is("Ad Content 1")))
+        .andExpect(jsonPath("$[0].price", is(100)))
+        .andExpect(jsonPath("$[1].id", is(2)))
+        .andExpect(jsonPath("$[1].title", is("Ad Title 2")))
+        .andExpect(jsonPath("$[1].content", is("Ad Content 2")))
+        .andExpect(jsonPath("$[1].price", is(200)));
+  }
+
+  @Test
+  public void testGetAllOpenAdsFull_MinPriceHigherThanMaxPrice() throws Exception {
+    mockMvc.perform(get("/admin/ads")
+            .param("minPrice", "100")
+            .param("maxPrice", "10")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void testGetAllOpenAdsFull_SearchStringTooShort() throws Exception {
+    mockMvc.perform(get("/admin/ads")
+            .param("searchString", "t")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
   public void testGetFilteredAdsForUser_Success() throws Exception {
     AdCurrentResponse response1 = new AdCurrentResponse();
     response1.setId(1L);
@@ -275,4 +327,126 @@ public class AdminControllerTest {
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest());
   }
+
+  @Test
+  public void testGetAd_Success() throws Exception {
+    Long adId = 1L;
+
+    AdCurrentResponse adResponse = new AdCurrentResponse();
+    adResponse.setId(adId);
+    adResponse.setTitle("Ad Title");
+    adResponse.setContent("Ad Content");
+    adResponse.setPrice(100);
+
+    when(adminService.doesAdExist(adId)).thenReturn(true);
+    doReturn(ResponseEntity.ok(adResponse)).when(adminService).getAd(adId);
+
+    mockMvc.perform(get("/admin/ads/1")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", is(1)))
+        .andExpect(jsonPath("$.title", is("Ad Title")))
+        .andExpect(jsonPath("$.content", is("Ad Content")))
+        .andExpect(jsonPath("$.price", is(100)));
+  }
+
+  @Test
+  public void testGetAd_AdNotFound() throws Exception {
+    Long adId = 1L;
+
+    when(adminService.doesAdExist(adId)).thenReturn(false);
+
+    mockMvc.perform(get("/admin/ads/1")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void testDeleteAd_Success() throws Exception {
+    Long adId = 1L;
+
+    when(adminService.doesAdExist(adId)).thenReturn(true);
+    when(adminService.isAdClosed(adId)).thenReturn(false);
+    when(adminService.deleteAd(adId)).thenReturn(true);
+
+    mockMvc.perform(delete("/admin/ads/1")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().string("true"));
+  }
+
+  @Test
+  public void testDeleteAd_AdNotFound() throws Exception {
+    Long adId = 1L;
+
+    when(adminService.doesAdExist(adId)).thenReturn(false);
+
+    mockMvc.perform(delete("/admin/ads/1")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void testDeleteAd_AdClosed() throws Exception {
+    Long adId = 1L;
+
+    when(adminService.doesAdExist(adId)).thenReturn(true);
+    when(adminService.isAdClosed(adId)).thenReturn(true);
+
+    mockMvc.perform(delete("/admin/ads/1")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void testUnmakeAdPremium_Success() throws Exception {
+    Long adId = 1L;
+
+    when(adminService.doesAdExist(adId)).thenReturn(true);
+    when(adminService.isAdClosed(adId)).thenReturn(false);
+    when(adminService.isAdPremium(adId)).thenReturn(true);
+    when(adminService.unmakeAdPremium(adId)).thenReturn(true);
+
+    mockMvc.perform(put("/admin/ads/1/premium")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().string("true"));
+  }
+
+  @Test
+  public void testUnmakeAdPremium_AdNotFound() throws Exception {
+    Long adId = 1L;
+
+    when(adminService.doesAdExist(adId)).thenReturn(false);
+
+    mockMvc.perform(put("/admin/ads/1/premium")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void testUnmakeAdPremium_AdClosed() throws Exception {
+    Long adId = 1L;
+
+    when(adminService.doesAdExist(adId)).thenReturn(true);
+    when(adminService.isAdClosed(adId)).thenReturn(true);
+
+    mockMvc.perform(put("/admin/ads/1/premium")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void testUnmakeAdPremium_AdNotPremium() throws Exception {
+    Long adId = 1L;
+
+    when(adminService.doesAdExist(adId)).thenReturn(true);
+    when(adminService.isAdClosed(adId)).thenReturn(false);
+    when(adminService.isAdPremium(adId)).thenReturn(false);
+
+    mockMvc.perform(put("/admin/ads/1/premium")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isConflict());
+  }
+
 }
