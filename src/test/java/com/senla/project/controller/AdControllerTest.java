@@ -1,17 +1,24 @@
 package com.senla.project.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.senla.project.config.SecurityConfig;
+import com.senla.project.dto.request.AdRequest;
 import com.senla.project.dto.response.AdCurrentResponse;
 import com.senla.project.dto.response.AdOpenResponse;
 import com.senla.project.exception.GlobalExceptionHandler;
@@ -51,6 +58,9 @@ public class AdControllerTest {
 
   @MockBean
   private AuthService authService;
+
+  @Autowired
+  private ObjectMapper objectMapper;
 
 
   @Test
@@ -173,6 +183,257 @@ public class AdControllerTest {
     when(userService.isUserBuyerOrSellerOfAd(anyLong(), anyLong())).thenReturn(false);
 
     mockMvc.perform(get("/ads/1")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void testCreateAd_Success() throws Exception {
+    AdRequest adRequest = new AdRequest();
+    adRequest.setTitle("Test title");
+    adRequest.setContent("Test content");
+    adRequest.setPrice(100);
+
+    AdCurrentResponse adResponse = new AdCurrentResponse();
+    adResponse.setId(1L);
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.createAd(anyLong(), any(AdRequest.class))).thenReturn(adResponse);
+
+    mockMvc.perform(post("/ads")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(adRequest)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(1L));
+  }
+
+  @Test
+  public void testCreateAd_InvalidRequest() throws Exception {
+    AdRequest adRequest = new AdRequest();
+    adRequest.setContent("Test content");
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+
+    mockMvc.perform(post("/ads")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(adRequest)))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void testUpdateAd_Success() throws Exception {
+    Long adId = 1L;
+    AdRequest adRequest = new AdRequest();
+    adRequest.setTitle("Updated title");
+    adRequest.setContent("Updated content");
+    adRequest.setPrice(200);
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(true);
+    when(adService.isAdClosed(adId)).thenReturn(false);
+    when(adService.updateAd(eq(adId), any(AdRequest.class))).thenReturn(true);
+
+    mockMvc.perform(put("/ads/{id}", adId)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(adRequest)))
+        .andExpect(status().isOk())
+        .andExpect(content().string("true"));
+  }
+
+  @Test
+  public void testUpdateAd_AdNotFound() throws Exception {
+    Long adId = 1L;
+    AdRequest adRequest = new AdRequest();
+    adRequest.setTitle("Updated title");
+    adRequest.setContent("Updated content");
+    adRequest.setPrice(200);
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(false);
+
+    mockMvc.perform(put("/ads/{id}", adId)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(adRequest)))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void testUpdateAd_Forbidden() throws Exception {
+    Long adId = 1L;
+    AdRequest adRequest = new AdRequest();
+    adRequest.setTitle("Updated title");
+    adRequest.setContent("Updated content");
+    adRequest.setPrice(200);
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(false);
+
+    mockMvc.perform(put("/ads/{id}", adId)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(adRequest)))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void testUpdateAd_AdClosed() throws Exception {
+    Long adId = 1L;
+    AdRequest adRequest = new AdRequest();
+    adRequest.setTitle("Updated title");
+    adRequest.setContent("Updated content");
+    adRequest.setPrice(200);
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(true);
+    when(adService.isAdClosed(adId)).thenReturn(true);
+
+    mockMvc.perform(put("/ads/{id}", adId)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(adRequest)))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void testUpdateAd_InvalidRequest() throws Exception {
+    Long adId = 1L;
+    AdRequest adRequest = new AdRequest();
+    adRequest.setContent("Updated content");
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(true);
+    when(adService.isAdClosed(adId)).thenReturn(false);
+
+    mockMvc.perform(put("/ads/{id}", adId)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(adRequest)))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void testMakeAdPremium_Success() throws Exception {
+    Long adId = 1L;
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(true);
+    when(adService.isAdClosed(adId)).thenReturn(false);
+    when(adService.isAdPremium(adId)).thenReturn(false);
+    when(adService.makeAdPremium(adId)).thenReturn(true);
+
+    mockMvc.perform(put("/ads/{id}/premium", adId)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().string("true"));
+  }
+
+  @Test
+  public void testMakeAdPremium_AdNotFound() throws Exception {
+    Long adId = 1L;
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(false);
+
+    mockMvc.perform(put("/ads/{id}/premium", adId)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void testMakeAdPremium_Forbidden() throws Exception {
+    Long adId = 1L;
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(false);
+
+    mockMvc.perform(put("/ads/{id}/premium", adId)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void testMakeAdPremium_AdClosed() throws Exception {
+    Long adId = 1L;
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(true);
+    when(adService.isAdClosed(adId)).thenReturn(true);
+
+    mockMvc.perform(put("/ads/{id}/premium", adId)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void testMakeAdPremium_AdAlreadyPremium() throws Exception {
+    Long adId = 1L;
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(true);
+    when(adService.isAdClosed(adId)).thenReturn(false);
+    when(adService.isAdPremium(adId)).thenReturn(true);
+
+    mockMvc.perform(put("/ads/{id}/premium", adId)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isConflict());
+  }
+
+  @Test
+  public void testDeleteAd_Success() throws Exception {
+    Long adId = 1L;
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(true);
+    when(adService.isAdClosed(adId)).thenReturn(false);
+    when(adService.deleteAd(adId)).thenReturn(true);
+
+    mockMvc.perform(delete("/ads/{id}", adId)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().string("true"));
+  }
+
+  @Test
+  public void testDeleteAd_AdNotFound() throws Exception {
+    Long adId = 1L;
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(false);
+
+    mockMvc.perform(delete("/ads/{id}", adId)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void testDeleteAd_Forbidden() throws Exception {
+    Long adId = 1L;
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(false);
+
+    mockMvc.perform(delete("/ads/{id}", adId)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void testDeleteAd_AdClosed() throws Exception {
+    Long adId = 1L;
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(adService.doesAdExist(adId)).thenReturn(true);
+    when(adService.doesAdBelongToUser(adId, 1L)).thenReturn(true);
+    when(adService.isAdClosed(adId)).thenReturn(true);
+
+    mockMvc.perform(delete("/ads/{id}", adId)
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isForbidden());
   }
