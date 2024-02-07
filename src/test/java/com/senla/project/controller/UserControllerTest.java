@@ -1,11 +1,16 @@
 package com.senla.project.controller;
 
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.senla.project.config.SecurityConfig;
 import com.senla.project.dto.request.UserProfileRequest;
 import com.senla.project.dto.response.UserBriefProfileResponse;
@@ -21,7 +26,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 
 @WebMvcTest(controllers =
     UserController.class,
@@ -34,6 +39,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 public class UserControllerTest {
 
   @Autowired
+  private ObjectMapper objectMapper;
+
+  @Autowired
   private MockMvc mockMvc;
 
   @MockBean
@@ -44,37 +52,95 @@ public class UserControllerTest {
 
 
   @Test
-  public void testGetUserBriefProfile() throws Exception {
-    when(userService.doesUserExist(anyLong())).thenReturn(true);
-    when(userService.getUserBriefProfile(anyLong())).thenReturn(new UserBriefProfileResponse());
+  public void testGetUserBriefProfile_Success() throws Exception {
+    Long userId = 1L;
+    UserBriefProfileResponse expectedResponse = new UserBriefProfileResponse();
+    expectedResponse.setId(userId);
+    expectedResponse.setUsername("testUser");
+    expectedResponse.setAddress("Test Address");
+    expectedResponse.setRating(4.5);
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
-            .contentType(MediaType.APPLICATION_JSON))
+    when(userService.doesUserExist(userId)).thenReturn(true);
+    when(userService.getUserBriefProfile(userId)).thenReturn(expectedResponse);
+
+    mockMvc.perform(get("/users/{id}", userId))
         .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        .andExpect(jsonPath("$.id", is(userId.intValue())))
+        .andExpect(jsonPath("$.username", is("testUser")))
+        .andExpect(jsonPath("$.address", is("Test Address")))
+        .andExpect(jsonPath("$.rating", is(4.5)));
   }
 
   @Test
-  public void testGetCurrentUserFullProfile() throws Exception {
-    when(authService.getCurrentUserId()).thenReturn(1L);
-    when(userService.getUserFullProfile(anyLong())).thenReturn(new UserFullProfileResponse());
+  public void testGetUserBriefProfile_UserNotFound() throws Exception {
+    Long userId = 1L;
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/users/current")
-            .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    when(userService.doesUserExist(userId)).thenReturn(false);
+
+    mockMvc.perform(get("/users/{id}", userId))
+        .andExpect(status().isNotFound());
   }
 
   @Test
-  public void testUpdateCurrentUserProfile() throws Exception {
+  public void testGetCurrentUserFullProfile_Success() throws Exception {
+    Long userId = 1L;
+    UserFullProfileResponse expectedResponse = new UserFullProfileResponse();
+    expectedResponse.setId(userId);
+    expectedResponse.setUsername("testUser");
+    expectedResponse.setEmail("test@example.com");
+    expectedResponse.setAddress("Test Address");
+    expectedResponse.setRating(4.5);
+
+    when(authService.getCurrentUserId()).thenReturn(userId);
+    when(userService.getUserFullProfile(userId)).thenReturn(expectedResponse);
+
+    mockMvc.perform(get("/users/current"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id", is(userId.intValue())))
+        .andExpect(jsonPath("$.username", is("testUser")))
+        .andExpect(jsonPath("$.email", is("test@example.com")))
+        .andExpect(jsonPath("$.address", is("Test Address")))
+        .andExpect(jsonPath("$.rating", is(4.5)));
+  }
+
+  @Test
+  public void testUpdateCurrentUserProfile_Success() throws Exception {
+    UserProfileRequest userProfileRequest = new UserProfileRequest();
+    userProfileRequest.setEmail("newemail@example.com");
+    userProfileRequest.setAddress("New Address");
+
     when(authService.getCurrentUserId()).thenReturn(1L);
-    when(userService.updateUserProfile(any(UserProfileRequest.class), anyLong())).thenReturn(true);
+    when(userService.doesUserExistByEmail(userProfileRequest.getEmail())).thenReturn(false);
+    when(userService.updateUserProfile(any(UserProfileRequest.class), eq(1L))).thenReturn(true);
 
-    String requestBody = "{\"email\": \"test@example.com\", \"address\": \"123 Street\", \"password\": \"password123\"}";
-
-    mockMvc.perform(MockMvcRequestBuilders.put("/users/current")
+    mockMvc.perform(put("/users/current")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(requestBody))
-        .andExpect(status().isOk());
+            .content(objectMapper.writeValueAsString(userProfileRequest)))
+        .andExpect(status().isOk())
+        .andExpect(content().string("true"));
+  }
+
+  @Test
+  public void testUpdateCurrentUserProfile_ConflictEmail() throws Exception {
+    UserProfileRequest userProfileRequest = new UserProfileRequest();
+    userProfileRequest.setEmail("existingemail@example.com");
+
+    when(authService.getCurrentUserId()).thenReturn(1L);
+    when(userService.doesUserExistByEmail(userProfileRequest.getEmail())).thenReturn(true);
+
+    mockMvc.perform(put("/users/current")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(userProfileRequest)))
+        .andExpect(status().isConflict());
+  }
+
+  @Test
+  public void testUpdateCurrentUserProfile_EmptyRequest() throws Exception {
+    UserProfileRequest userProfileRequest = new UserProfileRequest();
+
+    mockMvc.perform(put("/users/current")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(userProfileRequest)))
+        .andExpect(status().isBadRequest());
   }
 }
