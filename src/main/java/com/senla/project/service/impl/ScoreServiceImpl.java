@@ -41,7 +41,7 @@ public class ScoreServiceImpl implements ScoreService {
       score.setRating(ad.getSeller().getRating());
 
       scoreRepository.save(score);
-      ratingService.updateRatingForUser(score.getSetter().getId());
+      ratingService.updateRatingForUser(ad.getSeller().getId());
 
       ad.setScore(score);
       adRepository.save(ad);
