@@ -25,8 +25,4 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
 
   @Query("SELECT a FROM Ad a WHERE a.isClosed = false")
   List<Ad> findAllByIsClosedFalse();
-
-  @Modifying
-  @Query("DELETE FROM Ad a WHERE a.seller.id = :sellerId AND a.isClosed = false")
-  void deleteAllBySellerIdAndIsClosedFalse(@Param("sellerId") long sellerId);
 }
