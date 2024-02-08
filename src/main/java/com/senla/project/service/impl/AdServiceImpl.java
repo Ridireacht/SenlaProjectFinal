@@ -10,7 +10,6 @@ import com.senla.project.repository.RatingRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.AdService;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -231,7 +230,7 @@ public class AdServiceImpl implements AdService {
 
   private void sortAds(List<Ad> ads) {
     ads.sort(Comparator
-        .comparing((Ad ad) -> ad.getSeller().getRating().getAverageScore(), Comparator.reverseOrder())
-        .thenComparing(Ad::isPremium, Comparator.reverseOrder()));
+        .comparing(Ad::isPremium, Comparator.reverseOrder())
+        .thenComparing((Ad ad) -> ad.getSeller().getRating().getAverageScore(), Comparator.reverseOrder()));
   }
 }
