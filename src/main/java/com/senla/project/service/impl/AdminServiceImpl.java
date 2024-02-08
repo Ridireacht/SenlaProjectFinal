@@ -221,12 +221,8 @@ public class AdminServiceImpl implements AdminService {
   }
 
   private void sortAds(List<Ad> ads) {
-    Collections.sort(ads, Comparator
-        .comparing((Ad ad) -> getRatingForSeller(ad.getSeller().getId()), Comparator.reverseOrder())
+    ads.sort(Comparator
+        .comparing((Ad ad) -> ad.getSeller().getRating().getAverageScore(), Comparator.reverseOrder())
         .thenComparing(Ad::isPremium, Comparator.reverseOrder()));
-  }
-
-  private double getRatingForSeller(Long sellerId) {
-    return ratingRepository.findByUserId(sellerId).get().getAverageScore();
   }
 }
