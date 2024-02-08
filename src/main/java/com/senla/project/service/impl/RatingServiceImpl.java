@@ -21,12 +21,16 @@ public class RatingServiceImpl implements RatingService {
     Rating rating = ratingRepository.findByUserId(userId).get();
     List<Score> scores = rating.getScores();
 
-    double sumOfScores = scores.stream()
-        .mapToDouble(Score::getValue)
-        .sum();
+    if (scores.isEmpty()) {
+      rating.setAverageScore(2.5);
+    } else {
+      double sumOfScores = scores.stream()
+          .mapToDouble(Score::getValue)
+          .sum();
 
-    double averageScore = sumOfScores / scores.size();
-    rating.setAverageScore(averageScore);
+      double averageScore = sumOfScores / scores.size();
+      rating.setAverageScore(averageScore);
+    }
 
     ratingRepository.save(rating);
   }

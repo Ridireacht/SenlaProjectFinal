@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,6 +13,7 @@ import com.senla.project.dto.response.AdFullOpenResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Comment;
+import com.senla.project.entity.Score;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.AdMapperImpl;
 import com.senla.project.mapper.UserMapperImpl;
@@ -21,6 +23,8 @@ import com.senla.project.repository.RatingRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.impl.AdminServiceImpl;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +40,9 @@ import org.springframework.http.ResponseEntity;
 @SpringBootTest(classes = { AdminServiceImpl.class, UserMapperImpl.class, AdMapperImpl.class })
 @ExtendWith(MockitoExtension.class)
 public class AdminServiceTest {
+
+  @MockBean
+  private RatingService ratingService;
 
   @MockBean
   private UserRepository userRepository;
@@ -156,13 +163,41 @@ public class AdminServiceTest {
   public void testDeleteUser() {
     long userId = 1L;
 
+    User toBeDeleted = new User();
+    toBeDeleted.setId(userId);
+
+    Ad ad1 = new Ad();
+    ad1.setId(1L);
+
+    Ad ad2 = new Ad();
+    ad2.setId(2L);
+
+    User user1 = new User();
+    user1.setId(2L);
+
+    User user2 = new User();
+    user2.setId(3L);
+
+    ad1.setSeller(user1);
+    ad2.setSeller(user2);
+
+    Score score1 = new Score();
+    score1.setAd(ad1);
+
+    Score score2 = new Score();
+    score2.setAd(ad2);
+
+    List<Score> scores = new ArrayList<>(Arrays.asList(score1, score2));
+    toBeDeleted.setScoresSet(scores);
+
     when(userRepository.existsById(userId)).thenReturn(true);
+    when(userRepository.findById(userId)).thenReturn(Optional.of(toBeDeleted));
 
     boolean result = adminService.deleteUser(userId);
 
     assertTrue(result);
     verify(userRepository, times(1)).deleteById(userId);
-    verify(adRepository, times(1)).deleteAllBySellerIdAndIsClosedFalse(userId);
+    verify(ratingService, times(2)).updateRatingForUser(anyLong());
   }
 
   @Test

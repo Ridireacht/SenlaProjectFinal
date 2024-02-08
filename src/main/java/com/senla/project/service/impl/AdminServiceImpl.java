@@ -4,14 +4,15 @@ import com.senla.project.dto.response.AdFullOpenResponse;
 import com.senla.project.dto.response.UserFullProfileResponse;
 import com.senla.project.entity.Ad;
 import com.senla.project.entity.Comment;
+import com.senla.project.entity.Score;
 import com.senla.project.entity.User;
 import com.senla.project.mapper.AdMapper;
 import com.senla.project.mapper.UserMapper;
 import com.senla.project.repository.AdRepository;
 import com.senla.project.repository.CommentRepository;
-import com.senla.project.repository.RatingRepository;
 import com.senla.project.repository.UserRepository;
 import com.senla.project.service.AdminService;
+import com.senla.project.service.RatingService;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,10 +25,11 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
+  private final RatingService ratingService;
+
   private final UserRepository userRepository;
   private final AdRepository adRepository;
   private final CommentRepository commentRepository;
-  private final RatingRepository ratingRepository;
 
   private final UserMapper userMapper;
   private final AdMapper adMapper;
@@ -162,8 +164,24 @@ public class AdminServiceImpl implements AdminService {
   @Override
   public boolean deleteUser(long userId) {
     if (userRepository.existsById(userId)) {
+      // Собираем id пользователей, на чей рейтинг повлиял удаляемый User
+      User user = userRepository.findById(userId).get();
+      List<Score> scores = user.getScoresSet();
+      List<Long> ratedUserIds = scores.stream()
+          .map(Score::getAd)
+          .map(Ad::getSeller)
+          .map(User::getId)
+          .distinct()
+          .toList();
+
+      // Удаляем пользователя
       userRepository.deleteById(userId);
-      adRepository.deleteAllBySellerIdAndIsClosedFalse(userId);
+
+      // Пересчитываем рейтинг для пользователей выше
+      for (Long id : ratedUserIds) {
+        ratingService.updateRatingForUser(id);
+      }
+
       return true;
     }
 

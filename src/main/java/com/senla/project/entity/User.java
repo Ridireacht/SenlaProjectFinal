@@ -40,18 +40,16 @@ public class User {
   @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
   private List<Proposal> sentProposals = new ArrayList<>();
 
-  // Каскадное удаление обработано в AdminService - если происходит удаление пользователя, то
-  // удаляются лишь те объявления, которые были активными
-  @OneToMany(mappedBy = "seller")
+  @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
   private List<Ad> sellingAds = new ArrayList<>();
 
-  @OneToMany(mappedBy = "buyer")
+  @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
   private List<Ad> boughtAds = new ArrayList<>();
 
-  @OneToMany(mappedBy = "sender")
+  @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
   private List<Comment> sentComments = new ArrayList<>();
 
-  @OneToMany(mappedBy = "setter")
+  @OneToMany(mappedBy = "setter", cascade = CascadeType.ALL)
   private List<Score> scoresSet = new ArrayList<>();
 
   @OneToMany(mappedBy = "initiator", cascade = CascadeType.ALL)
